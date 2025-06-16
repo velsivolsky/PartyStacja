@@ -1,0 +1,116 @@
+:root {
+    --background: #fdf8ef;
+    --logo-color: #DDC78C;
+    --brand-color: #91835c;
+    --text-primary: #383438;
+    --hover-color: #5a4e43;
+    --section-bg: #f1e7d9;
+  }
+
+  body{
+    background-color: var(--section-bg);
+  }
+  
+  .navbar {
+    background-color: var(--background);
+    box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+    padding: 1rem 2rem;
+  }
+  
+  .navbar-brand {
+    color: var(--brand-color);
+    font-weight: 700;
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+  }
+  
+  .navbar-brand:hover {
+    color: var(--hover-color);
+    text-decoration: none;
+  }
+  
+  .navbar-nav .nav-link {
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 1.1rem;
+    margin-right: 1.5rem;
+    transition: color 0.25s ease;
+  }
+  
+  .navbar-nav .nav-link.active,
+  .navbar-nav .nav-link:hover {
+    color: var(--hover-color);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  
+  .navbar-toggler {
+    border: none;
+    font-size: 1.4rem;
+    color: var(--brand-color);
+  }
+  
+  .navbar-toggler:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+
+  .hero-span{
+    color: var(--brand-color);
+  }
+
+  .normal-section{
+    background-color: var(--section-bg);
+  }
+
+  .normal-section-2{
+    background-color: #f1e7d9 !important;
+  }
+
+
+
+
+
+  /* Wave-section tło identyczne z wypełnieniem fali */
+  .wave-section {
+    padding: 0;
+    margin: 0;
+    position: relative;
+    background-color: #fdf8ef; /* ten sam kolor co fill w path background-color: #f1e7d9; */
+    
+  }
+
+    /* Wave-section tło identyczne z wypełnieniem fali */
+    .wave-section-2 {
+        padding: 0;
+        margin: 0;
+        position: relative;
+        background-color: #f1e7d9; /* ten sam kolor co fill w path background-color: #f1e7d9; */
+        
+      }
+
+  
+
+  .wave-section svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    line-height: 0;
+    
+  }
+
+
+.fullwidth-bg {
+  width: 100vw;           /* pełna szerokość viewportu */
+  position: relative;
+  left: 50%;              /* żeby nie przesunęło sekcji poza ekran */
+  right: 50%;
+  margin-left: -50vw;     /* wyciąga na pełną szerokość */
+  margin-right: -50vw;
+  background-color: #fdf8ef;
+  padding: 2rem 0;
+}
+
