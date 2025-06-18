@@ -75,3 +75,25 @@
     box-shadow: 0 8px 16px rgba(0,0,0,0.1);
 }
 
+#oferta-content {
+    opacity: 1;
+    transition: opacity 0.4s ease-in-out;
+  }
+  
+  #oferta-content.fade-out {
+    opacity: 0;
+  }
+  
+  #oferta-content.fade-in {
+    opacity: 1;
+  }
+
+  .fade-in {
+    opacity: 1;
+    transition: opacity 0.4s ease-in;
+  }
+  
+  .fade-out {
+    opacity: 0;
+    transition: opacity 0.4s ease-out;
+  }

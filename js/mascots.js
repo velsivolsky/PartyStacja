@@ -160,30 +160,35 @@ function loadMaskotka(id) {
   const tiles = document.querySelectorAll('[data-show]');
   
   function showOferta(id) {
-    ofertaContent.innerHTML = oferta[id];
-    tiles.forEach(tile => {
-      tile.classList.remove('active');
-      tile.querySelector('.emoji')?.classList.remove('swaying');
-    });
+    ofertaContent.classList.add('fade-out');
   
-    const activeTile = document.querySelector(`[data-show="${id}"]`);
-    activeTile.classList.add('active');
-  
-    const emoji = activeTile.querySelector('.emoji');
-  
-    // Początkowa animacja
-    emoji.classList.remove('swaying');
-    void emoji.offsetWidth; // trigger reflow
-  
-    // Po wejściu – stałe bujanie
     setTimeout(() => {
-      emoji.classList.add('swaying');
-    }, 300); // czas trwania sway-enter
-    
+      ofertaContent.innerHTML = oferta[id];
   
-    if (id === "maskotki") {
-      initMaskotki();
-    }
+      tiles.forEach(tile => {
+        tile.classList.remove('active');
+        tile.querySelector('.emoji')?.classList.remove('swaying');
+      });
+  
+      const activeTile = document.querySelector(`[data-show="${id}"]`);
+      activeTile.classList.add('active');
+  
+      const emoji = activeTile.querySelector('.emoji');
+      emoji.classList.remove('swaying');
+      void emoji.offsetWidth; // force reflow
+      setTimeout(() => emoji.classList.add('swaying'), 300);
+  
+      if (id === "maskotki") {
+        initMaskotki();
+      }
+  
+      ofertaContent.classList.remove('fade-out');
+      ofertaContent.classList.add('fade-in');
+  
+      // Usuwamy fade-in po animacji, by nie blokować kolejnych
+      setTimeout(() => ofertaContent.classList.remove('fade-in'), 400);
+  
+    }, 400); // Czas trwania fade-out
   }
   
   // Podpinamy eventy raz, np. zaraz po deklaracji zmiennych
@@ -196,10 +201,68 @@ function loadMaskotka(id) {
   
   // Inicjalizacja
   showOferta("fotobudka");
-  buttons.forEach(btn =>
+  tiles.forEach(btn =>
     btn.addEventListener("click", () => showOferta(tiles.dataset.show))
   );
   
 
 
 
+  function showMaskotka(id) {
+    const container = document.getElementById('maskotkaDetail');
+  
+    container.classList.add('fade-out');
+  
+    setTimeout(() => {
+      const m = maskotki[id];
+      container.innerHTML = `
+        <div class="row align-items-center mb-5">
+          <div class="col-md-6 text-center">
+            <img src="${m.img}" alt="${m.alt}" class="img-fluid rounded shadow" style="max-height:400px;">
+          </div>
+          <div class="col-md-6">
+            <h3 class="fw-bold mb-3">${m.alt}</h3>
+            <p class="lead fw-bold">${m.text}</p>
+            ${m.desc}
+          </div>
+        </div>
+        <hr>
+        <div class="container text-center">
+          <h2 class="fw-bold mt-4">🎉 Występ maskotki zawiera:</h2>
+          <br>
+          <ul class="list-unstyled ps-3 fs-5">
+            <li>⏰ <strong>30–60 minut</strong> obecności na imprezie</li>
+            <li>🤝 Interakcje z gośćmi (przywitania, zdjęcia, taniec)</li>
+            <li>🎂 Możliwość personalizacji wejścia (np. wspólne wyjście do tortu)</li>
+            <li>📸 Opcjonalne połączenie z usługą fotobudki lub animacji</li>
+          </ul>
+        </div>
+      `;
+  
+      container.classList.remove('fade-out');
+      container.classList.add('fade-in');
+  
+      // Po animacji usuwamy klasę fade-in, żeby efekt można było powtórzyć
+      setTimeout(() => container.classList.remove('fade-in'), 400);
+  
+    }, 400);
+  }
+  
+  function initMaskotki() {
+    document.querySelectorAll('.maskotka-card').forEach(card => {
+      card.addEventListener('click', () => {
+        // Usuń active ze wszystkich kart
+        document.querySelectorAll('.maskotka-card').forEach(c => c.classList.remove('active'));
+  
+        // Dodaj active do klikniętej
+        card.classList.add('active');
+  
+        // Pokaż maskotkę z animacją
+        showMaskotka(card.dataset.id);
+      });
+    });
+  
+    // Domyślna maskotka
+    document.querySelector('.maskotka-card[data-id="mis"]').classList.add('active');
+    showMaskotka('mis');
+  }

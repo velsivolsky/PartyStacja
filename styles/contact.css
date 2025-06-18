@@ -1,0 +1,85 @@
+.form{
+    max-width: 700px; 
+    background-color: #DDC78C;
+}
+
+.form-container {
+    max-width: 700px;
+    background-color: #DDC78C;
+    padding: 30px 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #3a2f1b;
+    margin: 40px auto;
+  }
+  
+  .form-container label {
+    font-weight: 600;
+  }
+  
+  .form-container input.form-control,
+  .form-container textarea.form-control {
+    border-radius: 8px;
+    border: 1.8px solid #bfa25a;
+    transition: border-color 0.3s ease;
+  }
+  
+  .form-container input.form-control:focus,
+  .form-container textarea.form-control:focus {
+    border-color: #7b6e28;
+    box-shadow: 0 0 8px #9f8f38aa;
+    outline: none;
+  }
+  
+  .form-check-input {
+    cursor: pointer;
+  }
+  
+  .form-check-label {
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  .form-check.d-flex input[type="text"] {
+    border-radius: 8px;
+    border: 1.8px solid #bfa25a;
+    padding: 5px 10px;
+    margin-left: 8px;
+    max-width: 300px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .form-check.d-flex input[type="text"]:focus {
+    border-color: #7b6e28;
+    box-shadow: 0 0 8px #9f8f38aa;
+    outline: none;
+  }
+  
+  button.btn-primary {
+    background: #91835c;
+    border: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-radius: 12px;
+    padding: 12px 0;
+    transition: background 0.3s ease;
+    box-shadow: 0 5px 15px rgba(191, 162, 90, 0.6);
+  }
+  
+  button.btn-primary:hover {
+    background: #635a3f;
+    box-shadow: 0 8px 20px rgba(191, 162, 90, 0.85);
+  }
+  
+  textarea.form-control {
+    resize: vertical;
+    min-height: 120px;
+  }
+  
+  @media (max-width: 768px) {
+    .form-container {
+      margin: 20px 15px;
+      padding: 20px 15px;
+    }
+  }
