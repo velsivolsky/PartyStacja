@@ -1,4 +1,4 @@
-fetch('/navbar.html')
+fetch('navbar.html')
   .then(response => response.text())
   .then(data => {
     document.getElementById('nav-import').innerHTML = data;
@@ -8,7 +8,7 @@ fetch('/navbar.html')
     navbar.classList.add('sticky-top');
   });
 
-  fetch('/footer.html')
+  fetch('footer.html')
   .then(response => response.text())
   .then(data => {
     document.getElementById('footer-import').innerHTML = data;
