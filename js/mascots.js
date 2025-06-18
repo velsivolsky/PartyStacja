@@ -17,25 +17,25 @@ const oferta = {
       <div class="row g-4 justify-content-center">
         <div class="col-6 col-md-3">
           <div class="maskotka-card" data-id="mis" tabindex="0">
-            <img src="/resources/photos/mis.jpg" alt="Miś PartyStacji" class="img-fluid rounded-circle mb-2 shadow-sm">
+            <img src="resources/photos/mis.jpg" alt="Miś PartyStacji" class="img-fluid rounded-circle mb-2 shadow-sm">
             <h5 class="text-center">Miś PartyStacji</h5>
           </div>
         </div>
         <div class="col-6 col-md-3">
           <div class="maskotka-card" data-id="panda" tabindex="0">
-            <img src="/resources/photos/panda.jpg" alt="Panda Przytulanka" class="img-fluid rounded-circle mb-2 shadow-sm">
+            <img src="resources/photos/panda.jpg" alt="Panda Przytulanka" class="img-fluid rounded-circle mb-2 shadow-sm">
             <h5 class="text-center">Panda Przytulanka</h5>
           </div>
         </div>
         <div class="col-6 col-md-3">
           <div class="maskotka-card" data-id="stich" tabindex="0">
-            <img src="/resources/photos/stitch.jpg" alt="Stich" class="img-fluid rounded-circle mb-2 shadow-sm">
+            <img src="resources/photos/stitch.jpg" alt="Stich" class="img-fluid rounded-circle mb-2 shadow-sm">
             <h5 class="text-center">Stich</h5>
           </div>
         </div>
         <div class="col-6 col-md-3">
           <div class="maskotka-card" data-id="angel" tabindex="0">
-            <img src="/resources/photos/angel.jpg" alt="Angel" class="img-fluid rounded-circle mb-2 shadow-sm">
+            <img src="resources/photos/angel.jpg" alt="Angel" class="img-fluid rounded-circle mb-2 shadow-sm">
             <h5 class="text-center">Angel</h5>
           </div>
         </div>
