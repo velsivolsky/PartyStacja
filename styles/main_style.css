@@ -4,9 +4,13 @@
     --brand-color: #91835c;
     --text-primary: #383438;
     --hover-color: #5a4e43;
-    --section-bg: #f1e7d9;
+    --section-bg: #CFB472;
+    --olsection-bg: #f1e7d9;
   }
-
+  
+  .span{
+    color: var(--brand-color);
+  }
   body{
     background-color: var(--section-bg);
     margin: 0;
@@ -89,7 +93,9 @@
     background-color: #f1e7d9 !important;
   }
 
-
+.hero-section {
+  background-color: #fdf8ef;
+}
 
 
 
@@ -107,7 +113,7 @@
         padding: 0;
         margin: 0;
         position: relative;
-        background-color: #f1e7d9; /* ten sam kolor co fill w path background-color: #f1e7d9; */
+        background-color: #CFB472; /* ten sam kolor co fill w path background-color: #f1e7d9; */
         
       }
 
@@ -138,3 +144,29 @@
   padding-right: 2rem !important;
 }
 
+.dlaczego-my-section {
+  background: var(--background);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card {
+  background: rgba(191, 153, 88, 0.1);
+  border: 1px solid rgba(190, 165, 106, 0.2);
+  border-radius: 1rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: transform 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-5px);
+}
+
+.icon {
+  font-size: 2.5rem;
+}
+
+.highlight {
+  color: var(--brand-color);
+}
