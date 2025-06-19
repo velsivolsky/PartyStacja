@@ -7,16 +7,41 @@
     --section-bg: #CFB472;
     --olsection-bg: #f1e7d9;
   }
+
+  @font-face {
+    font-family: 'Atma';
+    src: url('../resources/fonts/Atma/Atma-Regular.ttf') format('truetype'),
+         url('../resources/fonts/Atma/Atma-Light.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'AtmaBold';
+         src: url('../resources/fonts/Atma/Atma-Medium.ttf') format('truetype');
+  }
   
+p, h2, h1, a, span, btn{
+  font-family: 'Atma', sans-serif;
+}
+
+.label{
+    font-family: 'AtmaBold', sans-serif;
+    
+    
+}
+
   .span{
     color: var(--brand-color);
   }
   body{
     background-color: var(--section-bg);
-    
     padding: 0;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
+    font-family: 'Atma', sans-serif;
+
+
 
   }
 
