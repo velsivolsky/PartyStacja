@@ -58,105 +58,111 @@
 <!--SECTION 1-->
       <section class="container my-5 normal-section">
         <h2 class="text-center">Wypełnij formularz, a my zajmiemy się resztą — szybko, sprawnie i bez stresu.</h2>
-        <form class="form-container">
-            <div class="mb-3">
-              <label class="form-label">Imię i nazwisko:</label>
-              <input type="text" class="form-control" required>
-            </div>
-          
-            <div class="mb-3">
-              <label class="form-label">E-mail kontaktowy:</label>
-              <input type="email" class="form-control" required>
-            </div>
-          
-            <div class="mb-3">
-              <label class="form-label">Numer telefonu:</label>
-              <input type="tel" class="form-control" required>
-            </div>
-          
-            <div class="mb-3">
-              <label class="form-label">Data wydarzenia:</label>
-              <input type="date" class="form-control">
-            </div>
+        <form method="POST" action="send_mail.php" class="form-container">
+        <div class="mb-3">
+          <label for="name" class="form-label">Imię i nazwisko:</label>
+          <input type="text" id="name" name="name" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">E-mail kontaktowy:</label>
+          <input type="email" id="email" name="email" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="phone" class="form-label">Numer telefonu:</label>
+          <input type="tel" id="phone" name="phone" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="date" class="form-label">Data wydarzenia:</label>
+          <input type="date" id="date" name="date" class="form-control">
+        </div>
           
             <div class="mb-3">
               <label class="form-label">Rodzaj imprezy:</label>
+
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="Urodziny" id="urodziny">
+                <input class="form-check-input event-checkbox" type="checkbox" name="event_type" value="Urodziny" id="urodziny">
                 <label class="form-check-label" for="urodziny">Urodziny</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="Roczek" id="roczek">
+                <input class="form-check-input event-checkbox" type="checkbox" name="event_type" value="Roczek" id="roczek">
                 <label class="form-check-label" for="roczek">Roczek</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="Komunia" id="komunia">
+                <input class="form-check-input event-checkbox" type="checkbox" name="event_type" value="Komunia" id="komunia">
                 <label class="form-check-label" for="komunia">Komunia</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="Chrzest" id="chrzest">
+                <input class="form-check-input event-checkbox" type="checkbox" name="event_type" value="Chrzest" id="chrzest">
                 <label class="form-check-label" for="chrzest">Chrzest</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="Wesele" id="wesele">
+                <input class="form-check-input event-checkbox" type="checkbox" name="event_type" value="Wesele" id="wesele">
                 <label class="form-check-label" for="wesele">Wesele</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="Event firmowy" id="event">
+                <input class="form-check-input event-checkbox" type="checkbox" name="event_type" value="Event firmowy" id="event">
                 <label class="form-check-label" for="event">Event firmowy / piknik</label>
               </div>
+
+              <!-- Inne -->
               <div class="form-check d-flex align-items-center gap-2">
-                <input class="form-check-input" type="checkbox" id="inneImpreza">
+                <input class="form-check-input" type="checkbox" name="event_type" value="Inne" id="inneImpreza">
                 <label class="form-check-label" for="inneImpreza">Inne:</label>
-                <input type="text" class="form-control form-control-sm" style="max-width: 300px;">
+                <input type="text" name="event_custom" class="form-control form-control-sm" style="max-width: 300px;">
               </div>
             </div>
           
             <div class="mb-3">
               <label class="form-label">Lokalizacja wydarzenia (miasto, miejscowość):</label>
-              <input type="text" class="form-control">
+              <input type="text" name="location" class="form-control">
             </div>
           
             <div class="mb-3">
               <label class="form-label">Wybierz interesujące Cię atrakcje:</label>
+
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="foto1">
+                <input class="form-check-input" type="checkbox" name="attractions[]" value="Fotobudka" id="foto1">
                 <label class="form-check-label" for="foto1">Fotobudka</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="foto360">
+                <input class="form-check-input" type="checkbox" name="attractions[]" value="Fotobudka 360" id="foto360">
                 <label class="form-check-label" for="foto360">Fotobudka 360</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="maskotki">
+                <input class="form-check-input" type="checkbox" name="attractions[]" value="Maskotki" id="maskotki">
                 <label class="form-check-label" for="maskotki">Maskotki (Miś, Panda, Stitch, Angel)</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="dmuchance">
+                <input class="form-check-input" type="checkbox" name="attractions[]" value="Dmuchańce" id="dmuchance">
                 <label class="form-check-label" for="dmuchance">Dmuchańce</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="dekoracje">
+                <input class="form-check-input" type="checkbox" name="attractions[]" value="Dekoracje" id="dekoracje">
                 <label class="form-check-label" for="dekoracje">Dekoracje</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="gadżety">
+                <input class="form-check-input" type="checkbox" name="attractions[]" value="Gadżety" id="gadżety">
                 <label class="form-check-label" for="gadżety">Przebrania / Gadżety</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="animatorzy">
+                <input class="form-check-input" type="checkbox" name="attractions[]" value="Animatorzy" id="animatorzy">
                 <label class="form-check-label" for="animatorzy">Animatorzy</label>
               </div>
+
+              <!-- Dodatkowe "Inne" -->
               <div class="form-check d-flex align-items-center gap-2">
-                <input class="form-check-input" type="checkbox" id="inneAtrak">
+                <input class="form-check-input" type="checkbox" name="attractions[]" value="Inne" id="inneAtrak">
                 <label class="form-check-label" for="inneAtrak">Inne:</label>
-                <input type="text" class="form-control form-control-sm" style="max-width: 300px;">
+                <input type="text" name="attraction_custom" class="form-control form-control-sm" style="max-width: 300px;">
               </div>
             </div>
           
             <div class="mb-3">
               <label class="form-label">Dodatkowe informacje / pytania:</label>
-              <textarea class="form-control" rows="5"></textarea>
+              <textarea name="message" class="form-control" rows="5"></textarea>
             </div>
           
             <div class="mb-3">
@@ -168,7 +174,7 @@
                 </label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="ofertaPDF">
+                <input class="form-check-input" type="checkbox" name="ofertaPDF" id="ofertaPDF">
                 <label class="form-check-label" for="ofertaPDF">
                   Chcę otrzymać ofertę PDF na e-mail (opcjonalnie)
                 </label>
@@ -184,5 +190,33 @@
 
   <div id="footer-import"></div>
   <script src="js/import.js"></script>
+
+
+  <script>
+document.addEventListener('DOMContentLoaded', function () {
+  const eventCheckboxes = document.querySelectorAll('.event-checkbox');
+  const inneCheckbox = document.getElementById('inneImpreza');
+  const inneInput = inneCheckbox.nextElementSibling; // pole tekstowe obok "Inne"
+
+  eventCheckboxes.forEach(box => {
+    box.addEventListener('change', () => {
+      if (box.checked) {
+        eventCheckboxes.forEach(b => { if (b !== box) b.checked = false; });
+        inneCheckbox.checked = false;
+        inneInput.value = '';
+      }
+    });
+  });
+
+  inneCheckbox.addEventListener('change', () => {
+    if (inneCheckbox.checked) {
+      eventCheckboxes.forEach(b => b.checked = false);
+    } else {
+      inneInput.value = '';
+    }
+  });
+});
+
+</script>
 </body>
 </html>

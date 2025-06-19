@@ -1,0 +1,37 @@
+img.img-clickable {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  img.img-clickable:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  }
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-image: none; /* usuwa domyślne białe SVG */
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: black;
+  position: relative;
+}
+
+.carousel-control-prev-icon::before,
+.carousel-control-next-icon::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-top: 2.5px solid white;
+  border-left: 2.5px solid white;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.carousel-control-next-icon::before {
+  border-top: 2.5px solid white;
+  border-left: 2.5px solid white;
+  transform: translate(-50%, -50%) rotate(135deg);
+}
