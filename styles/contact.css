@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'Atma';
+  src: url('../resources/fonts/Atma/Atma-Regular.ttf') format('truetype'),
+       url('../resources/fonts/Atma/Atma-Light.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
 .form{
     max-width: 700px; 
     background-color: #DDC78C;
@@ -9,9 +17,10 @@
     padding: 30px 25px;
     border-radius: 15px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Atma', sans-serif;
     color: #3a2f1b;
     margin: 40px auto;
+    
   }
   
   .form-container label {
@@ -65,6 +74,7 @@
     padding: 12px 0;
     transition: background 0.3s ease;
     box-shadow: 0 5px 15px rgba(191, 162, 90, 0.6);
+    font-family: 'Atma', sans-serif;
   }
   
   button.btn-primary:hover {
