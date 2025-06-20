@@ -68,6 +68,16 @@ p, h2, h1, a, span, btn{
       opacity: 0;
     }
   }
+
+.responsive-logo {
+  max-width: 400px;
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
   
 #nav-import {
     margin: 0 !important;
