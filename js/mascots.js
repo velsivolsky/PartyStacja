@@ -9,6 +9,24 @@ const oferta = {
         <li>🎭 Przebrania i rekwizyty do wyboru</li>
         <li>🎉 Idealna pamiątka z każdej imprezy</li>
       </ul>
+<div id="fotobudkaCarousel" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner h-100">
+    <div class="carousel-item active h-100">
+      <img src="resources/photos/fotobudka_1.jpg" class="d-block w-100" alt="fotobudka_1">
+    </div>
+    <div class="carousel-item h-100">
+      <img src="resources/photos/fotobudka_2.jpg" class="d-block w-100" alt="fotobudka_2">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#fotobudkaCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Poprzednie</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#fotobudkaCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Następne</span>
+  </button>
+</div>
     `,
     maskotki: `
       <h3 class="fw-bold mb-3 text-center">🐻 Maskotki</h3>
@@ -218,10 +236,10 @@ function loadMaskotka(id) {
       container.innerHTML = `
         <div class="row align-items-center mb-5">
           <div class="col-md-6 text-center">
-            <img src="${m.img}" alt="${m.alt}" class="img-fluid rounded shadow" style="max-height:400px;">
+            <img src="${m.img}" alt="${m.alt}" class="img-fluid rounded shadow mb-2" style="max-height:400px;">
           </div>
           <div class="col-md-6">
-            <h3 class="fw-bold mb-3">${m.alt}</h3>
+            <h3 class="fw-bold mb-3 fs-1">${m.alt}</h3>
             <p class="lead fw-bold">${m.text}</p>
             ${m.desc}
           </div>

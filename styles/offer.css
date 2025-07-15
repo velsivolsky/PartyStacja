@@ -99,3 +99,13 @@
     opacity: 0;
     transition: opacity 0.4s ease-out;
   }
+
+
+    #fotobudkaCarousel {
+    height: 400px; /* wysokość pierwszego obrazka – dopasuj do swojego */
+  }
+#fotobudkaCarousel img {
+  height: 400px; /* wysokość z pierwszego */
+  object-fit: contain; /* obrazek się skaluję, ale nie wytnie */
+  width: 100%;
+}
