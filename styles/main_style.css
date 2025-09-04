@@ -1,12 +1,53 @@
 :root {
-    --background: #fdf8ef;
-    --logo-color: #DDC78C;
-    --brand-color: #91835c;
-    --text-primary: #383438;
-    --hover-color: #5a4e43;
-    --section-bg: #CFB472;
-    --olsection-bg: #f1e7d9;
+    --background: #000000;
+    --logo-color: #D4AF37;
+    --brand-color: #CFB53B;
+    --text-primary: #f5f5f5;
+    --hover-color: #FFA500;
+    --section-bg: #1a1a1a;
+    --olsection-bg: #2d2d2d;
+    --gold-accent: #B8860B;
+    --dark-gold: #996515;
+    --card-bg: #2a2a2a;
   }
+
+/* Zapobiega migotaniu podczas przejść */
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+/* Styl dla loadera */
+#page-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Upewnij się, że Barba container ma odpowiednie style */
+[data-barba="container"] {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Styl dla cząsteczek - optymalizacja */
+.gold-particle {
+    will-change: transform, opacity;
+}
+
+
+
+
+
+
+
 
   @font-face {
     font-family: 'Atma';
@@ -40,7 +81,7 @@ p, h2, h1, a, span, btn{
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
     font-family: 'Atma', sans-serif;
-
+    color: var(--text-primary);
 
 
   }
@@ -49,23 +90,37 @@ p, h2, h1, a, span, btn{
     opacity: 0;
     /*position: relative; */
     z-index: 0; /* niech nie wchodzi przed sticky */
-    animation: fadeIn 0.5s forwards;
+    animation: fadeIn 2.5s ease-out forwards;
   }
   
   @keyframes fadeIn {
-    to {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    20% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    100% {
       opacity: 1;
+      transform: translateY(0);
     }
   }
   
   body.fade-out {
     opacity: 1;
-    animation: fadeOut 0.5s forwards;
+    animation: fadeOut 0.8s ease-in forwards;
   }
   
   @keyframes fadeOut {
-    to {
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
       opacity: 0;
+      transform: translateY(-10px);
     }
   }
 
@@ -88,7 +143,7 @@ p, h2, h1, a, span, btn{
     position: sticky !important;
     top: 0 !important;
     z-index: 2000 !important;
-    background-color: #fff;
+    background-color: #1a1a1a !important;
   }
   .navbar {
     position: relative;
@@ -99,8 +154,9 @@ p, h2, h1, a, span, btn{
     z-index: 1030; /* Wyżej niż wszystko inne */
     
     background-color: var(--background);
-    box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+    box-shadow: 0 2px 6px rgba(212, 175, 55, 0.3);
     padding: 1rem 2rem;
+    border-bottom: 1px solid var(--gold-accent);
   }
   
   .navbar-brand {
@@ -110,11 +166,13 @@ p, h2, h1, a, span, btn{
     
     text-transform: uppercase;
     transition: color 0.3s ease;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
   }
   
   .navbar-brand:hover {
     color: var(--hover-color);
     text-decoration: none;
+    text-shadow: 0 0 15px rgba(255, 165, 0, 0.7);
   }
   
   .navbar-nav .nav-link {
@@ -125,11 +183,24 @@ p, h2, h1, a, span, btn{
     transition: color 0.25s ease;
   }
   
-  .navbar-nav .nav-link.active,
+  .nav-link.active
+  {
+    background-color: var(--brand-color) !important;
+    border-color: black;
+    border: 1px solid black;
+    color: #000000 !important;
+  }
+
   .navbar-nav .nav-link:hover {
-    color: var(--hover-color);
-    font-weight: 600;
+    color: var(--brand-color);
     text-decoration: none;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+  }
+ 
+
+  .nav-link.active:hover {
+    color: #000000 !important;
+    text-shadow: none;
   }
   
   .navbar-toggler {
@@ -150,14 +221,16 @@ p, h2, h1, a, span, btn{
 
   .normal-section{
     background-color: var(--section-bg);
+    color: var(--text-primary);
   }
 
   .normal-section-2{
-    background-color: #f1e7d9 !important;
+    background-color: var(--background);
+    color: var(--text-primary);
   }
 
 .hero-section {
-  background-color: #fdf8ef;
+  background: var(--background);
   
     padding-top: 100px; /* albo 5rem */
   
@@ -170,7 +243,7 @@ p, h2, h1, a, span, btn{
     padding: 0;
     margin: 0;
     position: relative;
-    background-color: #fdf8ef; /* ten sam kolor co fill w path background-color: #f1e7d9; */
+    background-color: var(--background); /* głęboka szarość */
     
   }
 
@@ -179,7 +252,7 @@ p, h2, h1, a, span, btn{
         padding: 0;
         margin: 0;
         position: relative;
-        background-color: #CFB472; /* ten sam kolor co fill w path background-color: #f1e7d9; */
+        background-color: var(--section-bg); /* głęboka czerń */
         
       }
 
@@ -201,7 +274,7 @@ p, h2, h1, a, span, btn{
   right: 50%;
   margin-left: -50vw;     /* wyciąga na pełną szerokość */
   margin-right: -50vw;
-  background-color: #fdf8ef;
+  background-color: var(--background); /* głęboka szarość */
   /*padding: 2rem 0;*/
 }
 
@@ -235,6 +308,29 @@ p, h2, h1, a, span, btn{
 
 .highlight {
   color: var(--brand-color);
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+}
+
+.dlaczego-my-section {
+  background: var(--background);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card {
+  background: rgba(42, 42, 42, 0.8);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 1rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(212, 175, 55, 0.1);
+}
+
+.glass-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--brand-color);
+  box-shadow: 0 8px 30px rgba(255, 215, 0, 0.2);
 }
 
 
@@ -248,4 +344,80 @@ p, h2, h1, a, span, btn{
 
 .social-icon:hover {
   transform: scale(1.35);
+}
+
+/* ===== BARBA.JS STYLES - ZAPOBIEGANIE MIGANIU ===== */
+
+/* Kontener Barba - optymalizacja dla przejść */
+[data-barba="container"] {
+    opacity: 1;
+    transform: translateY(0);
+    min-height: 100vh;
+    will-change: opacity, transform; /* Optymalizacja renderowania */
+}
+
+/* Overlay dla przejść */
+.barba-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(ellipse at center, 
+        rgba(255, 215, 0, 0.4) 0%,
+        rgba(212, 175, 55, 0.3) 30%,
+        rgba(184, 134, 11, 0.2) 50%,
+        rgba(0, 0, 0, 0.85) 80%,
+        rgba(0, 0, 0, 0.95) 100%);
+    z-index: 9998;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+}
+
+/* Dym dla przejść */
+.barba-smoke {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+/* Loader - stylem opisany wcześniej ale wzmocniony */
+#page-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+    display: none; /* Domyślnie ukryty */
+    justify-content: center;
+    align-items: center;
+    z-index: 10000; /* Wyższy niż overlay */
+    color: var(--brand-color);
+    font-size: 1.5rem;
+    font-family: 'Atma', cursive;
+}
+
+/* Animacja loadera */
+#page-loader::before {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border: 3px solid transparent;
+    border-top: 3px solid var(--brand-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

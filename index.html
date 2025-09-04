@@ -6,8 +6,10 @@
     <title>PartyStacja</title>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="styles/main_style.css" />
+    <link rel="stylesheet" href="styles/effects.css" />
     <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/@barba/core"></script>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
         <!--SEO META TAGS-->
@@ -18,15 +20,22 @@
     <meta name="robots" content="index, follow">
 
     <meta property="og:description" content="Wypożycz fotobudkę 360, zamów maskotki i udekoruj swoją imprezę z PartyStacją!">
-    <meta property="og:image" content="https://www.partystacja.pl/resources/logo.png">
+    <meta property="og:image" content="https://www.partystacja.pl/resources/logo.jpg">
     <meta property="og:url" content="https://www.partystacja.pl">
     <meta property="og:type" content="website">
     
   </head>
-  <body class="fade-in">
-    <div class="sticky-top" id="nav-import"></div>
+  <body>
+    <!-- Loader widoczny podczas przejść -->
+    <div id="page-loader" style="display: none;">
+        <div>Ładowanie...</div>
+    </div>
+    
+    <div data-barba="wrapper">
+      <div class="sticky-top" id="nav-import"></div>
 
-    <!--HERO SECTION-->
+      <main data-barba="container" data-barba-namespace="home">
+        <!--HERO SECTION-->
 
     <section class="hero-section py-5">
       <div class="container">
@@ -34,7 +43,7 @@
           <!-- Lewa kolumna: logo -->
           <div class="col-12 col-md-4 text-center text-md-start mb-4 mb-md-0">
            <img
-  src="resources/logo.png"
+  src="resources/logo.jpg"
   alt="PartyStacja Logo"
   class="img-fluid mx-auto d-block"
 />
@@ -44,19 +53,19 @@
           <div class="col-12 col-md-8 text-center text-md-start">
             <h1
               class="display-4 fw-bold text-center d-none d-md-block"
-              style="color: #383438"
+              style="color: #f5ed96"
             >
-              Witamy w <span class="hero-span">PartyStacji</span>
+              Witamy w <span class="hero-span">PartyTime</span>
             </h1>
             <p
               class="lead mb-4 text-center d-none d-md-block"
-              style="color: #383438"
+              style="color: #f5ed96"
             >
               Twoja stacja wyjątkowych chwil
             </p>
             <div
               class="d-flex flex-wrap justify-content-center"
-              style="color: #383438; font-size: 1.2rem; gap: 0.8rem"
+              style="color: #f5ed96; font-size: 1.2rem; gap: 0.8rem"
             >
               <span>📸 Fotobudki</span>
               <span>🎈 Dekoracje</span>
@@ -67,7 +76,7 @@
               <a
                 href="kontakt.html"
                 class="btn btn-warning btn-lg"
-                style="background-color: #ddc78c; border: none; color: #4a454a"
+                style="background-color: #CFB53B; border: none; color: #000000"
               >
                 Skontaktuj się z nami
               </a>
@@ -85,7 +94,7 @@
         style="display: block"
       >
         <path
-          fill="#CFB472"
+          fill="#1a1a1a"
           d="M0,50 C360,150 1080,-50 1440,50 L1440,100 L0,100 Z"
         ></path>
       </svg>
@@ -110,7 +119,7 @@
         <!-- Photo -->
         <div class="col-md-6">
           <img
-            src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"
+            src="resources/photos/real/5.JPG"
             alt="Rodzina i dzieci podczas zabawy"
             class="img-fluid rounded shadow-sm"
           />
@@ -126,7 +135,7 @@
         style="display: block"
       >
         <path
-          fill="#fdf8ef"
+          fill="#000000"
           d="M0,50 C360,150 1080,-50 1440,50 L1440,100 L0,100 Z"
           transform="scale(-1,1) translate(-1440,0)"
         ></path>
@@ -154,7 +163,7 @@
           <!-- Photo -->
           <div class="col-md-6 order-2 order-md-1">
             <img
-              src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"
+              src="/resources/photos/real/23.JPG"
               alt="Rodzina i dzieci podczas zabawy"
               class="img-fluid rounded shadow-sm"
             />
@@ -171,7 +180,7 @@
         style="display: block"
       >
         <path
-          fill="#CFB472"
+          fill="#1a1a1a"
           d="M0,50 C360,150 1080,-50 1440,50 L1440,100 L0,100 Z"
         ></path>
       </svg>
@@ -197,7 +206,7 @@
         <!-- Photo -->
         <div class="col-md-6">
           <img
-            src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"
+            src="resources/photos/real/18.JPG"
             alt="Rodzina i dzieci podczas zabawy"
             class="img-fluid rounded shadow-sm"
           />
@@ -214,7 +223,7 @@
         style="display: block"
       >
         <path
-          fill="#fdf8ef"
+          fill="#000000"
           d="M0,50 C360,150 1080,-50 1440,50 L1440,100 L0,100 Z"
           transform="scale(-1,1) translate(-1440,0)"
         ></path>
@@ -276,7 +285,7 @@
         style="display: block"
       >
         <path
-          fill="#CFB472"
+          fill="#1a1a1a"
           d="M0,50 C360,150 1080,-50 1440,50 L1440,100 L0,100 Z"
         ></path>
       </svg>
@@ -301,7 +310,7 @@
           </a>
         </div>
       </section>
-    </div>
+    </div> 
 
     <!-- MAP -->
     <div class="col-md-6">
@@ -344,10 +353,14 @@
 </div>
   </div>
 </section>
+      </main>
 
-    <!--Footer-->
-    <div id="footer-import"></div>
+      <!--Footer-->
+      <div id="footer-import"></div>
+    </div>
+    
     <script src="js/active_link.js" defer></script>
     <script src="js/import.js" defer></script>
+    <script src="js/barba-setup.js" defer></script>
   </body>
 </html>

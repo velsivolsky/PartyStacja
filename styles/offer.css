@@ -1,17 +1,20 @@
 
 .maskotka-card {
   cursor: pointer;
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition: all 0.3s ease;
   padding: 15px;
-  background: #DDC78C;
+  background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+  border: 1px solid rgba(212, 175, 55, 0.3);
   border-radius: 15px;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   min-height: 200px;
+  color: #f5f5f5;
 }
 .maskotka-card:hover,
 .maskotka-card:focus {
   transform: translateY(-10px) scale(1.05);
-  box-shadow: 0 6px 20px rgb(0 0 0 / 0.2);
+  box-shadow: 0 8px 40px rgba(255, 215, 0, 0.3);
+  border-color: #FFD700;
   outline: none;
 }
 .maskotka-card img {
@@ -26,18 +29,19 @@
 .oferta-tile {
     width: 150px;
     height: 150px;
-    background-color: #f6d695;
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+    border: 2px solid rgba(212, 175, 55, 0.3);
     border-radius: 1rem;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     font-weight: 600;
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
+    transition: all 0.3s ease;
     user-select: none;
-    border: 2px solid transparent;
+    color: #f5f5f5;
 }
 
 .oferta-tile .emoji {
@@ -66,6 +70,13 @@
     animation: sway 1.5s ease-in-out infinite;
   }
 
+.oferta-tile.active {
+    border-color: #FFD700;
+    background: linear-gradient(135deg, #FFD700 0%, #B8860B 100%);
+    color: #000;
+    box-shadow: 0 8px 30px rgba(255, 215, 0, 0.4);
+}
+
 
 .oferta-tile .label {
     font-size: 1rem;
@@ -74,7 +85,10 @@
 
 .oferta-tile:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.2);
+    border-color: #FFD700;
+    background: linear-gradient(135deg, #FFD700 0%, #B8860B 100%);
+    color: #000;
 }
 
 #oferta-content {
