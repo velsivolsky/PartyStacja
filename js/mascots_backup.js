@@ -68,7 +68,7 @@ const oferta = {
       <ul class="list-unstyled ps-3 fs-5 text-center">
         <li><i class="fas fa-birthday-cake" style="color: #CFB53B;"></i> Balony z helem i girlandy tematyczne</li>
         <li><i class="fas fa-camera" style="color: #CFB53B;"></i> Ścianki zdjęciowe – glamour lub dziecięce</li>
-        <li><i class="far fa-circle" style="color: #CFB53B;"></i> Bańki mydlane, piana, dym, efekty świetlne</li>
+        <li><i class="fas fa-sparkles" style="color: #CFB53B;"></i> Bańki mydlane, piana, dym, efekty świetlne</li>
         <li><i class="fas fa-rainbow" style="color: #CFB53B;"></i> Kolorystyka dopasowana do motywu imprezy</li>
       </ul>
     `
@@ -134,23 +134,6 @@ const maskotki = {
 function loadMaskotka(id) {
   const container = document.getElementById('maskotkaDetail');
   const m = maskotki[id];
-  
-  // If container already has content, fade it out first
-  if (container.innerHTML.trim() !== '') {
-    container.classList.add('fade-out');
-    setTimeout(() => {
-      updateMaskotkaContent(container, m);
-    }, 400);
-  } else {
-    // For first time display, also use fade-in animation
-    container.classList.add('fade-out'); // Start invisible
-    setTimeout(() => {
-      updateMaskotkaContent(container, m);
-    }, 100); // Slightly longer delay for first display
-  }
-}
-
-function updateMaskotkaContent(container, m) {
   container.innerHTML = `
     <div class="row align-items-center mb-5">
       <div class="col-md-6 text-center">
@@ -162,25 +145,13 @@ function updateMaskotkaContent(container, m) {
         ${m.desc}
       </div>
     </div>
-    <hr>`;
-  
-  // Reset any inline styles and classes
-  container.style.opacity = '';
-  container.classList.remove('fade-out');
-  container.classList.add('fade-in');
-  
-  // Smooth scroll to the details
-  setTimeout(() => {
-    container.scrollIntoView({ 
-      behavior: 'smooth', 
-      block: 'start' 
-    });
-  }, 100);
-  
-  // Remove fade-in class after animation completes
-  setTimeout(() => {
-    container.classList.remove('fade-in');
-  }, 400);
+      <hr>
+    <button class="btn btn-warning shadow rounded-pill px-4 py-2 fw-bold" 
+            onclick="showOfferSection('maskotki')" style="background: linear-gradient(135deg, #CFB53B, #B8860B); border: none;">
+      <i class="fas fa-arrow-left"></i>
+    <br>
+        Powrót do maskotki
+    </button>`;
 }
 
 function showMaskotka(event) {
@@ -202,48 +173,19 @@ function initMaskotki() {
 
   function showOfferSection(section) {
     const ofertaContent = document.getElementById('oferta-content');
-    
-    // Clear maskotka details with fade-out when switching sections
-    const maskotkaDetail = document.getElementById('maskotkaDetail');
-    if (maskotkaDetail && maskotkaDetail.innerHTML.trim() !== '') {
-      maskotkaDetail.classList.add('fade-out');
-      setTimeout(() => {
-        maskotkaDetail.innerHTML = '';
-        maskotkaDetail.classList.remove('fade-out');
-      }, 400);
-    }
-    
     ofertaContent.classList.add('fade-out');
     setTimeout(() => {
       ofertaContent.innerHTML = oferta[section];
-      ofertaContent.classList.remove('fade-out');
-      ofertaContent.classList.add('fade-in');
-      
       if (section === 'maskotki') {
         setTimeout(() => initMaskotki(), 100);
       }
-      
-      // Remove fade-in class after animation completes
-      setTimeout(() => {
-        ofertaContent.classList.remove('fade-in');
-      }, 400);
-    }, 400);
-  }
-
-  // Initialize offer tiles
-  function initOfferTiles() {
-    document.querySelectorAll('.oferta-tile').forEach(tile => {
-      tile.addEventListener('click', function() {
-        const section = this.dataset.show;
-        showOfferSection(section);
-      });
-    });
+      ofertaContent.classList.remove('fade-out');
+    }, 250);
   }
 
   // Initialize when page loads
   document.addEventListener('DOMContentLoaded', function() {
     if (document.getElementById('oferta-content')) {
-      initOfferTiles();
       initMaskotki();
     }
   });
