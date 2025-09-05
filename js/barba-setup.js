@@ -39,9 +39,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     data.next.container.style.opacity = '0';
                     data.next.container.style.transform = 'translateY(-20px)';
                     
-                    // Poczekaj przed fade-in
+                    // Poczekaj przed fade-in - krótszy okres
                     setTimeout(() => {
-                        data.next.container.style.transition = 'opacity 1.2s ease-in-out, transform 1.2s ease-in-out';
+                        data.next.container.style.transition = 'opacity 0.8s ease-in-out, transform 0.8s ease-in-out';
                         data.next.container.style.opacity = '1';
                         data.next.container.style.transform = 'translateY(0)';
                         
@@ -60,8 +60,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             
                             console.log('Enter transition completed');
                             resolve();
-                        }, 1200);
-                    }, 800);
+                        }, 800);
+                    }, 300);
                 });
             }
         }],
@@ -173,46 +173,53 @@ function createGlobalParticles() {
         const particle = document.createElement('div');
         particle.className = 'gold-particle';
         
-        const size = Math.random() * 4 + 2;
+        // ISKIERKI zamiast kulek - różne rozmiary i kształty
+        const width = Math.random() * 6 + 2; // 2-8px szerokość
+        const height = Math.random() * 3 + 1; // 1-4px wysokość
         const shades = ['#FFD700', '#FFA500', '#DAA520', '#B8860B', '#CD853F'];
         const color = shades[Math.floor(Math.random() * shades.length)];
+        
+        // Losowy kąt obrotu dla iskierek
+        const rotation = Math.random() * 360;
         
         // Cząsteczki pojawiają się na dole hero section
         particle.style.cssText = `
             position: absolute;
-            width: ${size}px;
-            height: ${size}px;
-            background: ${color};
-            border-radius: 50%;
-            box-shadow: 0 0 ${size * 2}px ${color};
+            width: ${width}px;
+            height: ${height}px;
+            background: linear-gradient(45deg, ${color}, ${color}AA);
+            border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+            box-shadow: 0 0 ${width * 2}px ${color}66, 0 0 ${width * 4}px ${color}33;
             left: ${Math.random() * 100}%;
             top: ${heroHeight}px;
             pointer-events: none;
+            transform: rotate(${rotation}deg);
         `;
 
         container.appendChild(particle);
 
-        // Animacja cząsteczki - od dołu hero section do góry
+        // Animacja iskierek - od dołu hero section do góry z obrotem
         const duration = Math.random() * 8000 + 6000;
         const drift = (Math.random() - 0.5) * 200;
+        const spin = (Math.random() - 0.5) * 720; // Obracanie się
 
         particle.animate([
             {
-                transform: `translateY(0px) translateX(0px)`,
+                transform: `translateY(0px) translateX(0px) rotate(${rotation}deg)`,
                 opacity: 0
             },
             {
-                transform: `translateY(-${heroHeight * 0.2}px) translateX(${drift/4}px)`,
-                opacity: 0.6,
+                transform: `translateY(-${heroHeight * 0.2}px) translateX(${drift/4}px) rotate(${rotation + spin/3}deg)`,
+                opacity: 0.8,
                 offset: 0.1
             },
             {
-                transform: `translateY(-${heroHeight + 100}px) translateX(${drift}px)`,
+                transform: `translateY(-${heroHeight + 100}px) translateX(${drift}px) rotate(${rotation + spin}deg)`,
                 opacity: 0
             }
         ], {
             duration: duration,
-            easing: 'linear'
+            easing: 'ease-out'
         });
 
         // Usuń cząsteczkę po animacji
