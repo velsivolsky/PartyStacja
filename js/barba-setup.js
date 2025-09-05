@@ -33,54 +33,58 @@ document.addEventListener('DOMContentLoaded', function() {
             leave(data) {
                 console.log('Leave transition started for:', data.current.url);
                 return new Promise(resolve => {
-                    // Pokaż loader
-                    const loader = document.getElementById('page-loader');
-                    if (loader) loader.style.display = 'flex';
-                    
-                    // Stwórz efekty wizualne przejścia
+                    // Stwórz mgłę NATYCHMIAST - bez opóźnienia
                     const { overlay, smokeContainer } = createTransitionEffect();
                     
-                    // Animacja wyjścia - płynne zanikanie
-                    data.current.container.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-                    data.current.container.style.opacity = '0';
-                    data.current.container.style.transform = 'translateY(20px)';
-                    
+                    // Ukryj starą zawartość pod mgłą (po krótkim czasie)
                     setTimeout(() => {
-                        console.log('Leave transition completed');
-                        resolve();
-                    }, 600);
+                        data.current.container.style.transition = 'opacity 0.3s ease-out';
+                        data.current.container.style.opacity = '0';
+                        
+                        // Rozwiąż szybko żeby nowa strona mogła się załadować
+                        setTimeout(() => {
+                            console.log('Leave transition completed - content hidden under fog');
+                            resolve();
+                        }, 300);
+                    }, 400); // Poczekaj 400ms żeby mgła się ustabilizowała
                 });
             },
             
             enter(data) {
                 console.log('Enter transition started for:', data.next.url);
                 return new Promise(resolve => {
-                    // Poczekaj chwilę przed pokazaniem nowej zawartości
+                    // Nowa zawartość ładuje się pod mgłą (niewidocznie)
                     setTimeout(() => {
-                        // Włącz transition dla nowej zawartości
-                        data.next.container.style.transition = 'opacity 0.8s ease-in-out, transform 0.8s ease-in-out';
+                        data.next.container.style.transition = 'opacity 0.5s ease-in-out';
+                        data.next.container.style.opacity = '1';
+                        data.next.container.style.transform = 'translateY(0)';
                         
-                        // Animacja wejścia - płynne pojawianie się
-                        requestAnimationFrame(() => {
-                            data.next.container.style.opacity = '1';
-                            data.next.container.style.transform = 'translateY(0)';
-                        });
+                        console.log('New content loaded under fog');
                         
-                        // Ukryj loader po zakończeniu animacji
+                        // Ukryj loader
+                        const loader = document.getElementById('page-loader');
+                        if (loader) loader.style.display = 'none';
+                        
+                        // WAŻNE: Mgła znika dopiero po 1.5s całkowitego czasu
                         setTimeout(() => {
-                            const loader = document.getElementById('page-loader');
-                            if (loader) loader.style.display = 'none';
-                            
-                            // Usuń efekty przejścia
                             const overlay = document.querySelector('.barba-overlay');
                             const smokeContainer = document.querySelector('.barba-smoke');
-                            if (overlay) overlay.remove();
-                            if (smokeContainer) smokeContainer.remove();
                             
-                            console.log('Enter transition completed');
+                            if (overlay) {
+                                overlay.style.transition = 'opacity 0.5s ease-out';
+                                overlay.style.opacity = '0';
+                                setTimeout(() => overlay.remove(), 500);
+                            }
+                            if (smokeContainer) {
+                                smokeContainer.style.transition = 'opacity 0.5s ease-out';
+                                smokeContainer.style.opacity = '0';
+                                setTimeout(() => smokeContainer.remove(), 500);
+                            }
+                            
+                            console.log('Fog cleared - transition completed');
                             resolve();
-                        }, 800);
-                    }, 300); // Krótkie opóźnienie
+                        }, 1500); // Mgła trwa 1.5s od początku przejścia
+                    }, 800); // Nowa zawartość gotowa pod mgłą
                 });
             },
             
@@ -293,9 +297,9 @@ function createGlobalParticles() {
     window.addEventListener('scroll', scrollHandler, { passive: true });
 }
 
-// ===== EFEKT PRZEJŚCIA =====
+// ===== EFEKT PRZEJŚCIA - ZOPTYMALIZOWANY =====
 function createTransitionEffect() {
-    // Overlay
+    // Overlay - NATYCHMIAST widoczny, bez transition
     const overlay = document.createElement('div');
     overlay.className = 'barba-overlay';
     overlay.style.cssText = `
@@ -305,24 +309,18 @@ function createTransitionEffect() {
         width: 100vw;
         height: 100vh;
         background: radial-gradient(ellipse at center, 
-            rgba(255, 215, 0, 0.4) 0%,
-            rgba(212, 175, 55, 0.3) 30%,
+            rgba(255, 215, 0, 0.3) 0%,
+            rgba(212, 175, 55, 0.25) 30%,
             rgba(184, 134, 11, 0.2) 50%,
-            rgba(0, 0, 0, 0.85) 80%,
+            rgba(0, 0, 0, 0.9) 80%,
             rgba(0, 0, 0, 0.95) 100%);
-        z-index: 9999;
+        z-index: 10000;
         pointer-events: none;
-        opacity: 0;
-        transition: opacity 0.4s ease-in-out;
+        opacity: 1;
     `;
     document.body.appendChild(overlay);
 
-    // Aktywuj overlay
-    requestAnimationFrame(() => {
-        overlay.style.opacity = '1';
-    });
-
-    // Cząsteczki mgły
+    // Cząsteczki mgły - gęstsze i trwalsze
     const smokeContainer = document.createElement('div');
     smokeContainer.className = 'barba-smoke';
     smokeContainer.style.cssText = `
@@ -332,15 +330,15 @@ function createTransitionEffect() {
         width: 100vw;
         height: 100vh;
         pointer-events: none;
-        z-index: 10000;
+        z-index: 10001;
         overflow: hidden;
     `;
     document.body.appendChild(smokeContainer);
 
-    // Stwórz cząsteczki mgły
-    const particleCount = window.innerWidth <= 768 ? 8 : 15;
+    // Więcej cząsteczek mgły dla lepszego maskowania
+    const particleCount = window.innerWidth <= 768 ? 10 : 20;
     for (let i = 0; i < particleCount; i++) {
-        setTimeout(() => createSmokeParticle(smokeContainer), i * 80);
+        setTimeout(() => createSmokeParticle(smokeContainer), i * 50);
     }
 
     return { overlay, smokeContainer };
@@ -348,30 +346,32 @@ function createTransitionEffect() {
 
 function createSmokeParticle(container) {
     const particle = document.createElement('div');
-    const size = Math.random() * 40 + 30;
+    const size = Math.random() * 50 + 40; // Większe cząsteczki
     
     particle.style.cssText = `
         position: absolute;
         width: ${size}px;
         height: ${size}px;
-        background: radial-gradient(circle, rgba(255, 215, 0, 0.4), rgba(255, 215, 0, 0.1));
+        background: radial-gradient(circle, rgba(255, 215, 0, 0.4), rgba(255, 215, 0, 0.08));
         border-radius: 50%;
         left: ${Math.random() * 100}%;
         top: ${Math.random() * 100}%;
+        will-change: transform, opacity;
     `;
     
     container.appendChild(particle);
 
+    // Długa animacja dla lepszego maskowania
     particle.animate([
         { transform: 'scale(0) rotate(0deg)', opacity: 0 },
-        { transform: 'scale(1) rotate(180deg)', opacity: 0.8, offset: 0.2 },
-        { transform: 'scale(1.5) rotate(270deg)', opacity: 0.8, offset: 0.7 },
+        { transform: 'scale(1) rotate(120deg)', opacity: 0.8, offset: 0.2 },
+        { transform: 'scale(1.5) rotate(240deg)', opacity: 0.8, offset: 0.7 },
         { transform: 'scale(2.5) rotate(360deg)', opacity: 0 }
     ], {
-        duration: 3000,
+        duration: 3000, // Długa animacja
         easing: 'ease-out'
     });
 
-    // Usuń cząsteczkę po dłuższej animacji
+    // Usuń cząsteczkę po animacji
     setTimeout(() => particle.remove(), 3000);
 }
