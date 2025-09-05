@@ -4,109 +4,64 @@ document.addEventListener('DOMContentLoaded', function() {
     // Sprawdź czy Barba.js jest załadowany
     if (typeof barba === 'undefined') {
         console.error('Barba.js nie został załadowany!');
-        // Ukryj loader jeśli istnieje
-        const loader = document.getElementById('page-loader');
-        if (loader) loader.style.display = 'none';
         return;
     }
 
-    // Stwórz globalne cząsteczki po załadowaniu
+    // Stwórz globalne cząsteczki
     createGlobalParticles();
     
     // ===== INICJALIZACJA BARBA.JS =====
     barba.init({
-        // Włącz prefetch dla lepszej wydajności
-        prefetch: true,
-        
         transitions: [{
             name: 'gold-fade',
-            sync: true, // Ważne - zapobiega nakładaniu się przejść
-            
-            // Przed przejściem - ukryj nową zawartość
-            beforeEnter(data) {
-                console.log('beforeEnter - przygotowuję nową stronę:', data.next.url);
-                data.next.container.style.opacity = '0';
-                data.next.container.style.transform = 'translateY(20px)';
-                data.next.container.style.transition = 'none'; // Wyłącz transition początkowo
-            },
             
             leave(data) {
                 console.log('Leave transition started for:', data.current.url);
                 return new Promise(resolve => {
-                    // Stwórz mgłę NATYCHMIAST - bez opóźnienia
                     const { overlay, smokeContainer } = createTransitionEffect();
                     
-                    // Ukryj starą zawartość pod mgłą (po krótkim czasie)
+                    // Fade out obecnej strony
+                    data.current.container.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
+                    data.current.container.style.opacity = '0';
+                    data.current.container.style.transform = 'translateY(20px)';
+                    
                     setTimeout(() => {
-                        data.current.container.style.transition = 'opacity 0.3s ease-out';
-                        data.current.container.style.opacity = '0';
-                        
-                        // Rozwiąż szybko żeby nowa strona mogła się załadować
-                        setTimeout(() => {
-                            console.log('Leave transition completed - content hidden under fog');
-                            resolve();
-                        }, 300);
-                    }, 400); // Poczekaj 400ms żeby mgła się ustabilizowała
+                        console.log('Leave transition completed');
+                        resolve();
+                    }, 600);
                 });
             },
             
             enter(data) {
                 console.log('Enter transition started for:', data.next.url);
                 return new Promise(resolve => {
-                    // Nowa zawartość ładuje się pod mgłą (niewidocznie)
+                    // Przygotuj nową stronę (niewidoczną)
+                    data.next.container.style.opacity = '0';
+                    data.next.container.style.transform = 'translateY(-20px)';
+                    
+                    // Poczekaj przed fade-in
                     setTimeout(() => {
-                        data.next.container.style.transition = 'opacity 0.5s ease-in-out';
+                        data.next.container.style.transition = 'opacity 1.2s ease-in-out, transform 1.2s ease-in-out';
                         data.next.container.style.opacity = '1';
                         data.next.container.style.transform = 'translateY(0)';
                         
-                        console.log('New content loaded under fog');
-                        
-                        // Ukryj loader
-                        const loader = document.getElementById('page-loader');
-                        if (loader) loader.style.display = 'none';
-                        
-                        // WAŻNE: Mgła znika dopiero po 1.5s całkowitego czasu
+                        // Usuń efekty przejścia po fade-in
                         setTimeout(() => {
                             const overlay = document.querySelector('.barba-overlay');
                             const smokeContainer = document.querySelector('.barba-smoke');
-                            
                             if (overlay) {
-                                overlay.style.transition = 'opacity 0.5s ease-out';
                                 overlay.style.opacity = '0';
-                                setTimeout(() => overlay.remove(), 500);
+                                setTimeout(() => overlay.remove(), 300);
                             }
                             if (smokeContainer) {
-                                smokeContainer.style.transition = 'opacity 0.5s ease-out';
                                 smokeContainer.style.opacity = '0';
-                                setTimeout(() => smokeContainer.remove(), 500);
+                                setTimeout(() => smokeContainer.remove(), 300);
                             }
                             
-                            console.log('Fog cleared - transition completed');
+                            console.log('Enter transition completed');
                             resolve();
-                        }, 1500); // Mgła trwa 1.5s od początku przejścia
-                    }, 800); // Nowa zawartość gotowa pod mgłą
-                });
-            },
-            
-            // Once method to handle initial page load
-            once(data) {
-                console.log('Once - początkowe ładowanie strony:', data.next.url);
-                return new Promise(resolve => {
-                    // Ukryj loader jeśli istnieje
-                    const loader = document.getElementById('page-loader');
-                    if (loader) {
-                        loader.style.transition = 'opacity 0.8s ease-in-out';
-                        loader.style.opacity = '0';
-                        setTimeout(() => {
-                            loader.style.display = 'none';
-                        }, 800);
-                    }
-                    
-                    // Upewnij się, że zawartość jest widoczna
-                    data.next.container.style.opacity = '1';
-                    data.next.container.style.transform = 'translateY(0)';
-                    
-                    resolve();
+                        }, 1200);
+                    }, 800);
                 });
             }
         }],
@@ -165,10 +120,10 @@ function refreshParticles() {
         existingContainer.remove();
     }
     
-    // Stwórz nowe cząsteczki z opóźnieniem żeby DOM był gotowy
+    // Stwórz nowe cząsteczki z małym opóźnieniem
     setTimeout(() => {
         createGlobalParticles();
-    }, 200);
+    }, 100);
 }
 
 // ===== GLOBALNE CZĄSTECZKI ZŁOTA - OGRANICZONE DO HERO SECTION =====
@@ -297,9 +252,9 @@ function createGlobalParticles() {
     window.addEventListener('scroll', scrollHandler, { passive: true });
 }
 
-// ===== EFEKT PRZEJŚCIA - ZOPTYMALIZOWANY =====
+// ===== EFEKT PRZEJŚCIA =====
 function createTransitionEffect() {
-    // Overlay - NATYCHMIAST widoczny, bez transition
+    // Overlay
     const overlay = document.createElement('div');
     overlay.className = 'barba-overlay';
     overlay.style.cssText = `
@@ -309,18 +264,24 @@ function createTransitionEffect() {
         width: 100vw;
         height: 100vh;
         background: radial-gradient(ellipse at center, 
-            rgba(255, 215, 0, 0.3) 0%,
-            rgba(212, 175, 55, 0.25) 30%,
+            rgba(255, 215, 0, 0.4) 0%,
+            rgba(212, 175, 55, 0.3) 30%,
             rgba(184, 134, 11, 0.2) 50%,
-            rgba(0, 0, 0, 0.9) 80%,
+            rgba(0, 0, 0, 0.85) 80%,
             rgba(0, 0, 0, 0.95) 100%);
-        z-index: 10000;
+        z-index: 9999;
         pointer-events: none;
-        opacity: 1;
+        opacity: 0;
+        transition: opacity 0.4s ease-in-out;
     `;
     document.body.appendChild(overlay);
 
-    // Cząsteczki mgły - gęstsze i trwalsze
+    // Aktywuj overlay
+    requestAnimationFrame(() => {
+        overlay.style.opacity = '1';
+    });
+
+    // Cząsteczki mgły
     const smokeContainer = document.createElement('div');
     smokeContainer.className = 'barba-smoke';
     smokeContainer.style.cssText = `
@@ -330,15 +291,15 @@ function createTransitionEffect() {
         width: 100vw;
         height: 100vh;
         pointer-events: none;
-        z-index: 10001;
+        z-index: 10000;
         overflow: hidden;
     `;
     document.body.appendChild(smokeContainer);
 
-    // Więcej cząsteczek mgły dla lepszego maskowania
-    const particleCount = window.innerWidth <= 768 ? 10 : 20;
+    // Stwórz cząsteczki mgły
+    const particleCount = window.innerWidth <= 768 ? 8 : 15;
     for (let i = 0; i < particleCount; i++) {
-        setTimeout(() => createSmokeParticle(smokeContainer), i * 50);
+        setTimeout(() => createSmokeParticle(smokeContainer), i * 80);
     }
 
     return { overlay, smokeContainer };
@@ -346,29 +307,27 @@ function createTransitionEffect() {
 
 function createSmokeParticle(container) {
     const particle = document.createElement('div');
-    const size = Math.random() * 50 + 40; // Większe cząsteczki
+    const size = Math.random() * 40 + 30;
     
     particle.style.cssText = `
         position: absolute;
         width: ${size}px;
         height: ${size}px;
-        background: radial-gradient(circle, rgba(255, 215, 0, 0.4), rgba(255, 215, 0, 0.08));
+        background: radial-gradient(circle, rgba(255, 215, 0, 0.4), rgba(255, 215, 0, 0.1));
         border-radius: 50%;
         left: ${Math.random() * 100}%;
         top: ${Math.random() * 100}%;
-        will-change: transform, opacity;
     `;
     
     container.appendChild(particle);
 
-    // Długa animacja dla lepszego maskowania
     particle.animate([
         { transform: 'scale(0) rotate(0deg)', opacity: 0 },
-        { transform: 'scale(1) rotate(120deg)', opacity: 0.8, offset: 0.2 },
-        { transform: 'scale(1.5) rotate(240deg)', opacity: 0.8, offset: 0.7 },
+        { transform: 'scale(1) rotate(180deg)', opacity: 0.8, offset: 0.2 },
+        { transform: 'scale(1.5) rotate(270deg)', opacity: 0.8, offset: 0.7 },
         { transform: 'scale(2.5) rotate(360deg)', opacity: 0 }
     ], {
-        duration: 3000, // Długa animacja
+        duration: 3000,
         easing: 'ease-out'
     });
 
