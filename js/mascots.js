@@ -15,7 +15,22 @@ const oferta = {
       <img src="resources/photos/fotobudka_1.jpg" class="d-block w-100" alt="fotobudka_1">
     </div>
     <div class="carousel-item h-100">
-      <img src="resources/photos/fotobudka_2.jpg" class="d-block w-100" alt="fotobudka_2">
+      <video class="d-block w-100" autoplay muted loop playsinline>
+        <source src="resources/photos/real/fb1.MP4" type="video/mp4">
+        Twoja przeglądarka nie obsługuje wideo.
+      </video>
+    </div>
+    <div class="carousel-item h-100">
+      <video class="d-block w-100" autoplay muted loop playsinline>
+        <source src="resources/photos/real/fb2.MP4" type="video/mp4">
+        Twoja przeglądarka nie obsługuje wideo.
+      </video>
+    </div>
+    <div class="carousel-item h-100">
+      <video class="d-block w-100" autoplay muted loop playsinline>
+        <source src="resources/photos/real/fb3.MP4" type="video/mp4">
+        Twoja przeglądarka nie obsługuje wideo.
+      </video>
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#fotobudkaCarousel" data-bs-slide="prev">

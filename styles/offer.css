@@ -130,8 +130,9 @@
     #fotobudkaCarousel {
     height: 400px; /* wysokość pierwszego obrazka – dopasuj do swojego */
   }
-#fotobudkaCarousel img {
-  height: 400px; /* wysokość z pierwszego */
-  object-fit: contain; /* obrazek się skaluję, ale nie wytnie */
+#fotobudkaCarousel img,
+#fotobudkaCarousel video {
+  height: 400px;
+  object-fit: contain;
   width: 100%;
 }

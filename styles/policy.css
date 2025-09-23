@@ -1,0 +1,85 @@
+/* Polityka prywatności - stylowanie */
+
+.policy-card {
+  background-color: #2a2a2a; /* tło karty - trochę jaśniejsze niż główne tło */
+  border: 1px solid #CFB53B; /* złota ramka */
+  border-radius: 12px;
+  padding: 2.5rem;
+  max-width: 800px;
+}
+
+.policy-card h1 {
+  color: #CFB53B; /* złoty nagłówek główny */
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.policy-card h2 {
+  color: #CFB53B; /* złote nagłówki sekcji */
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #CFB53B;
+  padding-bottom: 0.5rem;
+}
+
+.policy-card p {
+  color: #ffffff; /* białe akapity dla czytelności */
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.policy-card ul, 
+.policy-card ol {
+  color: #ffffff; /* białe listy */
+}
+
+.policy-card li {
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+}
+
+.policy-card a {
+  color: #CFB53B; /* złote linki */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.policy-card a:hover {
+  color: #B8860B; /* ciemniejszy złoty przy hover */
+  text-decoration: underline;
+}
+
+.policy-card strong {
+  color: #CFB53B; /* złote wzmocnienia tekstu */
+}
+
+.muted-small {
+  color: #cccccc !important; /* jasnoszare dla mniejszych informacji */
+  font-size: 0.9rem;
+}
+
+.policy-card footer {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #555555;
+}
+
+.policy-card .border-top {
+  border-top-color: #555555 !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .policy-card {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .policy-card h1 {
+    font-size: 1.5rem;
+  }
+  
+  .policy-card h2 {
+    font-size: 1.2rem;
+  }
+}
