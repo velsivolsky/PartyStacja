@@ -10,29 +10,46 @@ const oferta = {
         <li><i class="fas fa-heart" style="color: #CFB53B;"></i> Idealna pamiątka z każdej imprezy</li>
       </ul>
 <div id="fotobudkaCarousel" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner h-100">
-    <div class="carousel-item active h-100">
-      <img src="resources/photos/fotobudka_1.jpg" class="d-block w-100" alt="fotobudka_1">
+  <div class="carousel-inner">
+    <!-- Slide 1: Zdjęcie główne -->
+    <div class="carousel-item active">
+      <div class="d-flex justify-content-center">
+        <img src="resources/photos/fotobudka_1.jpg" class="carousel-single-image" alt="fotobudka_1">
+      </div>
     </div>
-    <div class="carousel-item h-100">
-      <video class="d-block w-100" autoplay muted loop playsinline>
-        <source src="resources/photos/real/fb1.MP4" type="video/mp4">
-        Twoja przeglądarka nie obsługuje wideo.
-      </video>
-    </div>
-    <div class="carousel-item h-100">
-      <video class="d-block w-100" autoplay muted loop playsinline>
-        <source src="resources/photos/real/fb2.MP4" type="video/mp4">
-        Twoja przeglądarka nie obsługuje wideo.
-      </video>
-    </div>
-    <div class="carousel-item h-100">
-      <video class="d-block w-100" autoplay muted loop playsinline>
-        <source src="resources/photos/real/fb3.MP4" type="video/mp4">
-        Twoja przeglądarka nie obsługuje wideo.
-      </video>
+    
+    <!-- Slide 2: 3 filmiki portrait -->
+    <div class="carousel-item">
+      <div class="row g-3 justify-content-center">
+        <div class="col-12 col-md-4">
+          <div class="video-container-portrait">
+            <video class="w-100 h-100" autoplay muted loop playsinline>
+              <source src="resources/photos/real/fb1.MP4" type="video/mp4">
+              Twoja przeglądarka nie obsługuje wideo.
+            </video>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="video-container-portrait">
+            <video class="w-100 h-100" autoplay muted loop playsinline>
+              <source src="resources/photos/real/fb2.MP4" type="video/mp4">
+              Twoja przeglądarka nie obsługuje wideo.
+            </video>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="video-container-portrait">
+            <video class="w-100 h-100" autoplay muted loop playsinline>
+              <source src="resources/photos/real/fb3.MP4" type="video/mp4">
+              Twoja przeglądarka nie obsługuje wideo.
+            </video>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+  
+  <!-- Kontrolki karuzeli -->
   <button class="carousel-control-prev" type="button" data-bs-target="#fotobudkaCarousel" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Poprzedni</span>
@@ -41,6 +58,12 @@ const oferta = {
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Następny</span>
   </button>
+  
+  <!-- Wskaźniki -->
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#fotobudkaCarousel" data-bs-slide-to="0" class="active"></button>
+    <button type="button" data-bs-target="#fotobudkaCarousel" data-bs-slide-to="1"></button>
+  </div>
 </div>
     `,
     maskotki: `
@@ -62,13 +85,13 @@ const oferta = {
         </div>
         <div class="col-6 col-md-3">
           <div class="maskotka-card" data-id="stich" tabindex="0">
-            <img src="resources/photos/stitch.jpg" alt="Stich" class="img-fluid rounded-circle mb-2 shadow-sm">
+            <img src="resources/photos/stitch.png" alt="Stich" class="img-fluid rounded-circle mb-2 shadow-sm">
             <h5 class="text-center">Stich</h5>
           </div>
         </div>
         <div class="col-6 col-md-3">
           <div class="maskotka-card" data-id="angel" tabindex="0">
-            <img src="resources/photos/angel.jpg" alt="Angel" class="img-fluid rounded-circle mb-2 shadow-sm">
+            <img src="resources/photos/real/24.JPG" alt="Angel" class="img-fluid rounded-circle mb-2 shadow-sm">
             <h5 class="text-center">Angel</h5>
           </div>
         </div>
@@ -119,7 +142,7 @@ const maskotki = {
 `
     },
     stich: {
-      img: 'resources/photos/stitch.jpg',
+      img: 'resources/photos/stitch.png',
       alt: 'Stich',
       text: `Mały, niebieski rozrabiaka z ogromnym sercem. Dla fanów bajek i imprez z humorem!`,
       desc: `
@@ -132,7 +155,7 @@ const maskotki = {
         `
     },
     angel: {
-      img: 'resources/photos/angel.jpg',
+      img: 'resources/photos/real/24.JPG',
       alt: 'Angel',
       text: `Piękna, różowa bohaterka, taniec i animacje dla najmłodszych, element niespodzianki...`,
       desc: `
