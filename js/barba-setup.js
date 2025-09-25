@@ -27,6 +27,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Stwórz globalne cząsteczki
     createGlobalParticles();
     
+    // ===== PREFETCH WSZYSTKICH STRON =====
+    prefetchAllPages();
+    
     // ===== INICJALIZACJA BARBA.JS =====
     barba.init({
         transitions: [{
@@ -858,6 +861,90 @@ function createSingleFadeParticle(container, goldColors) {
             particle.remove();
         }
     }, duration);
+}
+
+// ===== PREFETCH WSZYSTKICH STRON DLA BŁYSKAWICZNYCH PRZEJŚĆ =====
+function prefetchAllPages() {
+    // Lista wszystkich podstron witryny
+    const pages = [
+        'index.html',
+        'o_nas.html', 
+        'oferta.html',
+        'galeria.html',
+        'kontakt.html',
+        'sklep.html',
+        'polityka.html'
+    ];
+    
+    console.log('🚀 Rozpoczynam prefetch wszystkich stron...');
+    
+    pages.forEach((page, index) => {
+        // Różne delay żeby nie przeciążać serwera
+        setTimeout(() => {
+            prefetchPage(page);
+        }, index * 200); // 200ms opóźnienia między stronami
+    });
+}
+
+function prefetchPage(url) {
+    // Sprawdź czy nie jesteśmy już na tej stronie
+    if (window.location.pathname.includes(url) || window.location.pathname === '/' && url === 'index.html') {
+        console.log(`⏭️ Pomijam prefetch ${url} - jesteśmy już na tej stronie`);
+        return;
+    }
+    
+    console.log(`📥 Prefetch: ${url}`);
+    
+    // Użyj fetch z cache dla performance
+    fetch(url, {
+        method: 'GET',
+        cache: 'force-cache'
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log(`✅ Prefetch zakończony: ${url}`);
+            return response.text();
+        }
+        throw new Error(`HTTP ${response.status}`);
+    })
+    .then(html => {
+        // Opcjonalnie: możemy też prefetch CSS/JS z tej strony
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        
+        // Prefetch unikalnych CSS i JS z tej strony
+        const stylesheets = doc.querySelectorAll('link[rel="stylesheet"]');
+        const scripts = doc.querySelectorAll('script[src]');
+        
+        stylesheets.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && !document.querySelector(`link[href="${href}"]`)) {
+                prefetchResource(href, 'style');
+            }
+        });
+        
+        scripts.forEach(script => {
+            const src = script.getAttribute('src');
+            if (src && !document.querySelector(`script[src="${src}"]`)) {
+                prefetchResource(src, 'script');
+            }
+        });
+    })
+    .catch(error => {
+        console.warn(`⚠️ Błąd prefetch ${url}:`, error);
+    });
+}
+
+function prefetchResource(url, type) {
+    // Użyj link rel="prefetch" dla zasobów
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.href = url;
+    if (type === 'style') link.as = 'style';
+    if (type === 'script') link.as = 'script';
+    
+    document.head.appendChild(link);
+    console.log(`📦 Prefetch zasobu: ${url}`);
 }
 
 // ===== SUBTELNE EFEKTY PRZEJŚCIA (OPCJONALNE) =====
