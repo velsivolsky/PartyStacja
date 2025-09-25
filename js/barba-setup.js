@@ -13,99 +13,160 @@ document.addEventListener('DOMContentLoaded', function() {
     // ===== INICJALIZACJA BARBA.JS =====
     barba.init({
         transitions: [{
-            name: 'gold-fade',
+            name: 'smooth-fade',
+            
+            // Asynchroniczne przejście - overlapping
+            sync: false,
             
             leave(data) {
-                console.log('Leave transition started for:', data.current.url);
                 return new Promise(resolve => {
-                    const { overlay, smokeContainer } = createTransitionEffect();
+                    // Stwórz cząsteczki na początku przejścia
+                    const particlesPromise = createTransitionParticles();
                     
-                    // Fade out obecnej strony
-                    data.current.container.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
+                    // Fade-out starej strony
+                    data.current.container.style.transition = 'opacity 0.6s ease-out';
                     data.current.container.style.opacity = '0';
-                    data.current.container.style.transform = 'translateY(20px)';
                     
-                    setTimeout(() => {
-                        console.log('Leave transition completed');
-                        resolve();
-                    }, 600);
+                    // Zapisz promise cząsteczek globalnie
+                    window.transitionParticlesPromise = particlesPromise;
+                    
+                    setTimeout(resolve, 600);
                 });
             },
             
             enter(data) {
-                console.log('Enter transition started for:', data.next.url);
                 return new Promise(resolve => {
-                    // Przygotuj nową stronę (niewidoczną)
+                    // Przygotuj nową stronę (ukryta)
                     data.next.container.style.opacity = '0';
-                    data.next.container.style.transform = 'translateY(-20px)';
+                    data.next.container.style.transition = 'opacity 0.8s ease-in';
                     
-                    // Poczekaj przed fade-in - krótszy okres
-                    setTimeout(() => {
-                        data.next.container.style.transition = 'opacity 0.8s ease-in-out, transform 0.8s ease-in-out';
-                        data.next.container.style.opacity = '1';
-                        data.next.container.style.transform = 'translateY(0)';
-                        
-                        // Usuń efekty przejścia po fade-in
-                        setTimeout(() => {
-                            const overlay = document.querySelector('.barba-overlay');
-                            const smokeContainer = document.querySelector('.barba-smoke');
-                            if (overlay) {
-                                overlay.style.opacity = '0';
-                                setTimeout(() => overlay.remove(), 300);
-                            }
-                            if (smokeContainer) {
-                                smokeContainer.style.opacity = '0';
-                                setTimeout(() => smokeContainer.remove(), 300);
-                            }
-                            
-                            console.log('Enter transition completed');
-                            resolve();
-                        }, 800);
-                    }, 300);
+                    // Poczekaj aż cząsteczki będą gotowe do zniknięcia
+                    if (window.transitionParticlesPromise) {
+                        window.transitionParticlesPromise.then(() => {
+                            // Teraz pokaż nową stronę i usuń cząsteczki
+                            fadeInNewPage(data, resolve);
+                        });
+                    } else {
+                        // Fallback gdyby coś poszło nie tak
+                        setTimeout(() => fadeInNewPage(data, resolve), 100);
+                    }
                 });
             }
         }],
+        
+        // Preload dla szybszego ładowania
+        prefetch: true,
         
         // Callbacks dla różnych stron
         views: [{
             namespace: 'home',
             afterEnter() {
-                console.log('Strona główna załadowana');
                 refreshParticles();
+                initPageScripts();
             }
         }, {
             namespace: 'gallery', 
             afterEnter() {
-                console.log('Galeria załadowana');
                 if (typeof initCarousel === 'function') initCarousel();
                 refreshParticles();
+                initPageScripts();
             }
         }, {
             namespace: 'about',
             afterEnter() {
-                console.log('O nas załadowana');
                 refreshParticles();
+                initPageScripts();
             }
         }, {
             namespace: 'offer',
             afterEnter() {
-                console.log('Oferta załadowana');
                 refreshParticles();
+                initPageScripts();
+                // Reinicjalizuj oferta scripts
+                if (typeof initOfferTiles === 'function') initOfferTiles();
+                if (typeof initMaskotki === 'function') initMaskotki();
             }
         }, {
             namespace: 'contact',
             afterEnter() {
-                console.log('Kontakt załadowany');
                 refreshParticles();
+                initPageScripts();
             }
         }]
     });
 
-    // Odśwież cząsteczki po przejściu
+    // Globalne hooks dla wszystkich przejść
+    barba.hooks.beforeLeave(() => {
+        // Wyczyść timery i eventy przed opuszczeniem strony
+        cleanupPage();
+    });
+    
     barba.hooks.afterEnter(() => {
+        // Odśwież cząsteczki i skrypty po każdym przejściu
         refreshParticles();
+        initPageScripts();
     });
 });
+
+// ===== FUNKCJE POMOCNICZE =====
+
+// Czyszczenie strony przed opuszczeniem
+function cleanupPage() {
+    // Wyczyść timery cząsteczek
+    if (window.particlesInterval) {
+        clearInterval(window.particlesInterval);
+    }
+    
+    // Wyczyść cząsteczki przejścia
+    if (window.transitionParticleInterval) {
+        clearInterval(window.transitionParticleInterval);
+    }
+    
+    // Usuń scroll listenery
+    if (window.particlesScrollListener) {
+        window.removeEventListener('scroll', window.particlesScrollListener);
+        window.particlesScrollListener = null;
+    }
+    
+    // Wyczyść wszystkie kontenery cząsteczek
+    const particleContainers = document.querySelectorAll('#transition-particles, .fade-in-particles, .barba-overlay, .barba-smoke');
+    particleContainers.forEach(el => el.remove());
+}
+
+// Inicjalizacja skryptów strony
+function initPageScripts() {
+    // Przeładuj import.js dla navbar/footer
+    if (typeof loadNavbarAndFooter === 'function') {
+        loadNavbarAndFooter();
+    }
+    
+    // Przeładuj active links
+    if (typeof updateActiveLinks === 'function') {
+        updateActiveLinks();
+    }
+    
+    // Reinicjalizuj Bootstrap komponenty
+    initBootstrapComponents();
+}
+
+// Inicjalizacja komponentów Bootstrap po przejściu
+function initBootstrapComponents() {
+    // Karuzele
+    const carousels = document.querySelectorAll('.carousel');
+    carousels.forEach(carousel => {
+        if (window.bootstrap && window.bootstrap.Carousel) {
+            new window.bootstrap.Carousel(carousel);
+        }
+    });
+    
+    // Tooltips i Popovers jeśli istnieją
+    if (window.bootstrap) {
+        const tooltips = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+        tooltips.forEach(tooltip => {
+            new window.bootstrap.Tooltip(tooltip);
+        });
+    }
+}
 
 // Funkcja do odświeżania cząsteczek
 function refreshParticles() {
@@ -259,85 +320,295 @@ function createGlobalParticles() {
     window.addEventListener('scroll', scrollHandler, { passive: true });
 }
 
-// ===== EFEKT PRZEJŚCIA =====
-function createTransitionEffect() {
-    // Overlay
-    const overlay = document.createElement('div');
-    overlay.className = 'barba-overlay';
-    overlay.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: radial-gradient(ellipse at center, 
-            rgba(255, 215, 0, 0.4) 0%,
-            rgba(212, 175, 55, 0.3) 30%,
-            rgba(184, 134, 11, 0.2) 50%,
-            rgba(0, 0, 0, 0.85) 80%,
-            rgba(0, 0, 0, 0.95) 100%);
-        z-index: 9999;
-        pointer-events: none;
-        opacity: 0;
-        transition: opacity 0.4s ease-in-out;
-    `;
-    document.body.appendChild(overlay);
-
-    // Aktywuj overlay
+// ===== FUNKCJA POMOCNICZA DO FADE-IN NOWEJ STRONY =====
+function fadeInNewPage(data, resolve) {
+    // Fade-in nowej strony
     requestAnimationFrame(() => {
-        overlay.style.opacity = '1';
+        data.next.container.style.opacity = '1';
+        
+        // Wyczyść cząsteczki i zakończ przejście
+        setTimeout(() => {
+            clearTransitionParticles();
+            data.next.container.style.transition = '';
+            resolve();
+        }, 800);
     });
-
-    // Cząsteczki mgły
-    const smokeContainer = document.createElement('div');
-    smokeContainer.className = 'barba-smoke';
-    smokeContainer.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        pointer-events: none;
-        z-index: 10000;
-        overflow: hidden;
-    `;
-    document.body.appendChild(smokeContainer);
-
-    // Stwórz cząsteczki mgły
-    const particleCount = window.innerWidth <= 768 ? 8 : 15;
-    for (let i = 0; i < particleCount; i++) {
-        setTimeout(() => createSmokeParticle(smokeContainer), i * 80);
-    }
-
-    return { overlay, smokeContainer };
 }
 
-function createSmokeParticle(container) {
+// ===== CZĄSTECZKI PRZEJŚCIA - WIDOCZNE POD CZAS ŁADOWANIA =====
+function createTransitionParticles() {
+    return new Promise((resolve) => {
+        const particlesContainer = document.createElement('div');
+        particlesContainer.id = 'transition-particles';
+        particlesContainer.className = 'transition-particles';
+        particlesContainer.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 99999;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.1);
+        `;
+        
+        document.body.appendChild(particlesContainer);
+        window.transitionParticlesContainer = particlesContainer;
+
+        // Różne kolory złota
+        const goldColors = ['#FFD700', '#FFA500', '#DAA520', '#B8860B', '#CD853F', '#F4E87C'];
+        
+        // Więcej cząsteczek na dłużej
+        const particleCount = window.innerWidth <= 768 ? 20 : 35;
+        
+        // Stwórz cząsteczki natychmiast
+        for (let i = 0; i < particleCount; i++) {
+            setTimeout(() => createLongTransitionParticle(particlesContainer, goldColors), i * 100);
+        }
+        
+        // Kontynuuj tworzenie cząsteczek przez czas przejścia
+        const particleInterval = setInterval(() => {
+            if (document.getElementById('transition-particles')) {
+                for (let i = 0; i < 3; i++) {
+                    createLongTransitionParticle(particlesContainer, goldColors);
+                }
+            } else {
+                clearInterval(particleInterval);
+            }
+        }, 800);
+        
+        window.transitionParticleInterval = particleInterval;
+        
+        // Sygnalizuj że cząsteczki są gotowe po 1 sekundzie
+        setTimeout(resolve, 1000);
+    });
+}
+
+function createLongTransitionParticle(container, goldColors) {
+    if (!container || !container.parentNode) return;
+    
     const particle = document.createElement('div');
-    const size = Math.random() * 40 + 30;
+    
+    // Różne rozmiary i kształty cząsteczek
+    const size = Math.random() * 10 + 4; // 4-14px
+    const color = goldColors[Math.floor(Math.random() * goldColors.length)];
+    const isCircle = Math.random() > 0.3;
+    
+    // Startowa pozycja - losowo z całego ekranu
+    const startX = Math.random() * window.innerWidth;
+    const startY = Math.random() * window.innerHeight;
+    const endX = Math.random() * window.innerWidth;
+    const endY = Math.random() * window.innerHeight;
     
     particle.style.cssText = `
         position: absolute;
         width: ${size}px;
         height: ${size}px;
-        background: radial-gradient(circle, rgba(255, 215, 0, 0.4), rgba(255, 215, 0, 0.1));
-        border-radius: 50%;
-        left: ${Math.random() * 100}%;
-        top: ${Math.random() * 100}%;
+        background: radial-gradient(circle, ${color}FF, ${color}AA, ${color}55);
+        border-radius: ${isCircle ? '50%' : '30%'};
+        left: ${startX}px;
+        top: ${startY}px;
+        box-shadow: 
+            0 0 ${size * 3}px ${color}AA,
+            0 0 ${size * 6}px ${color}55,
+            inset 0 0 ${size * 2}px ${color}DD;
+        filter: blur(0.8px);
     `;
     
     container.appendChild(particle);
-
+    
+    // Długa animacja - cząsteczki krążą podczas ładowania
+    const duration = 3000 + Math.random() * 2000;
+    const rotation = Math.random() * 1440 - 720; // Więcej obrotów
+    
     particle.animate([
-        { transform: 'scale(0) rotate(0deg)', opacity: 0 },
-        { transform: 'scale(1) rotate(180deg)', opacity: 0.8, offset: 0.2 },
-        { transform: 'scale(1.5) rotate(270deg)', opacity: 0.8, offset: 0.7 },
-        { transform: 'scale(2.5) rotate(360deg)', opacity: 0 }
+        {
+            transform: `translate(0, 0) rotate(0deg) scale(0.5)`,
+            opacity: 0
+        },
+        {
+            transform: `translate(${(endX - startX) * 0.2}px, ${(endY - startY) * 0.2}px) rotate(${rotation * 0.2}deg) scale(1.2)`,
+            opacity: 1,
+            offset: 0.1
+        },
+        {
+            transform: `translate(${(endX - startX) * 0.8}px, ${(endY - startY) * 0.8}px) rotate(${rotation * 0.8}deg) scale(1)`,
+            opacity: 0.9,
+            offset: 0.9
+        },
+        {
+            transform: `translate(${endX - startX}px, ${endY - startY}px) rotate(${rotation}deg) scale(0)`,
+            opacity: 0
+        }
     ], {
-        duration: 3000,
-        easing: 'ease-out'
+        duration: duration,
+        easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+        iterations: 1
     });
-
+    
     // Usuń cząsteczkę po animacji
-    setTimeout(() => particle.remove(), 3000);
+    setTimeout(() => {
+        if (particle.parentNode) {
+            particle.remove();
+        }
+    }, duration);
 }
+
+function clearTransitionParticles() {
+    // Wyczyść interval
+    if (window.transitionParticleInterval) {
+        clearInterval(window.transitionParticleInterval);
+        window.transitionParticleInterval = null;
+    }
+    
+    // Usuń kontener z fade-out
+    const container = document.getElementById('transition-particles');
+    if (container) {
+        container.style.transition = 'opacity 0.6s ease-out';
+        container.style.opacity = '0';
+        setTimeout(() => {
+            if (container.parentNode) {
+                container.remove();
+            }
+            window.transitionParticlesContainer = null;
+        }, 600);
+    }
+    
+    // Wyczyść promise
+    window.transitionParticlesPromise = null;
+}
+
+// ===== STARE CZĄSTECZKI FADE-IN (BACKUP) =====
+function createFadeInParticles() {
+    const particlesContainer = document.createElement('div');
+    particlesContainer.className = 'fade-in-particles';
+    particlesContainer.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 9999;
+        overflow: hidden;
+    `;
+    
+    document.body.appendChild(particlesContainer);
+
+    // Różne kolory złota
+    const goldColors = ['#FFD700', '#FFA500', '#DAA520', '#B8860B', '#CD853F', '#F4E87C'];
+    
+    // Mniej cząsteczek na mobile
+    const particleCount = window.innerWidth <= 768 ? 15 : 25;
+    
+    // Stwórz cząsteczki z różnych punktów ekranu
+    for (let i = 0; i < particleCount; i++) {
+        setTimeout(() => createSingleFadeParticle(particlesContainer, goldColors), i * 50);
+    }
+    
+    // Usuń kontener po 3 sekundach
+    setTimeout(() => {
+        if (particlesContainer.parentNode) {
+            particlesContainer.style.transition = 'opacity 0.5s ease-out';
+            particlesContainer.style.opacity = '0';
+            setTimeout(() => particlesContainer.remove(), 500);
+        }
+    }, 2500);
+}
+
+function createSingleFadeParticle(container, goldColors) {
+    const particle = document.createElement('div');
+    
+    // Różne rozmiary i kształty cząsteczek
+    const size = Math.random() * 8 + 3; // 3-11px
+    const color = goldColors[Math.floor(Math.random() * goldColors.length)];
+    const isCircle = Math.random() > 0.3;
+    
+    // Startowa pozycja - losowo z brzegów ekranu
+    let startX, startY, endX, endY;
+    const edge = Math.floor(Math.random() * 4);
+    
+    switch(edge) {
+        case 0: // Góra
+            startX = Math.random() * window.innerWidth;
+            startY = -20;
+            endX = Math.random() * window.innerWidth;
+            endY = window.innerHeight / 3;
+            break;
+        case 1: // Prawo
+            startX = window.innerWidth + 20;
+            startY = Math.random() * window.innerHeight;
+            endX = window.innerWidth * 2/3;
+            endY = Math.random() * window.innerHeight;
+            break;
+        case 2: // Dół
+            startX = Math.random() * window.innerWidth;
+            startY = window.innerHeight + 20;
+            endX = Math.random() * window.innerWidth;
+            endY = window.innerHeight * 2/3;
+            break;
+        case 3: // Lewo
+            startX = -20;
+            startY = Math.random() * window.innerHeight;
+            endX = window.innerWidth / 3;
+            endY = Math.random() * window.innerHeight;
+            break;
+    }
+    
+    particle.style.cssText = `
+        position: absolute;
+        width: ${size}px;
+        height: ${size}px;
+        background: radial-gradient(circle, ${color}FF, ${color}AA, ${color}44);
+        border-radius: ${isCircle ? '50%' : '30%'};
+        left: ${startX}px;
+        top: ${startY}px;
+        box-shadow: 
+            0 0 ${size * 2}px ${color}88,
+            0 0 ${size * 4}px ${color}44,
+            inset 0 0 ${size}px ${color}CC;
+        filter: blur(0.5px);
+    `;
+    
+    container.appendChild(particle);
+    
+    // Animacja - lot do centrum i fade out
+    const duration = 1500 + Math.random() * 1000;
+    const rotation = Math.random() * 720 - 360;
+    
+    particle.animate([
+        {
+            transform: `translate(0, 0) rotate(0deg) scale(0)`,
+            opacity: 0
+        },
+        {
+            transform: `translate(${(endX - startX) * 0.3}px, ${(endY - startY) * 0.3}px) rotate(${rotation * 0.3}deg) scale(1)`,
+            opacity: 1,
+            offset: 0.3
+        },
+        {
+            transform: `translate(${endX - startX}px, ${endY - startY}px) rotate(${rotation}deg) scale(0.8)`,
+            opacity: 0.8,
+            offset: 0.7
+        },
+        {
+            transform: `translate(${endX - startX}px, ${endY - startY}px) rotate(${rotation}deg) scale(0)`,
+            opacity: 0
+        }
+    ], {
+        duration: duration,
+        easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+    });
+    
+    // Usuń cząsteczkę po animacji
+    setTimeout(() => {
+        if (particle.parentNode) {
+            particle.remove();
+        }
+    }, duration);
+}
+
+// ===== SUBTELNE EFEKTY PRZEJŚCIA (OPCJONALNE) =====
+// Usunięte ciężkie overlaye - teraz przejścia są czysto fade bez dodatkowych efektów
+// Cząsteczki zostają tylko w hero sections dla ambient effect
