@@ -18,10 +18,10 @@ const oferta = {
       </div>
     </div>
     
-    <!-- Slide 2: 3 filmiki portrait -->
-    <div class="carousel-item">
+    <!-- Slide 2: 3 filmiki portrait (desktop) -->
+    <div class="carousel-item d-none d-md-block">
       <div class="row g-3 justify-content-center">
-        <div class="col-12 col-md-4">
+        <div class="col-md-4">
           <div class="video-container-portrait">
             <video class="w-100 h-100" autoplay muted loop playsinline>
               <source src="resources/photos/real/fb1.MP4" type="video/mp4">
@@ -29,7 +29,7 @@ const oferta = {
             </video>
           </div>
         </div>
-        <div class="col-12 col-md-4">
+        <div class="col-md-4">
           <div class="video-container-portrait">
             <video class="w-100 h-100" autoplay muted loop playsinline>
               <source src="resources/photos/real/fb2.MP4" type="video/mp4">
@@ -37,13 +37,47 @@ const oferta = {
             </video>
           </div>
         </div>
-        <div class="col-12 col-md-4">
+        <div class="col-md-4">
           <div class="video-container-portrait">
             <video class="w-100 h-100" autoplay muted loop playsinline>
               <source src="resources/photos/real/fb3.MP4" type="video/mp4">
               Twoja przeglądarka nie obsługuje wideo.
             </video>
           </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Slidy dla mobile - każdy film osobno -->
+    <div class="carousel-item d-block d-md-none">
+      <div class="d-flex justify-content-center">
+        <div class="video-container-portrait-mobile">
+          <video class="w-100 h-100" autoplay muted loop playsinline>
+            <source src="resources/photos/real/fb1.MP4" type="video/mp4">
+            Twoja przeglądarka nie obsługuje wideo.
+          </video>
+        </div>
+      </div>
+    </div>
+    
+    <div class="carousel-item d-block d-md-none">
+      <div class="d-flex justify-content-center">
+        <div class="video-container-portrait-mobile">
+          <video class="w-100 h-100" autoplay muted loop playsinline>
+            <source src="resources/photos/real/fb2.MP4" type="video/mp4">
+            Twoja przeglądarka nie obsługuje wideo.
+          </video>
+        </div>
+      </div>
+    </div>
+    
+    <div class="carousel-item d-block d-md-none">
+      <div class="d-flex justify-content-center">
+        <div class="video-container-portrait-mobile">
+          <video class="w-100 h-100" autoplay muted loop playsinline>
+            <source src="resources/photos/real/fb3.MP4" type="video/mp4">
+            Twoja przeglądarka nie obsługuje wideo.
+          </video>
         </div>
       </div>
     </div>
@@ -59,10 +93,18 @@ const oferta = {
     <span class="visually-hidden">Następny</span>
   </button>
   
-  <!-- Wskaźniki -->
-  <div class="carousel-indicators">
+  <!-- Wskaźniki dla desktop -->
+  <div class="carousel-indicators d-none d-md-flex">
     <button type="button" data-bs-target="#fotobudkaCarousel" data-bs-slide-to="0" class="active"></button>
     <button type="button" data-bs-target="#fotobudkaCarousel" data-bs-slide-to="1"></button>
+  </div>
+  
+  <!-- Wskaźniki dla mobile -->
+  <div class="carousel-indicators d-flex d-md-none">
+    <button type="button" data-bs-target="#fotobudkaCarousel" data-bs-slide-to="0" class="active"></button>
+    <button type="button" data-bs-target="#fotobudkaCarousel" data-bs-slide-to="2"></button>
+    <button type="button" data-bs-target="#fotobudkaCarousel" data-bs-slide-to="3"></button>
+    <button type="button" data-bs-target="#fotobudkaCarousel" data-bs-slide-to="4"></button>
   </div>
 </div>
     `,
