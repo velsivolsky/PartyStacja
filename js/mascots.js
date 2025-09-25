@@ -10,80 +10,30 @@ const oferta = {
         <li><i class="fas fa-heart" style="color: #CFB53B;"></i> Idealna pamiątka z każdej imprezy</li>
       </ul>
 <div id="fotobudkaCarousel" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner">
-    <!-- Slide 1: Zdjęcie główne -->
-    <div class="carousel-item active">
-      <div class="d-flex justify-content-center">
-        <img src="resources/photos/fotobudka_1.jpg" class="carousel-single-image" alt="fotobudka_1">
-      </div>
+  <div class="carousel-inner h-100">
+    <div class="carousel-item active h-100">
+      <img src="resources/photos/fotobudka_1.jpg" class="d-block w-100" alt="fotobudka_1">
+    </div>
+    <div class="carousel-item h-100">
+      <video class="d-block w-100 h-100" autoplay muted loop playsinline >
+        <source src="resources/photos/real/fb1.MP4" type="video/mp4">
+        Twója przeglądarka nie wspiera HTML5 video.
+      </video>
+    </div>
+    <div class="carousel-item h-100">
+      <video class="d-block w-100 h-100" autoplay muted loop playsinline >
+        <source src="resources/photos/real/fb2.MP4" type="video/mp4">
+        Twója przeglądarka nie wspiera HTML5 video.
+      </video>
+    </div>
+    <div class="carousel-item h-100">
+      <video class="d-block w-100 h-100" autoplay muted loop playsinline >
+        <source src="resources/photos/real/fb3.MP4" type="video/mp4">
+        Twója przeglądarka nie wspiera HTML5 video.
+      </video>
     </div>
     
-    <!-- Slide 2: 3 filmiki portrait (desktop) -->
-    <div class="carousel-item d-none d-md-block">
-      <div class="row g-3 justify-content-center">
-        <div class="col-md-4">
-          <div class="video-container-portrait">
-            <video class="w-100 h-100" autoplay muted loop playsinline>
-              <source src="resources/photos/real/fb1.MP4" type="video/mp4">
-              Twoja przeglądarka nie obsługuje wideo.
-            </video>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="video-container-portrait">
-            <video class="w-100 h-100" autoplay muted loop playsinline>
-              <source src="resources/photos/real/fb2.MP4" type="video/mp4">
-              Twoja przeglądarka nie obsługuje wideo.
-            </video>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="video-container-portrait">
-            <video class="w-100 h-100" autoplay muted loop playsinline>
-              <source src="resources/photos/real/fb3.MP4" type="video/mp4">
-              Twoja przeglądarka nie obsługuje wideo.
-            </video>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Slidy dla mobile - każdy film osobno -->
-    <div class="carousel-item d-block d-md-none">
-      <div class="d-flex justify-content-center">
-        <div class="video-container-portrait-mobile">
-          <video class="w-100 h-100" autoplay muted loop playsinline>
-            <source src="resources/photos/real/fb1.MP4" type="video/mp4">
-            Twoja przeglądarka nie obsługuje wideo.
-          </video>
-        </div>
-      </div>
-    </div>
-    
-    <div class="carousel-item d-block d-md-none">
-      <div class="d-flex justify-content-center">
-        <div class="video-container-portrait-mobile">
-          <video class="w-100 h-100" autoplay muted loop playsinline>
-            <source src="resources/photos/real/fb2.MP4" type="video/mp4">
-            Twoja przeglądarka nie obsługuje wideo.
-          </video>
-        </div>
-      </div>
-    </div>
-    
-    <div class="carousel-item d-block d-md-none">
-      <div class="d-flex justify-content-center">
-        <div class="video-container-portrait-mobile">
-          <video class="w-100 h-100" autoplay muted loop playsinline>
-            <source src="resources/photos/real/fb3.MP4" type="video/mp4">
-            Twoja przeglądarka nie obsługuje wideo.
-          </video>
-        </div>
-      </div>
-    </div>
   </div>
-  
-  <!-- Kontrolki karuzeli -->
   <button class="carousel-control-prev" type="button" data-bs-target="#fotobudkaCarousel" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Poprzedni</span>
@@ -92,20 +42,6 @@ const oferta = {
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Następny</span>
   </button>
-  
-  <!-- Wskaźniki dla desktop -->
-  <div class="carousel-indicators d-none d-md-flex">
-    <button type="button" data-bs-target="#fotobudkaCarousel" data-bs-slide-to="0" class="active"></button>
-    <button type="button" data-bs-target="#fotobudkaCarousel" data-bs-slide-to="1"></button>
-  </div>
-  
-  <!-- Wskaźniki dla mobile -->
-  <div class="carousel-indicators d-flex d-md-none">
-    <button type="button" data-bs-target="#fotobudkaCarousel" data-bs-slide-to="0" class="active"></button>
-    <button type="button" data-bs-target="#fotobudkaCarousel" data-bs-slide-to="2"></button>
-    <button type="button" data-bs-target="#fotobudkaCarousel" data-bs-slide-to="3"></button>
-    <button type="button" data-bs-target="#fotobudkaCarousel" data-bs-slide-to="4"></button>
-  </div>
 </div>
     `,
     maskotki: `
@@ -315,7 +251,33 @@ function initMaskotki() {
     document.querySelectorAll('.oferta-tile').forEach(tile => {
       tile.addEventListener('click', function() {
         const section = this.dataset.show;
+        
+        // Usuń active z wszystkich kafelków
+        document.querySelectorAll('.oferta-tile').forEach(t => {
+          t.classList.remove('active');
+          const emoji = t.querySelector('.emoji');
+          if (emoji) {
+            emoji.classList.remove('swaying');
+          }
+        });
+        
+        // Dodaj active do klikniętego kafelka
+        this.classList.add('active');
+        const emoji = this.querySelector('.emoji');
+        if (emoji) {
+          // Krótkiego timeout dla animacji wejścia
+          setTimeout(() => {
+            emoji.classList.add('swaying');
+          }, 300);
+        }
+        
         showOfferSection(section);
+      });
+      
+      // Touch events dla lepszej responsywności na mobile
+      tile.addEventListener('touchstart', function(e) {
+        e.preventDefault(); // Zapobiega podwójnemu kliknięciu
+        this.click();
       });
     });
   }
@@ -325,5 +287,18 @@ function initMaskotki() {
     if (document.getElementById('oferta-content')) {
       initOfferTiles();
       initMaskotki();
+      
+      // Aktywuj pierwszy kafelek domyślnie
+      const firstTile = document.querySelector('.oferta-tile[data-show="fotobudka"]');
+      if (firstTile) {
+        firstTile.classList.add('active');
+        const emoji = firstTile.querySelector('.emoji');
+        if (emoji) {
+          setTimeout(() => {
+            emoji.classList.add('swaying');
+          }, 300);
+        }
+        showOfferSection('fotobudka');
+      }
     }
   });

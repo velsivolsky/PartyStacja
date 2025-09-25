@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PartyTime - Sklep</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/main_style.css">
+    <link rel="stylesheet" href="styles/effects.css">
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/@barba/core"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!--SEO META TAGS-->
+    <meta name="description" content="Sklep PartyStacja - wkrótce otwarcie! Sprawdź nasze nadchodzące produkty i bądź pierwszy który skorzysta z naszej oferty.">
+    <meta name="keywords" content="sklep, fotobudki, dekoracje, maskotki, przebrania, imprezy, eventy, PartyTime">
+    <meta name="author" content="PartyTime">
+    <meta property="og:title" content="PartyTime - Sklep">
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:description" content="Sklep PartyStacja - wkrótce otwarcie! Sprawdź nasze nadchodzące produkty i bądź pierwszy który skorzysta z naszej oferty.">
+    <meta property="og:image" content="https://www.partystacja.pl/resources/logo.png">
+    <meta property="og:url" content="https://www.partystacja.pl/sklep.html">
+    <meta property="og:type" content="website">
+
+    <style>
+        .under-construction {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .construction-icon {
+            font-size: 6rem;
+            color: #FFD700;
+            margin-bottom: 2rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-30px);
+            }
+            60% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .construction-text {
+            color: #f5ed96;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+
+
+        .coming-soon-card {
+            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .coming-soon-card:hover {
+            transform: translateY(-10px);
+            border-color: #FFD700;
+            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: #CFB53B;
+            margin-bottom: 1rem;
+            animation: sway-gentle 3s ease-in-out infinite;
+        }
+
+        @keyframes sway-gentle {
+            0%, 100% { 
+                transform: rotate(-15deg); 
+            }
+            50% { 
+                transform: rotate(15deg); 
+            }
+        }
+
+
+
+        .progress-bar-wrapper {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 5px;
+            margin: 2rem 0;
+        }
+
+        .progress-bar-fill {
+            background: linear-gradient(90deg, #FFD700, #CFB53B, #FFD700);
+            height: 20px;
+            border-radius: 20px;
+            width: 53%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.3) 30%,
+                rgba(255, 255, 255, 0.6) 50%,
+                rgba(255, 255, 255, 0.3) 70%,
+                rgba(255, 255, 255, 0) 100%);
+            animation: glow-sweep 3s ease-in-out infinite;
+        }
+
+        @keyframes glow-sweep {
+            0% { 
+                left: -100%;
+            }
+            50% {
+                left: -100%;
+            }
+            100% { 
+                left: 100%;
+            }
+        }
+
+        .sparkle {
+            position: absolute;
+            color: #FFD700;
+            animation: sparkle-rotate 4s ease-in-out infinite;
+        }
+
+        @keyframes sparkle-rotate {
+            0%, 100% { 
+                opacity: 0; 
+                transform: scale(0) rotate(0deg); 
+            }
+            50% { 
+                opacity: 1; 
+                transform: scale(1) rotate(180deg); 
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader widoczny podczas przejść -->
+    <div id="page-loader" style="display: none;">
+        <div>Ładowanie...</div>
+    </div>
+    
+    <div data-barba="wrapper">
+        <div class='sticky-top' id="nav-import"></div>
+
+        <main data-barba="container" data-barba-namespace="shop">
+
+
+            <!-- UNDER CONSTRUCTION SECTION -->
+            <section class="under-construction">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="sparkle" style="top: 10%; left: 20%;"><i class="fas fa-cog"></i></div>
+                            <div class="sparkle" style="top: 20%; right: 15%; animation-delay: 1s;"><i class="fas fa-hammer"></i></div>
+                            <div class="sparkle" style="bottom: 30%; left: 10%; animation-delay: 2s;"><i class="fas fa-wrench"></i></div>
+                            
+                            <div class="construction-icon">
+                                <i class="fas fa-hard-hat"></i>
+                            </div>
+                            
+                            <h2 class="display-3 fw-bold construction-text mb-4">
+                                Sklep w budowie
+                            </h2>
+                            
+                            <p class="lead construction-text mb-4">
+                                Pracujemy nad czymś wyjątkowym! Nasz sklep online będzie pełen niesamowitych produktów dla Twojej imprezy.
+                            </p>
+
+                            <!-- Progress Bar -->
+                            <div class="progress-bar-wrapper">
+                                <div class="progress-bar-fill"></div>
+                            </div>
+                            <p class="text-center" style="color: #CFB53B;">Postęp: 53% ukończone</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- COMING SOON FEATURES -->
+            <section class="container my-5">
+                <h2 class="text-center fw-bold mb-5" style="color: #f5ed96;">
+                    <i class="fas fa-rocket" style="color: #CFB53B;"></i> Co znajdziesz w naszym sklepie?
+                </h2>
+                
+                <div class="row g-4 justify-content-center">
+                    <div class="col-md-4">
+                        <div class="coming-soon-card text-center">
+                            <div class="feature-icon" style="animation-delay: 0s;">
+                                <i class="fas fa-birthday-cake"></i>
+                            </div>
+                            <h4 style="color: #FFD700;">Świeczki</h4>
+                            <p style="color: #f5f5f5;">Piękne świeczki urodzinowe, cyferki i fontanny do każdej okazji.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="coming-soon-card text-center">
+                            <div class="feature-icon" style="animation-delay: 1s;">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <h4 style="color: #FFD700;">Wianki</h4>
+                            <p style="color: #f5f5f5;">Dekoracyjne wianki i girlandy na każdą porę roku i okazję.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="coming-soon-card text-center">
+                            <div class="feature-icon" style="animation-delay: 2s;">
+                                <i class="fas fa-box-open"></i>
+                            </div>
+                            <h4 style="color: #FFD700;">Pakiety Imprezowe</h4>
+                            <p style="color: #f5f5f5;">Gotowe zestawy imprezowe - wszystko czego potrzebujesz w jednym pakiecie.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+
+            <!-- TIMELINE -->
+            <section class="container my-5">
+                <h2 class="text-center fw-bold mb-5" style="color: #f5ed96;">
+                    <i class="fas fa-calendar-alt" style="color: #CFB53B;"></i> Harmonogram otwarcia
+                </h2>
+                
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="timeline">
+                            <div class="d-flex justify-content-between align-items-center mb-4" style="color: #f5f5f5;">
+                                <div class="text-center">
+                                    <i class="fas fa-check-circle fa-2x" style="color: #4CAF50;"></i>
+                                    <p class="mt-2"><strong>Październik 2024</strong><br>Koncepcja i planowanie</p>
+                                </div>
+                                <div class="text-center">
+                                    <i class="fas fa-cog fa-2x fa-spin" style="color: #FFD700;"></i>
+                                    <p class="mt-2"><strong>Listopad 2024</strong><br>Rozwój platformy</p>
+                                </div>
+                                <div class="text-center">
+                                    <i class="fas fa-rocket fa-2x" style="color: #CFB53B;"></i>
+                                    <p class="mt-2"><strong>Grudzień 2024</strong><br>Wielkie otwarcie!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <div id="footer-import"></div>
+    </div>
+
+    <script src="js/import.js" defer></script>
+    <script src="js/active_link.js" defer></script>
+    <script src="js/barba-setup.js" defer></script>
+
+    <script>
+        // Dodaj więcej narzędzi budowlanych dynamicznie
+        document.addEventListener('DOMContentLoaded', function() {
+            const constructionSection = document.querySelector('.under-construction');
+            
+            // Dodaj losowe narzędzia budowlane w losowych miejscach i rozmiarach
+            const tools = ['fa-screwdriver', 'fa-toolbox', 'fa-saw', 'fa-ruler', 'fa-drill'];
+            for(let i = 0; i < 8; i++) { // Więcej narzędzi
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                const randomTool = tools[Math.floor(Math.random() * tools.length)];
+                const randomSize = Math.random() * 1.3 + 0.5; // Od 0.5rem do 1.8rem
+                
+                sparkle.innerHTML = `<i class="fas ${randomTool}"></i>`;
+                sparkle.style.fontSize = randomSize + 'rem';
+                sparkle.style.top = Math.random() * 85 + '%';
+                sparkle.style.left = Math.random() * 95 + '%';
+                sparkle.style.animationDelay = Math.random() * 4 + 's';
+                constructionSection.appendChild(sparkle);
+            }
+
+            // Animacja progress bara
+            const progressBar = document.querySelector('.progress-bar-fill');
+            setTimeout(() => {
+                progressBar.style.width = '53%';
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

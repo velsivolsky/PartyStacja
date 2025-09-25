@@ -1,5 +1,16 @@
 // ===== BARBA.JS SETUP - PŁYNNE PRZEJŚCIA MIĘDZY STRONAMI =====
 
+// ===== PARTICLES MANAGER - ZARZĄDZANIE GLOBALNYM STANEM =====
+window.ParticlesManager = {
+    interval: null,
+    transitionInterval: null,
+    scrollListener: null,
+    intersectionObserver: null,
+    globalContainer: null,
+    isInitialized: false,
+    isCleaningUp: false
+};
+
 document.addEventListener('DOMContentLoaded', function() {
     // Sprawdź czy Barba.js jest załadowany
     if (typeof barba === 'undefined') {
@@ -7,6 +18,12 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
+    // Stwórz globalny kontener tylko raz
+    if (!window.ParticlesManager.isInitialized) {
+        createGlobalParticlesContainer();
+        window.ParticlesManager.isInitialized = true;
+    }
+    
     // Stwórz globalne cząsteczki
     createGlobalParticles();
     
@@ -20,43 +37,50 @@ document.addEventListener('DOMContentLoaded', function() {
             
             leave(data) {
                 return new Promise(resolve => {
-                    // Stwórz cząsteczki na początku przejścia
-                    const particlesPromise = createTransitionParticles();
+                    console.log('🎭 Barba LEAVE: Tworzenie cząsteczek...');
+                    // Stwórz cząsteczki PRZED fade-out
+                    createTransitionParticles();
                     
-                    // Fade-out starej strony
-                    data.current.container.style.transition = 'opacity 0.6s ease-out';
-                    data.current.container.style.opacity = '0';
-                    
-                    // Zapisz promise cząsteczek globalnie
-                    window.transitionParticlesPromise = particlesPromise;
-                    
-                    setTimeout(resolve, 600);
+                    // Krótkie opóźnienie żeby cząsteczki się pojawiły
+                    setTimeout(() => {
+                        console.log('🎭 Barba LEAVE: Fade-out starej strony...');
+                        // Fade-out starej strony
+                        data.current.container.style.transition = 'opacity 0.6s ease-out';
+                        data.current.container.style.opacity = '0';
+                        
+                        setTimeout(resolve, 600);
+                    }, 200);
                 });
             },
             
             enter(data) {
                 return new Promise(resolve => {
+                    console.log('🎭 Barba ENTER: Przygotowanie nowej strony...');
                     // Przygotuj nową stronę (ukryta)
                     data.next.container.style.opacity = '0';
                     
                     // Fade-in nowej strony z cząsteczkami nadal widocznymi
                     setTimeout(() => {
+                        console.log('🎭 Barba ENTER: Fade-in nowej strony...');
                         data.next.container.style.transition = 'opacity 0.8s ease-in';
                         data.next.container.style.opacity = '1';
                         
                         // Usuń cząsteczki DOPIERO po fade-in nowej strony
                         setTimeout(() => {
+                            console.log('🎭 Barba ENTER: Usuwanie cząsteczek...');
                             clearTransitionParticles();
                             data.next.container.style.transition = '';
                             resolve();
-                        }, 800); // Po zakończeniu fade-in (0.8s)
+                        }, 1000); // Więcej czasu na fade-in + cleanup
                     }, 100);
                 });
             }
         }],
         
-        // Preload dla szybszego ładowania
-        prefetch: true,
+        // Inteligentne prefetch - 4G, Wi-Fi, bez oszczędzania danych
+        prefetch: navigator.connection ? 
+            (['4g', 'wifi'].includes(navigator.connection.effectiveType) && !navigator.connection.saveData) : 
+            true,
         
         // Callbacks dla różnych stron
         views: [{
@@ -93,6 +117,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 refreshParticles();
                 initPageScripts();
             }
+        }, {
+            namespace: 'shop',
+            afterEnter() {
+                refreshParticles();
+                initPageScripts();
+            }
         }]
     });
 
@@ -111,27 +141,97 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // ===== FUNKCJE POMOCNICZE =====
 
+// Globalny kontener na cząsteczki - POZA zasięgiem Barba.js
+function createGlobalParticlesContainer() {
+    // Guard - sprawdź czy już istnieje
+    if (window.ParticlesManager.globalContainer && document.body.contains(window.ParticlesManager.globalContainer)) {
+        console.log('🌟 Globalny kontener już istnieje, pomijam tworzenie');
+        return;
+    }
+    
+    // Usuń stary kontener jeśli istnieje
+    const existingContainer = document.getElementById('global-particles-overlay');
+    if (existingContainer) {
+        existingContainer.remove();
+    }
+    
+    // Stwórz globalny kontener
+    const globalContainer = document.createElement('div');
+    globalContainer.id = 'global-particles-overlay';
+    globalContainer.style.cssText = `
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        pointer-events: none !important;
+        z-index: 999998 !important;
+        overflow: hidden !important;
+        display: block !important;
+    `;
+    
+    // Dodaj do body - POZA data-barba="wrapper"
+    document.body.appendChild(globalContainer);
+    window.ParticlesManager.globalContainer = globalContainer;
+    
+    console.log('🌟 Globalny kontener cząsteczek utworzony:', globalContainer.id);
+    
+    // Debug - sprawdź czy kontener przetrwa Barba przejścia
+    const observer = new MutationObserver(() => {
+        if (!document.body.contains(globalContainer)) {
+            console.error('❌ Globalny kontener został usunięty z DOM!');
+            window.ParticlesManager.globalContainer = null;
+        }
+    });
+    observer.observe(document.body, { childList: true });
+}
+
 // Czyszczenie strony przed opuszczeniem
 function cleanupPage() {
+    const manager = window.ParticlesManager;
+    manager.isCleaningUp = true;
+    
     // Wyczyść timery cząsteczek
-    if (window.particlesInterval) {
-        clearInterval(window.particlesInterval);
+    if (manager.interval) {
+        clearInterval(manager.interval);
+        manager.interval = null;
     }
     
     // Wyczyść cząsteczki przejścia
-    if (window.transitionParticleInterval) {
-        clearInterval(window.transitionParticleInterval);
+    if (manager.transitionInterval) {
+        clearInterval(manager.transitionInterval);
+        manager.transitionInterval = null;
     }
     
     // Usuń scroll listenery
-    if (window.particlesScrollListener) {
-        window.removeEventListener('scroll', window.particlesScrollListener);
-        window.particlesScrollListener = null;
+    if (manager.scrollListener) {
+        window.removeEventListener('scroll', manager.scrollListener);
+        manager.scrollListener = null;
     }
     
-    // Wyczyść wszystkie kontenery cząsteczek
-    const particleContainers = document.querySelectorAll('#transition-particles, .fade-in-particles, .barba-overlay, .barba-smoke');
-    particleContainers.forEach(el => el.remove());
+    // Wyczyść intersection observer
+    if (manager.intersectionObserver) {
+        manager.intersectionObserver.disconnect();
+        manager.intersectionObserver = null;
+    }
+    
+    // Wyczyść tylko cząsteczki przejścia - NIE globalny kontener
+    const globalContainer = manager.globalContainer || document.getElementById('global-particles-overlay');
+    if (globalContainer) {
+        const transitionParticles = globalContainer.querySelector('#transition-particles');
+        if (transitionParticles) {
+            transitionParticles.remove();
+        }
+    }
+    
+    // Wyczyść inne efekty
+    const otherContainers = document.querySelectorAll('.fade-in-particles, .barba-overlay, .barba-smoke');
+    otherContainers.forEach(el => el.remove());
+    
+    // Reset flagi cleanup po zakończeniu
+    setTimeout(() => {
+        manager.isCleaningUp = false;
+    }, 200);
 }
 
 // Inicjalizacja skryptów strony
@@ -171,24 +271,38 @@ function initBootstrapComponents() {
 
 // Funkcja do odświeżania cząsteczek
 function refreshParticles() {
+    const manager = window.ParticlesManager;
+    
     // Usuń stare cząsteczki jeśli istnieją
     const existingContainer = document.getElementById('particles-container');
     if (existingContainer) {
-        clearInterval(window.particlesInterval);
+        if (manager.interval) {
+            clearInterval(manager.interval);
+            manager.interval = null;
+        }
         // Usuń scroll listener jeśli istnieje
-        if (window.particlesScrollListener) {
-            window.removeEventListener('scroll', window.particlesScrollListener);
+        if (manager.scrollListener) {
+            window.removeEventListener('scroll', manager.scrollListener);
+            manager.scrollListener = null;
+        }
+        // Usuń intersection observer
+        if (manager.intersectionObserver) {
+            manager.intersectionObserver.disconnect();
+            manager.intersectionObserver = null;
         }
         existingContainer.remove();
     }
     
-    // Stwórz nowe cząsteczki z małym opóźnieniem
+    // Stwórz nowe cząsteczki z małym opóźnieniem - z guardem
     setTimeout(() => {
-        createGlobalParticles();
+        // Guard - sprawdź czy DOM nadal istnieje i czy nie ma cleanup w trakcie
+        if (document.body && !window.ParticlesManager.isCleaningUp) {
+            createGlobalParticles();
+        }
     }, 100);
 }
 
-// ===== GLOBALNE CZĄSTECZKI ZŁOTA - OGRANICZONE DO HERO SECTION =====
+// ===== GLOBALNE CZĄSTECZKI ZŁOTA - HERO SECTION + FALLBACK =====
 function createGlobalParticles() {
     // Usuń stary kontener jeśli istnieje
     const existingContainer = document.getElementById('particles-container');
@@ -198,31 +312,37 @@ function createGlobalParticles() {
 
     // Znajdź hero section na aktualnej stronie
     const heroSection = document.querySelector('.hero-section');
+    
     if (!heroSection) {
-        console.log('Brak hero section na tej stronie - pomijam cząsteczki');
+        console.log('Brak hero section - tworzę subtelne cząsteczki tła');
+        createFallbackParticles();
         return;
     }
 
-    // Pobierz wymiary hero section
-    const heroRect = heroSection.getBoundingClientRect();
-    const heroTop = heroSection.offsetTop;
+    // Pozycjonowanie względem hero section - unika problemów z reflow
     const heroHeight = heroSection.offsetHeight;
+    
+    // Ustaw hero section jako relative jeśli nie jest
+    const heroStyle = window.getComputedStyle(heroSection);
+    if (heroStyle.position === 'static') {
+        heroSection.style.position = 'relative';
+    }
 
     const particlesContainer = document.createElement('div');
     particlesContainer.id = 'particles-container';
     particlesContainer.style.cssText = `
         position: absolute;
-        top: ${heroTop}px;
+        top: 0;
         left: 0;
-        width: 100vw;
-        height: ${heroHeight}px;
+        width: 100%;
+        height: 100%;
         pointer-events: none;
         z-index: 1;
         overflow: hidden;
     `;
     
-    // Dodaj do body
-    document.body.appendChild(particlesContainer);
+    // Dodaj bezpośrednio do hero section zamiast body
+    heroSection.appendChild(particlesContainer);
 
     // Mniej cząsteczek na mobile
     const particleCount = window.innerWidth <= 768 ? 10 : 20;
@@ -244,7 +364,7 @@ function createGlobalParticles() {
         // Losowy kąt obrotu dla iskierek
         const rotation = Math.random() * 360;
         
-        // Cząsteczki pojawiają się na dole hero section
+        // Cząsteczki startują z samego dołu jak iskierki z ognia
         particle.style.cssText = `
             position: absolute;
             width: ${width}px;
@@ -253,35 +373,57 @@ function createGlobalParticles() {
             border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
             box-shadow: 0 0 ${width * 2}px ${color}66, 0 0 ${width * 4}px ${color}33;
             left: ${Math.random() * 100}%;
-            top: ${heroHeight}px;
+            top: ${Math.random() * 10 + 90}%;
             pointer-events: none;
             transform: rotate(${rotation}deg);
         `;
 
         container.appendChild(particle);
 
-        // Animacja iskierek - od dołu hero section do góry z obrotem
-        const duration = Math.random() * 8000 + 6000;
-        const drift = (Math.random() - 0.5) * 200;
-        const spin = (Math.random() - 0.5) * 720; // Obracanie się
+        // Animacja iskierek - jak iskry nad ogniskiem (szybki start, potem kołysanie)
+        const duration = Math.random() * 6000 + 5000; // Dłużej, 5-11 sekund
+        const horizontalDrift = (Math.random() - 0.5) * 120; // Więcej bujania na boki
+        const wavyMotion = Math.random() * 40 + 20; // Falujący ruch
+        const spin = Math.random() * 360; // Pełny obrót
 
         particle.animate([
             {
-                transform: `translateY(0px) translateX(0px) rotate(${rotation}deg)`,
+                transform: `translateY(0px) translateX(0px) rotate(${rotation}deg) scale(0)`,
                 opacity: 0
             },
             {
-                transform: `translateY(-${heroHeight * 0.2}px) translateX(${drift/4}px) rotate(${rotation + spin/3}deg)`,
-                opacity: 0.8,
-                offset: 0.1
+                // Szybki start w górę
+                transform: `translateY(-8vh) translateX(${horizontalDrift * 0.1}px) rotate(${rotation + spin * 0.1}deg) scale(1)`,
+                opacity: 1,
+                offset: 0.15
             },
             {
-                transform: `translateY(-${heroHeight + 100}px) translateX(${drift}px) rotate(${rotation + spin}deg)`,
+                // Zwalnianie i zaczynanie kołysania
+                transform: `translateY(-25vh) translateX(${horizontalDrift * 0.4 + Math.sin(1) * wavyMotion}px) rotate(${rotation + spin * 0.3}deg) scale(0.9)`,
+                opacity: 0.9,
+                offset: 0.35
+            },
+            {
+                // Kołysanie w środku lotu
+                transform: `translateY(-45vh) translateX(${horizontalDrift * 0.7 + Math.sin(2) * wavyMotion}px) rotate(${rotation + spin * 0.6}deg) scale(0.8)`,
+                opacity: 0.7,
+                offset: 0.6
+            },
+            {
+                // Więcej kołysania i zwalnianie
+                transform: `translateY(-65vh) translateX(${horizontalDrift * 0.9 + Math.sin(3) * wavyMotion * 0.8}px) rotate(${rotation + spin * 0.8}deg) scale(0.6)`,
+                opacity: 0.5,
+                offset: 0.8
+            },
+            {
+                // Delikatne wygaszanie na górze
+                transform: `translateY(-75vh) translateX(${horizontalDrift + Math.sin(4) * wavyMotion * 0.5}px) rotate(${rotation + spin}deg) scale(0.3)`,
                 opacity: 0
             }
         ], {
             duration: duration,
-            easing: 'ease-out'
+            easing: 'cubic-bezier(0.55, 0.085, 0.68, 0.53)', // Start szybki, potem spowolnienie
+            composite: 'replace'
         });
 
         // Usuń cząsteczkę po animacji
@@ -297,80 +439,192 @@ function createGlobalParticles() {
         setTimeout(() => createParticle(), i * 300);
     }
 
-    // Ciągle dodawaj nowe cząsteczki - rzadziej
-    window.particlesInterval = setInterval(() => {
+    // Ciągle dodawaj nowe cząsteczki - częściej dla lepszego efektu iskier
+    window.ParticlesManager.interval = setInterval(() => {
         createParticle();
-    }, 1000);
+    }, 800);
     
-    // Sprawdź czy hero section jest widoczny podczas scrollu
-    const scrollHandler = () => {
-        const heroSection = document.querySelector('.hero-section');
-        if (!heroSection) return;
-        
-        const heroRect = heroSection.getBoundingClientRect();
-        const isVisible = heroRect.bottom > 0 && heroRect.top < window.innerHeight;
-        
-        // Dodaj cząsteczki tylko gdy hero section jest widoczny
-        if (isVisible && Math.random() < 0.3) {
-            createParticle();
-        }
+    // REUŻYWALNY INTERSECTION OBSERVER
+    const manager = window.ParticlesManager;
+    
+    // Wyczyść stary observer jeśli istnieje
+    if (manager.intersectionObserver) {
+        manager.intersectionObserver.disconnect();
+    }
+    
+    const observerOptions = {
+        root: null,
+        rootMargin: '50px',
+        threshold: 0.1
     };
     
-    // Zapisz listener żeby móc go później usunąć
-    window.particlesScrollListener = scrollHandler;
-    window.addEventListener('scroll', scrollHandler, { passive: true });
+    const observerCallback = (entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && Math.random() < 0.4) {
+                // Hero section jest widoczny - dodaj dodatkowe cząsteczki
+                for (let i = 0; i < 2; i++) {
+                    setTimeout(() => createParticle(), i * 200);
+                }
+            }
+        });
+    };
+    
+    manager.intersectionObserver = new IntersectionObserver(observerCallback, observerOptions);
+    manager.intersectionObserver.observe(heroSection);
 }
 
+// ===== FALLBACK CZĄSTECZKI DLA STRON BEZ HERO SECTION =====
+function createFallbackParticles() {
+    const particlesContainer = document.createElement('div');
+    particlesContainer.id = 'particles-container';
+    particlesContainer.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 1;
+        overflow: hidden;
+    `;
+    
+    document.body.appendChild(particlesContainer);
 
+    // Bardzo subtelne cząsteczki tła - mniej i mniejsze
+    const particleCount = window.innerWidth <= 768 ? 3 : 5;
+
+    function createSubtleParticle() {
+        const container = document.getElementById('particles-container');
+        if (!container) return;
+        
+        const particle = document.createElement('div');
+        particle.className = 'subtle-particle';
+        
+        // Małe, subtelne iskierki
+        const size = Math.random() * 3 + 1; // 1-4px
+        const shades = ['#FFD700', '#DAA520', '#B8860B'];
+        const color = shades[Math.floor(Math.random() * shades.length)];
+        
+        // Losowa pozycja na całym ekranie
+        particle.style.cssText = `
+            position: absolute;
+            width: ${size}px;
+            height: ${size}px;
+            background: ${color}66;
+            border-radius: 50%;
+            box-shadow: 0 0 ${size * 2}px ${color}33;
+            left: ${Math.random() * 100}%;
+            top: ${Math.random() * 100}%;
+            pointer-events: none;
+        `;
+
+        container.appendChild(particle);
+
+        // Bardzo powolna animacja
+        const duration = Math.random() * 15000 + 10000;
+        const drift = (Math.random() - 0.5) * 100;
+
+        particle.animate([
+            {
+                transform: `translateY(0px) translateX(0px)`,
+                opacity: 0
+            },
+            {
+                transform: `translateY(-50px) translateX(${drift/2}px)`,
+                opacity: 0.3,
+                offset: 0.2
+            },
+            {
+                transform: `translateY(-150px) translateX(${drift}px)`,
+                opacity: 0
+            }
+        ], {
+            duration: duration,
+            easing: 'ease-out',
+            composite: 'replace'
+        });
+
+        setTimeout(() => {
+            if (particle.parentNode) {
+                particle.remove();
+            }
+        }, duration);
+    }
+
+    // Stwórz początkowe cząsteczki
+    for (let i = 0; i < particleCount; i++) {
+        setTimeout(() => createSubtleParticle(), i * 1000);
+    }
+
+    // Bardzo rzadko dodawaj nowe
+    window.ParticlesManager.interval = setInterval(() => {
+        if (Math.random() < 0.3) {
+            createSubtleParticle();
+        }
+    }, 3000);
+}
 
 // ===== CZĄSTECZKI PRZEJŚCIA - WIDOCZNE POD CZAS ŁADOWANIA =====
 function createTransitionParticles() {
-    return new Promise((resolve) => {
-        const particlesContainer = document.createElement('div');
-        particlesContainer.id = 'transition-particles';
-        particlesContainer.className = 'transition-particles';
-        particlesContainer.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: 99999;
-            overflow: hidden;
-            background: rgba(0, 0, 0, 0.1);
-        `;
-        
-        document.body.appendChild(particlesContainer);
-        window.transitionParticlesContainer = particlesContainer;
+    console.log('✨ Tworzenie cząsteczek przejścia...');
+    
+    // Sprawdź czy globalny kontener istnieje
+    const globalContainer = window.ParticlesManager.globalContainer || document.getElementById('global-particles-overlay');
+    if (!globalContainer) {
+        console.error('❌ Brak globalnego kontenera cząsteczek!');
+        createGlobalParticlesContainer();
+        return;
+    }
+    
+    // Usuń stare cząsteczki przejścia jeśli istnieją
+    const existingParticles = globalContainer.querySelector('#transition-particles');
+    if (existingParticles) {
+        console.log('✨ Usuwanie starych cząsteczek...');
+        existingParticles.remove();
+    }
+    
+    const particlesContainer = document.createElement('div');
+    particlesContainer.id = 'transition-particles';
+    particlesContainer.className = 'transition-particles';
+    particlesContainer.style.cssText = `
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        pointer-events: none !important;
+        z-index: 10 !important;
+        overflow: hidden !important;
+        background: rgba(0, 0, 0, 0.3) !important;
+        display: block !important;
+    `;
+    
+    // Dodaj do GLOBALNEGO kontenera - nie do body!
+    globalContainer.appendChild(particlesContainer);
 
-        // Różne kolory złota
-        const goldColors = ['#FFD700', '#FFA500', '#DAA520', '#B8860B', '#CD853F', '#F4E87C'];
-        
-        // Więcej cząsteczek na dłużej
-        const particleCount = window.innerWidth <= 768 ? 20 : 35;
-        
-        // Stwórz cząsteczki natychmiast
-        for (let i = 0; i < particleCount; i++) {
-            setTimeout(() => createLongTransitionParticle(particlesContainer, goldColors), i * 100);
-        }
-        
-        // Kontynuuj tworzenie cząsteczek przez czas przejścia
-        const particleInterval = setInterval(() => {
-            if (document.getElementById('transition-particles')) {
-                for (let i = 0; i < 3; i++) {
-                    createLongTransitionParticle(particlesContainer, goldColors);
-                }
-            } else {
-                clearInterval(particleInterval);
+    // Różne kolory złota
+    const goldColors = ['#FFD700', '#FFA500', '#DAA520', '#B8860B', '#CD853F', '#F4E87C'];
+    
+    // Więcej cząsteczek na dłużej
+    const particleCount = window.innerWidth <= 768 ? 25 : 40;
+    
+    // Stwórz cząsteczki natychmiast
+    for (let i = 0; i < particleCount; i++) {
+        setTimeout(() => createLongTransitionParticle(particlesContainer, goldColors), i * 50);
+    }
+    
+    // Kontynuuj tworzenie cząsteczek przez czas przejścia
+    const particleInterval = setInterval(() => {
+        if (document.getElementById('transition-particles')) {
+            for (let i = 0; i < 4; i++) {
+                createLongTransitionParticle(particlesContainer, goldColors);
             }
-        }, 800);
-        
-        window.transitionParticleInterval = particleInterval;
-        
-        // Cząsteczki są gotowe natychmiast - nie usuwaj automatycznie
-        resolve();
-    });
+        } else {
+            clearInterval(particleInterval);
+        }
+    }, 500);
+    
+    window.ParticlesManager.transitionInterval = particleInterval;
 }
 
 function createLongTransitionParticle(container, goldColors) {
@@ -432,7 +686,8 @@ function createLongTransitionParticle(container, goldColors) {
     ], {
         duration: duration,
         easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-        iterations: 1
+        iterations: 1,
+        composite: 'replace'
     });
     
     // Usuń cząsteczkę po animacji
@@ -444,27 +699,34 @@ function createLongTransitionParticle(container, goldColors) {
 }
 
 function clearTransitionParticles() {
+    console.log('🧹 Czyszczenie cząsteczek przejścia...');
+    const manager = window.ParticlesManager;
+    
     // Wyczyść interval
-    if (window.transitionParticleInterval) {
-        clearInterval(window.transitionParticleInterval);
-        window.transitionParticleInterval = null;
+    if (manager.transitionInterval) {
+        clearInterval(manager.transitionInterval);
+        manager.transitionInterval = null;
     }
     
-    // Usuń kontener z fade-out
-    const container = document.getElementById('transition-particles');
+    // Szukaj kontenera w globalnym kontenerze
+    const globalContainer = manager.globalContainer || document.getElementById('global-particles-overlay');
+    const container = globalContainer?.querySelector('#transition-particles');
+    
     if (container) {
-        container.style.transition = 'opacity 0.6s ease-out';
+        console.log('🧹 Płynne fade-out cząsteczek i overlayu...');
+        // Szybszy fade-out dla lepszej responsywności
+        container.style.transition = 'opacity 0.4s ease-out';
         container.style.opacity = '0';
+        
         setTimeout(() => {
             if (container.parentNode) {
+                console.log('🧹 Usuwanie kontenera cząsteczek z globalnego kontenera');
                 container.remove();
             }
-            window.transitionParticlesContainer = null;
-        }, 600);
+        }, 400); // Skrócony czas dla szybszego przejścia
+    } else {
+        console.log('🧹 Brak kontenera cząsteczek do usunięcia');
     }
-    
-    // Wyczyść promise
-    window.transitionParticlesPromise = null;
 }
 
 // ===== STARE CZĄSTECZKI FADE-IN (BACKUP) =====
@@ -586,7 +848,8 @@ function createSingleFadeParticle(container, goldColors) {
         }
     ], {
         duration: duration,
-        easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+        easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+        composite: 'replace'
     });
     
     // Usuń cząsteczkę po animacji
