@@ -38,18 +38,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 return new Promise(resolve => {
                     // Przygotuj nową stronę (ukryta)
                     data.next.container.style.opacity = '0';
-                    data.next.container.style.transition = 'opacity 0.8s ease-in';
                     
-                    // Poczekaj aż cząsteczki będą gotowe do zniknięcia
-                    if (window.transitionParticlesPromise) {
-                        window.transitionParticlesPromise.then(() => {
-                            // Teraz pokaż nową stronę i usuń cząsteczki
-                            fadeInNewPage(data, resolve);
-                        });
-                    } else {
-                        // Fallback gdyby coś poszło nie tak
-                        setTimeout(() => fadeInNewPage(data, resolve), 100);
-                    }
+                    // Fade-in nowej strony z cząsteczkami nadal widocznymi
+                    setTimeout(() => {
+                        data.next.container.style.transition = 'opacity 0.8s ease-in';
+                        data.next.container.style.opacity = '1';
+                        
+                        // Usuń cząsteczki DOPIERO po fade-in nowej strony
+                        setTimeout(() => {
+                            clearTransitionParticles();
+                            data.next.container.style.transition = '';
+                            resolve();
+                        }, 800); // Po zakończeniu fade-in (0.8s)
+                    }, 100);
                 });
             }
         }],
@@ -320,20 +321,7 @@ function createGlobalParticles() {
     window.addEventListener('scroll', scrollHandler, { passive: true });
 }
 
-// ===== FUNKCJA POMOCNICZA DO FADE-IN NOWEJ STRONY =====
-function fadeInNewPage(data, resolve) {
-    // Fade-in nowej strony
-    requestAnimationFrame(() => {
-        data.next.container.style.opacity = '1';
-        
-        // Wyczyść cząsteczki i zakończ przejście
-        setTimeout(() => {
-            clearTransitionParticles();
-            data.next.container.style.transition = '';
-            resolve();
-        }, 800);
-    });
-}
+
 
 // ===== CZĄSTECZKI PRZEJŚCIA - WIDOCZNE POD CZAS ŁADOWANIA =====
 function createTransitionParticles() {
@@ -380,8 +368,8 @@ function createTransitionParticles() {
         
         window.transitionParticleInterval = particleInterval;
         
-        // Sygnalizuj że cząsteczki są gotowe po 1 sekundzie
-        setTimeout(resolve, 1000);
+        // Cząsteczki są gotowe natychmiast - nie usuwaj automatycznie
+        resolve();
     });
 }
 
