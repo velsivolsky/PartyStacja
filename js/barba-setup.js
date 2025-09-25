@@ -40,13 +40,13 @@ document.addEventListener('DOMContentLoaded', function() {
             
             leave(data) {
                 return new Promise(resolve => {
-                    console.log('🎭 Barba LEAVE: Tworzenie cząsteczek...');
+                    //console.log('🎭 Barba LEAVE: Tworzenie cząsteczek...');
                     // Stwórz cząsteczki PRZED fade-out
                     createTransitionParticles();
                     
                     // Krótkie opóźnienie żeby cząsteczki się pojawiły
                     setTimeout(() => {
-                        console.log('🎭 Barba LEAVE: Fade-out starej strony...');
+                        //console.log('🎭 Barba LEAVE: Fade-out starej strony...');
                         // Fade-out starej strony
                         data.current.container.style.transition = 'opacity 0.6s ease-out';
                         data.current.container.style.opacity = '0';
@@ -58,19 +58,19 @@ document.addEventListener('DOMContentLoaded', function() {
             
             enter(data) {
                 return new Promise(resolve => {
-                    console.log('🎭 Barba ENTER: Przygotowanie nowej strony...');
+                    //console.log('🎭 Barba ENTER: Przygotowanie nowej strony...');
                     // Przygotuj nową stronę (ukryta)
                     data.next.container.style.opacity = '0';
                     
                     // Fade-in nowej strony z cząsteczkami nadal widocznymi
                     setTimeout(() => {
-                        console.log('🎭 Barba ENTER: Fade-in nowej strony...');
+                        //console.log('🎭 Barba ENTER: Fade-in nowej strony...');
                         data.next.container.style.transition = 'opacity 0.8s ease-in';
                         data.next.container.style.opacity = '1';
                         
                         // Usuń cząsteczki DOPIERO po fade-in nowej strony
                         setTimeout(() => {
-                            console.log('🎭 Barba ENTER: Usuwanie cząsteczek...');
+                            //console.log('🎭 Barba ENTER: Usuwanie cząsteczek...');
                             clearTransitionParticles();
                             data.next.container.style.transition = '';
                             resolve();
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function createGlobalParticlesContainer() {
     // Guard - sprawdź czy już istnieje
     if (window.ParticlesManager.globalContainer && document.body.contains(window.ParticlesManager.globalContainer)) {
-        console.log('🌟 Globalny kontener już istnieje, pomijam tworzenie');
+        //console.log('🌟 Globalny kontener już istnieje, pomijam tworzenie');
         return;
     }
     
@@ -177,7 +177,7 @@ function createGlobalParticlesContainer() {
     document.body.appendChild(globalContainer);
     window.ParticlesManager.globalContainer = globalContainer;
     
-    console.log('🌟 Globalny kontener cząsteczek utworzony:', globalContainer.id);
+    //console.log('🌟 Globalny kontener cząsteczek utworzony:', globalContainer.id);
     
     // Debug - sprawdź czy kontener przetrwa Barba przejścia
     const observer = new MutationObserver(() => {
@@ -317,7 +317,7 @@ function createGlobalParticles() {
     const heroSection = document.querySelector('.hero-section');
     
     if (!heroSection) {
-        console.log('Brak hero section - tworzę subtelne cząsteczki tła');
+        //console.log('Brak hero section - tworzę subtelne cząsteczki tła');
         createFallbackParticles();
         return;
     }
@@ -569,7 +569,7 @@ function createFallbackParticles() {
 
 // ===== CZĄSTECZKI PRZEJŚCIA - WIDOCZNE POD CZAS ŁADOWANIA =====
 function createTransitionParticles() {
-    console.log('✨ Tworzenie cząsteczek przejścia...');
+    //console.log('✨ Tworzenie cząsteczek przejścia...');
     
     // Sprawdź czy globalny kontener istnieje
     const globalContainer = window.ParticlesManager.globalContainer || document.getElementById('global-particles-overlay');
@@ -582,7 +582,7 @@ function createTransitionParticles() {
     // Usuń stare cząsteczki przejścia jeśli istnieją
     const existingParticles = globalContainer.querySelector('#transition-particles');
     if (existingParticles) {
-        console.log('✨ Usuwanie starych cząsteczek...');
+        //console.log('✨ Usuwanie starych cząsteczek...');
         existingParticles.remove();
     }
     
@@ -702,7 +702,7 @@ function createLongTransitionParticle(container, goldColors) {
 }
 
 function clearTransitionParticles() {
-    console.log('🧹 Czyszczenie cząsteczek przejścia...');
+    //console.log('🧹 Czyszczenie cząsteczek przejścia...');
     const manager = window.ParticlesManager;
     
     // Wyczyść interval
@@ -716,19 +716,19 @@ function clearTransitionParticles() {
     const container = globalContainer?.querySelector('#transition-particles');
     
     if (container) {
-        console.log('🧹 Płynne fade-out cząsteczek i overlayu...');
+        //console.log('🧹 Płynne fade-out cząsteczek i overlayu...');
         // Szybszy fade-out dla lepszej responsywności
         container.style.transition = 'opacity 0.4s ease-out';
         container.style.opacity = '0';
         
         setTimeout(() => {
             if (container.parentNode) {
-                console.log('🧹 Usuwanie kontenera cząsteczek z globalnego kontenera');
+                //console.log('🧹 Usuwanie kontenera cząsteczek z globalnego kontenera');
                 container.remove();
             }
         }, 400); // Skrócony czas dla szybszego przejścia
     } else {
-        console.log('🧹 Brak kontenera cząsteczek do usunięcia');
+        //console.log('🧹 Brak kontenera cząsteczek do usunięcia');
     }
 }
 
@@ -876,7 +876,7 @@ function prefetchAllPages() {
         'polityka.html'
     ];
     
-    console.log('🚀 Rozpoczynam prefetch wszystkich stron...');
+    //console.log('🚀 Rozpoczynam prefetch wszystkich stron...');
     
     pages.forEach((page, index) => {
         // Różne delay żeby nie przeciążać serwera
@@ -889,11 +889,11 @@ function prefetchAllPages() {
 function prefetchPage(url) {
     // Sprawdź czy nie jesteśmy już na tej stronie
     if (window.location.pathname.includes(url) || window.location.pathname === '/' && url === 'index.html') {
-        console.log(`⏭️ Pomijam prefetch ${url} - jesteśmy już na tej stronie`);
+        //console.log(`⏭️ Pomijam prefetch ${url} - jesteśmy już na tej stronie`);
         return;
     }
     
-    console.log(`📥 Prefetch: ${url}`);
+    //console.log(`📥 Prefetch: ${url}`);
     
     // Użyj fetch z cache dla performance
     fetch(url, {
@@ -902,7 +902,7 @@ function prefetchPage(url) {
     })
     .then(response => {
         if (response.ok) {
-            console.log(`✅ Prefetch zakończony: ${url}`);
+            //console.log(`✅ Prefetch zakończony: ${url}`);
             return response.text();
         }
         throw new Error(`HTTP ${response.status}`);
@@ -944,7 +944,7 @@ function prefetchResource(url, type) {
     if (type === 'script') link.as = 'script';
     
     document.head.appendChild(link);
-    console.log(`📦 Prefetch zasobu: ${url}`);
+    //console.log(`📦 Prefetch zasobu: ${url}`);
 }
 
 // ===== SUBTELNE EFEKTY PRZEJŚCIA (OPCJONALNE) =====
