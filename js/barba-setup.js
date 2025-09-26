@@ -3,10 +3,40 @@
 // ===== GLOBALNY CACHE DLA PREFETCH =====
 window.PageCache = {};
 
-// Debug function - sprawdź co jest w cache
+// Lista wszystkich stron do prefetch - 100% pewności że wszystko zostanie załadowane
+const ALL_PAGES = [
+    '/',
+    '/index.html',
+    '/o_nas.html',
+    '/galeria.html', 
+    '/oferta.html',
+    '/kontakt.html',
+    '/sklep.html',
+    '/polityka.html'
+];
+
+// Normalizacja URL żeby uniknąć duplikatów w cache
+function normalizeUrl(url) {
+    try {
+        let u = new URL(url, window.location.origin);
+        u.hash = '';
+        u.search = '';
+        return u.toString().replace(/\/$/, ''); // usuń trailing slash
+    } catch {
+        return url;
+    }
+}
+
+// Debug functions - sprawdź co jest w cache
 window.debugCache = () => {
     console.log('📦 Cache content:', Object.keys(window.PageCache));
     return window.PageCache;
+};
+
+// Test function - ręczny prefetch
+window.testPrefetch = () => {
+    console.log('🧪 Test prefetch...');
+    prefetchAllPages();
 };
 
 // ===== PARTICLES MANAGER - ZARZĄDZANIE GLOBALNYM STANEM =====
@@ -36,20 +66,20 @@ document.addEventListener('DOMContentLoaded', function() {
     // Stwórz globalne cząsteczki
     createGlobalParticles();
     
-    // ===== PREFETCH WSZYSTKICH STRON OD STARTU =====
-    if (!window._barbaPrefetched) {
-        prefetchAllPages();
-        window._barbaPrefetched = true;
-    }
+    // ===== PREFETCH PRZENOSIMY DO HOOKA ŻEBY DOM BYŁ W PEŁNI ZAŁADOWANY =====
+    // (prefetch będzie w barba.hooks.after)
     
     // ===== INICJALIZACJA BARBA.JS =====
     barba.init({
         // Custom request interceptor żeby używać naszego cache
         request: (url, trigger, action, cache) => {
+            // Normalizuj URL żeby uniknąć problemów z różnymi formatami
+            const key = normalizeUrl(url);
+            
             // Sprawdź czy mamy w cache
-            if (window.PageCache[url]) {
-                console.log('🚀 Używam cache dla:', url);
-                return Promise.resolve(window.PageCache[url]);
+            if (window.PageCache[key]) {
+                console.log('🚀 Używam cache dla:', key);
+                return Promise.resolve(window.PageCache[key]);
             }
             
             // Jeśli nie ma w cache, użyj standardowego fetch
@@ -59,8 +89,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     return res.text();
                 })
                 .then(html => {
-                    // Zapisz do cache na przyszłość
-                    window.PageCache[url] = html;
+                    // Zapisz do cache na przyszłość (z normalizowanym kluczem)
+                    window.PageCache[key] = html;
+                    console.log('💾 Zapisano do cache:', key);
                     return html;
                 });
         },
@@ -181,9 +212,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     barba.hooks.after(() => {
-        // Fallback prefetch - na wypadek gdyby DOM się odświeżył bez pełnego reloadu
+        // Prefetch po pełnym załadowaniu DOM (navbar, footer, itp.)
         if (!window._barbaPrefetched) {
-            console.log('🔄 Fallback prefetch - uruchamianie z hooka');
+            console.log('� Uruchamianie prefetch po załadowaniu DOM');
             prefetchAllPages();
             window._barbaPrefetched = true;
         }
@@ -913,22 +944,19 @@ function createSingleFadeParticle(container, goldColors) {
 
 // ===== PREFETCH WSZYSTKICH STRON DLA BŁYSKAWICZNYCH PRZEJŚĆ =====
 function prefetchAllPages() {
-    const links = Array.from(document.querySelectorAll('a[href]'))
-        .map(link => link.href)
-        .filter((href, index, self) =>
-            href.startsWith(window.location.origin) && // tylko nasze strony
-            !href.includes('#') &&                     // bez anchorów
-            self.indexOf(href) === index               // unikalne
-        );
+    // Używamy stałej listy wszystkich stron zamiast szukać w DOM
+    const links = ALL_PAGES;
 
     console.log('� Rozpoczynam prefetch wszystkich stron:', links);
 
     // Sekwencyjne ściąganie z małymi opóźnieniami żeby nie przeciążyć serwera
     links.forEach((url, index) => {
         setTimeout(() => {
+            const key = normalizeUrl(url);
+            
             // Sprawdź czy już nie mamy w cache
-            if (window.PageCache[url]) {
-                console.log(`⚡ Już w cache: ${url}`);
+            if (window.PageCache[key]) {
+                console.log(`⚡ Już w cache: ${key}`);
                 return;
             }
             
@@ -938,9 +966,9 @@ function prefetchAllPages() {
                     return res.text();
                 })
                 .then(html => {
-                    // Zapisz do naszego własnego cache
-                    window.PageCache[url] = html;
-                    console.log(`✅ Prefetched (${index + 1}/${links.length}): ${url}`);
+                    // Zapisz do naszego cache z normalizowanym kluczem
+                    window.PageCache[key] = html;
+                    console.log(`✅ Prefetched (${index + 1}/${links.length}): ${key}`);
                 })
                 .catch(err => console.warn('⚠️ Prefetch error:', err));
         }, index * 200); // 200ms między requestami
