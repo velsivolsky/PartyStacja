@@ -27,9 +27,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Stwórz globalne cząsteczki
     createGlobalParticles();
     
-    // ===== PREFETCH WSZYSTKICH STRON =====
-    prefetchAllPages();
-    
     // ===== INICJALIZACJA BARBA.JS =====
     barba.init({
         transitions: [{
@@ -139,6 +136,13 @@ document.addEventListener('DOMContentLoaded', function() {
         // Odśwież cząsteczki i skrypty po każdym przejściu
         refreshParticles();
         initPageScripts();
+    });
+
+    barba.hooks.after(() => {
+        if (!window._barbaPrefetched) {
+            prefetchAllPages();
+            window._barbaPrefetched = true;
+        }
     });
 });
 
@@ -865,86 +869,31 @@ function createSingleFadeParticle(container, goldColors) {
 
 // ===== PREFETCH WSZYSTKICH STRON DLA BŁYSKAWICZNYCH PRZEJŚĆ =====
 function prefetchAllPages() {
-    // Lista wszystkich podstron witryny
-    const pages = [
-        'index.html',
-        'o_nas.html', 
-        'oferta.html',
-        'galeria.html',
-        'kontakt.html',
-        'sklep.html',
-        'polityka.html'
-    ];
-    
-    //console.log('🚀 Rozpoczynam prefetch wszystkich stron...');
-    
-    pages.forEach((page, index) => {
-        // Różne delay żeby nie przeciążać serwera
-        setTimeout(() => {
-            prefetchPage(page);
-        }, index * 200); // 200ms opóźnienia między stronami
-    });
-}
+    const links = Array.from(document.querySelectorAll('a[href]'))
+        .map(link => link.href)
+        .filter((href, index, self) =>
+            href.startsWith(window.location.origin) && // tylko nasze strony
+            !href.includes('#') &&                     // bez anchorów
+            self.indexOf(href) === index               // unikalne
+        );
 
-function prefetchPage(url) {
-    // Sprawdź czy nie jesteśmy już na tej stronie
-    if (window.location.pathname.includes(url) || window.location.pathname === '/' && url === 'index.html') {
-        //console.log(`⏭️ Pomijam prefetch ${url} - jesteśmy już na tej stronie`);
-        return;
-    }
-    
-    //console.log(`📥 Prefetch: ${url}`);
-    
-    // Użyj fetch z cache dla performance
-    fetch(url, {
-        method: 'GET',
-        cache: 'force-cache'
-    })
-    .then(response => {
-        if (response.ok) {
-            //console.log(`✅ Prefetch zakończony: ${url}`);
-            return response.text();
-        }
-        throw new Error(`HTTP ${response.status}`);
-    })
-    .then(html => {
-        // Opcjonalnie: możemy też prefetch CSS/JS z tej strony
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        
-        // Prefetch unikalnych CSS i JS z tej strony
-        const stylesheets = doc.querySelectorAll('link[rel="stylesheet"]');
-        const scripts = doc.querySelectorAll('script[src]');
-        
-        stylesheets.forEach(link => {
-            const href = link.getAttribute('href');
-            if (href && !document.querySelector(`link[href="${href}"]`)) {
-                prefetchResource(href, 'style');
-            }
-        });
-        
-        scripts.forEach(script => {
-            const src = script.getAttribute('src');
-            if (src && !document.querySelector(`script[src="${src}"]`)) {
-                prefetchResource(src, 'script');
-            }
-        });
-    })
-    .catch(error => {
-        console.warn(`⚠️ Błąd prefetch ${url}:`, error);
-    });
-}
+    console.log('� Rozpoczynam prefetch wszystkich stron:', links);
 
-function prefetchResource(url, type) {
-    // Użyj link rel="prefetch" dla zasobów
-    const link = document.createElement('link');
-    link.rel = 'prefetch';
-    link.href = url;
-    if (type === 'style') link.as = 'style';
-    if (type === 'script') link.as = 'script';
-    
-    document.head.appendChild(link);
-    //console.log(`📦 Prefetch zasobu: ${url}`);
+    links.forEach(url => {
+        fetch(url, { credentials: 'include' })
+            .then(res => {
+                if (!res.ok) throw new Error(`Prefetch failed: ${url}`);
+                return res.text();
+            })
+            .then(html => {
+                // Barba przechowuje cache w sessionStorage
+                if (typeof barba !== 'undefined' && barba.cache) {
+                    barba.cache.set(url, html);
+                    console.log(`✅ Prefetched: ${url}`);
+                }
+            })
+            .catch(err => console.warn('⚠️', err));
+    });
 }
 
 // ===== SUBTELNE EFEKTY PRZEJŚCIA (OPCJONALNE) =====
