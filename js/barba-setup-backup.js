@@ -31,6 +31,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!window.ParticlesManager.isInitialized) {
         createGlobalParticlesContainer();
         window.ParticlesManager.isInitialized = true;
+    }er();
+        window.ParticlesManager.isInitialized = true;
     }
     
     // Stwórz globalne cząsteczki
@@ -923,27 +925,20 @@ function prefetchAllPages() {
 
     console.log('� Rozpoczynam prefetch wszystkich stron:', links);
 
-    // Sekwencyjne ściąganie z małymi opóźnieniami żeby nie przeciążyć serwera
-    links.forEach((url, index) => {
-        setTimeout(() => {
-            // Sprawdź czy już nie mamy w cache
-            if (window.PageCache[url]) {
-                console.log(`⚡ Już w cache: ${url}`);
-                return;
-            }
-            
-            fetch(url, { credentials: 'include' })
-                .then(res => {
-                    if (!res.ok) throw new Error(`Prefetch failed: ${url}`);
-                    return res.text();
-                })
-                .then(html => {
-                    // Zapisz do naszego własnego cache
-                    window.PageCache[url] = html;
-                    console.log(`✅ Prefetched (${index + 1}/${links.length}): ${url}`);
-                })
-                .catch(err => console.warn('⚠️ Prefetch error:', err));
-        }, index * 200); // 200ms między requestami
+    links.forEach(url => {
+        fetch(url, { credentials: 'include' })
+            .then(res => {
+                if (!res.ok) throw new Error(`Prefetch failed: ${url}`);
+                return res.text();
+            })
+            .then(html => {
+                // Barba przechowuje cache w sessionStorage
+                if (typeof barba !== 'undefined' && barba.cache) {
+                    barba.cache.set(url, html);
+                    console.log(`✅ Prefetched: ${url}`);
+                }
+            })
+            .catch(err => console.warn('⚠️', err));
     });
 }
 
