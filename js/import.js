@@ -98,8 +98,55 @@ function activateMenu() {
   }
 }
 
-// Startujemy wszystko po DOMContentLoaded
-document.addEventListener('DOMContentLoaded', () => {
+// Funkcja do inicjalizacji cookies modal
+function initCookiesModal() {
+  // Sprawdź czy plik cookies.js jest już załadowany
+  if (typeof window.CookiesManager !== 'undefined' && window.CookiesManager.isLoaded) {
+    console.log('🍪 Cookies modal już zainicjalizowany');
+    return;
+  }
+  
+  // Sprawdź czy funkcja loadCookiesModal z cookies.js istnieje
+  if (typeof window.loadCookiesModal === 'function') {
+    window.loadCookiesModal();
+  } else {
+    // Dynamicznie załaduj plik cookies.js
+    console.log('🍪 Ładowanie cookies.js...');
+    const script = document.createElement('script');
+    script.src = 'js/cookies.js';
+    script.onload = () => {
+      console.log('🍪 cookies.js załadowany, inicjalizuję modal...');
+      // Po załadowaniu skryptu, załaduj modal
+      if (typeof window.loadCookiesModal === 'function') {
+        window.loadCookiesModal();
+      }
+    };
+    script.onerror = () => {
+      console.error('❌ Błąd ładowania cookies.js');
+    };
+    document.head.appendChild(script);
+  }
+}
+
+// Funkcja do ładowania navbar i footer (dla Barba.js)
+function loadNavbarAndFooter() {
   loadNavbar();
   loadFooter();
+  initCookiesModal();
+}
+
+// Startujemy wszystko po DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('🚀 DOMContentLoaded - import.js');
+  loadNavbar();
+  loadFooter();
+  
+  // Opóźnij cookies modal żeby navbar/footer się załadowały
+  setTimeout(() => {
+    console.log('🍪 Inicjalizuję cookies modal...');
+    initCookiesModal();
+  }, 1000);
 });
+
+// Export dla Barba.js
+window.loadNavbarAndFooter = loadNavbarAndFooter;

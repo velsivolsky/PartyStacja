@@ -328,6 +328,11 @@ function initPageScripts() {
         updateActiveLinks();
     }
     
+    // Upewnij się że cookies modal jest załadowany na każdej stronie
+    if (typeof initCookiesModal === 'function' && !window.CookiesManager?.isLoaded) {
+        initCookiesModal();
+    }
+    
     // Reinicjalizuj Bootstrap komponenty
     initBootstrapComponents();
 }

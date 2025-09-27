@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Cookies Modal - Party Stacja</title>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 50px 20px;
+            font-family: Arial, sans-serif;
+        }
+        .test-buttons {
+            margin: 20px 0;
+        }
+        .test-buttons button {
+            margin: 10px;
+            padding: 10px 20px;
+        }
+        .status-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #DAA520;
+        }
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍪 Test Cookies Modal</h1>
+        <p>Ta strona służy do testowania funkcjonalności modalu cookies.</p>
+        
+        <div class="status-info">
+            <h4>Status cookies:</h4>
+            <div id="cookies-status">Ładowanie...</div>
+        </div>
+        
+        <div class="test-buttons">
+            <h4>Akcje testowe:</h4>
+            <button onclick="showCookiesModal()" class="btn btn-primary">
+                🍪 Pokaż modal cookies
+            </button>
+            <button onclick="resetCookiesConsent()" class="btn btn-warning">
+                🔄 Resetuj zgodę
+            </button>
+            <button onclick="debugCache()" class="btn btn-info">
+                📦 Debug cache
+            </button>
+            <button onclick="updateStatus()" class="btn btn-success">
+                ♻️ Odśwież status
+            </button>
+        </div>
+        
+        <div class="status-info">
+            <h4>Przykład użycia w kodzie:</h4>
+            <pre id="usage-example">
+// Sprawdzenie czy określony typ cookies jest dozwolony
+if (window.isCookieAllowed('analytics')) {
+    console.log('Możemy używać Google Analytics');
+    // gtag('config', 'GA_MEASUREMENT_ID');
+}
+
+if (window.isCookieAllowed('marketing')) {
+    console.log('Możemy używać cookies marketingowych');
+    // Facebook Pixel, itp.
+}
+
+// Nasłuchiwanie na zmiany ustawień cookies
+window.addEventListener('cookiesSettingsChanged', (e) => {
+    console.log('Nowe ustawienia:', e.detail);
+});
+            </pre>
+        </div>
+        
+        <div class="status-info">
+            <h4>LocalStorage:</h4>
+            <pre id="localstorage-content">Ładowanie...</pre>
+        </div>
+    </div>
+
+    <!-- Skrypty -->
+    <script src="js/import.js"></script>
+    <script>
+        // Update status funkcji
+        function updateStatus() {
+            const statusDiv = document.getElementById('cookies-status');
+            const localStorageDiv = document.getElementById('localstorage-content');
+            
+            if (window.CookiesManager) {
+                const manager = window.CookiesManager;
+                statusDiv.innerHTML = `
+                    <strong>Zgodę:</strong> ${manager.consent || 'Brak'}<br>
+                    <strong>Niezbędne:</strong> ${manager.settings.necessary ? '✅' : '❌'}<br>
+                    <strong>Analityczne:</strong> ${manager.settings.analytics ? '✅' : '❌'}<br>
+                    <strong>Marketingowe:</strong> ${manager.settings.marketing ? '✅' : '❌'}<br>
+                    <strong>Modal załadowany:</strong> ${manager.isLoaded ? '✅' : '❌'}
+                `;
+            } else {
+                statusDiv.innerHTML = '❌ CookiesManager nie załadowany';
+            }
+            
+            // LocalStorage content
+            const consent = localStorage.getItem('cookies-consent');
+            const settings = localStorage.getItem('cookies-settings');
+            localStorageDiv.innerHTML = `
+cookies-consent: ${consent || 'null'}
+cookies-settings: ${settings || 'null'}
+            `;
+        }
+        
+        // Nasłuchuj na zmiany cookies
+        window.addEventListener('cookiesSettingsChanged', (e) => {
+            console.log('🍪 Cookies settings changed:', e.detail);
+            updateStatus();
+        });
+        
+        // Auto-update co 2 sekundy
+        setInterval(updateStatus, 2000);
+        
+        // Pierwsza aktualizacja po załadowaniu
+        setTimeout(updateStatus, 1000);
+    </script>
+</body>
+</html>
