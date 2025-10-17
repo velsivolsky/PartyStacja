@@ -58,7 +58,7 @@
           <!-- Prawa kolumna: tekst -->
           <div class="col-12 col-md-8 text-center text-md-start">
             <h1
-              class="display-4 fw-bold text-center d-none d-md-block"
+              class="display-4 fw-bold text-center d-none d-md-block hero-title"
               style="color: #f5ed96"
             >
               Witamy w <span class="hero-span">PartyTime</span>
@@ -82,7 +82,7 @@
               <a
                 href="kontakt.html"
                 class="btn btn-warning btn-lg"
-                style="background-color: #CFB53B; border: none; color: #000000"
+                style="background-color: #f5ed96; border: none; color: #000000"
               >
                 Skontaktuj się z nami
               </a>
@@ -100,7 +100,7 @@
 
 <!--SECTION 1-->
       <section class="container my-5 normal-section">
-        <h2 class="text-center" style="color: #D4AF37;">Wypełnij formularz, a my zajmiemy się resztą — szybko, sprawnie i bez stresu.</h2>
+        <h2 class="text-center" style="color: #f5ed96;">Wypełnij formularz, a my zajmiemy się resztą — szybko, sprawnie i bez stresu.</h2>
         <form method="POST" action="send_mail.php" class="form-container">
         <div class="mb-3">
           <label for="name" class="form-label">Imię i nazwisko:</label>
@@ -146,6 +146,10 @@
                 <label class="form-check-label" for="wesele">Wesele</label>
               </div>
               <div class="form-check">
+                <input class="form-check-input event-checkbox" type="checkbox" name="event_type" value="Baby shower" id="babyshower">
+                <label class="form-check-label" for="babyshower">Baby shower</label>
+              </div>
+              <div class="form-check">
                 <input class="form-check-input event-checkbox" type="checkbox" name="event_type" value="Event firmowy" id="event">
                 <label class="form-check-label" for="event">Event firmowy / piknik</label>
               </div>
@@ -167,10 +171,6 @@
               <label class="form-label">Wybierz interesujące Cię atrakcje:</label>
 
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="attractions[]" value="Fotobudka" id="foto1">
-                <label class="form-check-label" for="foto1">Fotobudka</label>
-              </div>
-              <div class="form-check">
                 <input class="form-check-input" type="checkbox" name="attractions[]" value="Fotobudka 360" id="foto360">
                 <label class="form-check-label" for="foto360">Fotobudka 360</label>
               </div>
@@ -187,12 +187,32 @@
                 <label class="form-check-label" for="dekoracje">Dekoracje</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="attractions[]" value="Gadżety" id="gadżety">
-                <label class="form-check-label" for="gadżety">Przebrania / Gadżety</label>
+                <input class="form-check-input" type="checkbox" name="attractions[]" value="Świece" id="swiece">
+                <label class="form-check-label" for="swiece">Świece</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="attractions[]" value="Animatorzy" id="animatorzy">
-                <label class="form-check-label" for="animatorzy">Animatorzy</label>
+                <input class="form-check-input" type="checkbox" name="attractions[]" value="Papeteria" id="papeteria">
+                <label class="form-check-label" for="papeteria">Papeteria (zaproszenia, winietki)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="attractions[]" value="Wianki" id="wianki">
+                <label class="form-check-label" for="wianki">Wianki</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="attractions[]" value="Maszyna do baniek" id="banki">
+                <label class="form-check-label" for="banki">Maszyna do baniek</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="attractions[]" value="Maszyna do waty cukrowej" id="wata">
+                <label class="form-check-label" for="wata">Maszyna do waty cukrowej</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="attractions[]" value="Catering" id="catering">
+                <label class="form-check-label" for="catering">Catering</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="attractions[]" value="Gadżety" id="gadżety">
+                <label class="form-check-label" for="gadżety">Przebrania / Gadżety</label>
               </div>
 
               <!-- Dodatkowe "Inne" -->
@@ -224,16 +244,16 @@
               </div>
             </div>
             
-            <div class="mb-4">
-              <a href="polityka.html" class="btn btn-primary w-100">
-                <i class="fas fa-shield-alt"></i> Polityka prywatności
+            <div class="mb-4 text-center">
+              <a href="polityka.html" class="btn btn-primary">
+                Polityka prywatności
               </a>
             </div>
             
-            <hr style="border-color: #CFB53B;">
+            <hr style="border-color: #f5ed96;">
             
-            <div>
-              <button type="submit" class="btn btn-primary w-100">
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary">
                 <i class="fas fa-paper-plane"></i> Wyślij zapytanie
               </button>
             </div>

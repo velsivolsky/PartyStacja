@@ -150,3 +150,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Export dla Barba.js
 window.loadNavbarAndFooter = loadNavbarAndFooter;
+
+
+
