@@ -271,6 +271,76 @@
 
 
   <script>
+// Funkcja do generowania confetti
+function createConfetti() {
+  const colors = ['#f5ed96', '#CFB53B', '#FFD700', '#F0E68C', '#BDB76B'];
+  
+  // Tworzenie 60 kawałków confetti
+  for (let i = 0; i < 60; i++) {
+    const confettiPiece = document.createElement('div');
+    confettiPiece.style.position = 'fixed';
+    confettiPiece.style.width = Math.random() * 15 + 8 + 'px';
+    confettiPiece.style.height = Math.random() * 15 + 8 + 'px';
+    confettiPiece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    confettiPiece.style.left = Math.random() * window.innerWidth + 'px';
+    confettiPiece.style.top = '-30px';
+    confettiPiece.style.borderRadius = '3px';
+    confettiPiece.style.opacity = '0.9';
+    confettiPiece.style.pointerEvents = 'none';
+    confettiPiece.style.zIndex = '9999';
+    confettiPiece.style.boxShadow = '0 2px 8px rgba(245, 237, 150, 0.6)';
+    
+    document.body.appendChild(confettiPiece);
+    
+    // Parametry animacji
+    const fallDuration = Math.random() * 3000 + 2000; // 2-5 sekund
+    const swayAmount = Math.random() * 300 + 100; // 100-400px
+    const rotationAmount = Math.random() * 720 + 360; // 360-1080 stopni
+    
+    // Animacja JavaScript
+    animateConfetti(confettiPiece, fallDuration, swayAmount, rotationAmount);
+  }
+}
+
+function animateConfetti(element, duration, swayAmount, rotation) {
+  const startTime = Date.now();
+  const startX = parseFloat(element.style.left);
+  const startY = parseFloat(element.style.top);
+  const endY = window.innerHeight + 50;
+  
+  function animate() {
+    const elapsed = Date.now() - startTime;
+    const progress = elapsed / duration;
+    
+    if (progress >= 1) {
+      element.remove();
+      return;
+    }
+    
+    // Pozycja Y (spadanie)
+    const currentY = startY + (endY - startY) * progress;
+    
+    // Pozycja X (zygzak)
+    const swayProgress = progress * Math.PI * 4; // 4 pełne oscylacje
+    const currentX = startX + Math.sin(swayProgress) * swayAmount * (1 - progress * 0.5);
+    
+    // Rotacja
+    const currentRotation = rotation * progress;
+    
+    // Opacity (zanikanie pod koniec)
+    const opacity = progress > 0.8 ? (1 - progress) * 5 : 0.9;
+    
+    element.style.left = currentX + 'px';
+    element.style.top = currentY + 'px';
+    element.style.transform = `rotate(${currentRotation}deg)`;
+    element.style.opacity = opacity;
+    
+    requestAnimationFrame(animate);
+  }
+  
+  animate();
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   const eventCheckboxes = document.querySelectorAll('.event-checkbox');
   const inneCheckbox = document.getElementById('inneImpreza');
@@ -293,6 +363,14 @@ document.addEventListener('DOMContentLoaded', function () {
       inneInput.value = '';
     }
   });
+
+  // Dodanie obsługi confetti do przycisku
+  const submitButton = document.querySelector('button[type="submit"]');
+  if (submitButton) {
+    submitButton.addEventListener('click', function(e) {
+      createConfetti();
+    });
+  }
 });
 
 </script>

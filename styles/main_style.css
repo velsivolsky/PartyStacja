@@ -419,7 +419,6 @@ p, h1, a, span, btn{
     font-weight: 700;
     font-size: 1.8rem;
     font-family: 'Birthstone', cursive;
-    text-transform: uppercase;
     transition: color 0.3s ease;
     text-shadow: 0 0 10px rgba(245, 237, 150, 0.5);
   }

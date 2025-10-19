@@ -10,7 +10,7 @@
   min-height: 200px;
   width: 200px;
   height: 200px;
-  color: #f5f5f5;
+  color: #f5ed96;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -62,7 +62,7 @@
     cursor: pointer;
     transition: all 0.3s ease;
     user-select: none;
-    color: #f5f5f5;
+    color: #f5ed96;
 }
 
 .oferta-tile .emoji {
@@ -171,6 +171,7 @@
   #dekoracjeCarousel,
   #swieceCarousel,
   #zaproszeniaCarousel,
+  #winietkiCarousel,
   #papeteriaCarousel {
     height: 400px; /* wysokość pierwszego obrazka – dopasuj do swojego */
   }
@@ -178,8 +179,167 @@
 #dekoracjeCarousel img,
 #swieceCarousel img,
 #zaproszeniaCarousel img,
+#winietkiCarousel img,
 #papeteriaCarousel img {
   height: 400px; /* wysokość z pierwszego */
   object-fit: contain; /* obrazek się skaluję, ale nie wytnie */
   width: 100%;
+}
+
+/* Ikona świec - domyślnie złota, czarna przy hover/active */
+.oferta-tile[data-show="swiece"] .emoji img {
+  filter: brightness(0) saturate(100%) invert(95%) sepia(15%) saturate(800%) hue-rotate(5deg) brightness(98%) contrast(95%);
+  transition: filter 0.3s ease;
+}
+
+.oferta-tile[data-show="swiece"]:hover .emoji img,
+.oferta-tile[data-show="swiece"].active .emoji img {
+  filter: invert(0) brightness(1);
+}
+
+/* Ikona dekoracji - domyślnie złota, czarna przy hover/active */
+.oferta-tile[data-show="dekoracje"] .emoji img {
+  filter: brightness(0) saturate(100%) invert(95%) sepia(15%) saturate(800%) hue-rotate(5deg) brightness(98%) contrast(95%);
+  transition: filter 0.3s ease;
+}
+
+.oferta-tile[data-show="dekoracje"]:hover .emoji img,
+.oferta-tile[data-show="dekoracje"].active .emoji img {
+  filter: invert(0) brightness(1);
+}
+
+/* Ikona papeterii - domyślnie złota, czarna przy hover/active */
+.oferta-tile[data-show="papeteria"] .emoji img {
+  filter: brightness(0) saturate(100%) invert(95%) sepia(15%) saturate(800%) hue-rotate(5deg) brightness(98%) contrast(95%);
+  transition: filter 0.3s ease;
+}
+
+.oferta-tile[data-show="papeteria"]:hover .emoji img,
+.oferta-tile[data-show="papeteria"].active .emoji img {
+  filter: invert(0) brightness(1);
+}
+
+/* Ikona fotobudki - domyślnie złota, czarna przy hover/active */
+.oferta-tile[data-show="fotobudka"] .emoji img {
+  filter: brightness(0) saturate(100%) invert(95%) sepia(15%) saturate(800%) hue-rotate(5deg) brightness(98%) contrast(95%);
+  transition: filter 0.3s ease;
+}
+
+.oferta-tile[data-show="fotobudka"]:hover .emoji img,
+.oferta-tile[data-show="fotobudka"].active .emoji img {
+  filter: invert(0) brightness(1);
+}
+
+/* Ikona maskotki - domyślnie złota, czarna przy hover/active */
+.oferta-tile[data-show="maskotki"] .emoji img {
+  filter: brightness(0) saturate(100%) invert(95%) sepia(15%) saturate(800%) hue-rotate(5deg) brightness(98%) contrast(95%);
+  transition: filter 0.3s ease;
+}
+
+.oferta-tile[data-show="maskotki"]:hover .emoji img,
+.oferta-tile[data-show="maskotki"].active .emoji img {
+  filter: invert(0) brightness(1);
+}
+
+/* Style dla kart papeterii - podobne do kart maskotki */
+.papeteria-card {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 15px;
+  background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+  border: 1px solid rgba(245, 237, 150, 0.3);
+  border-radius: 50%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  min-height: 200px;
+  width: 200px;
+  height: 200px;
+  color: #f5ed96;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.papeteria-card:hover,
+.papeteria-card:focus {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 8px 40px rgba(245, 237, 150, 0.3);
+  border-color: #f5ed96;
+  background: linear-gradient(135deg, #f5ed96 0%, #CFB53B 100%);
+  outline: none;
+}
+
+.papeteria-card .card-icon {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+
+.papeteria-card .card-icon i {
+  color: #f5f5f5;
+  transition: color 0.3s ease;
+}
+
+.papeteria-card:hover .card-icon i {
+  color: #000;
+}
+
+.papeteria-card .card-icon img {
+  width: 60px;
+  height: 60px;
+  filter: brightness(0) saturate(100%) invert(95%) sepia(15%) saturate(800%) hue-rotate(5deg) brightness(98%) contrast(95%);
+  transition: filter 0.3s ease;
+}
+
+.papeteria-card:hover .card-icon img {
+  filter: invert(0) brightness(1);
+}
+
+.papeteria-card h5 {
+  color: #f5ed96;
+  margin: 0;
+  font-weight: 600;
+  transition: color 0.3s ease;
+  text-align: center;
+}
+
+.papeteria-card:hover h5 {
+  color: #000;
+}
+
+/* Stan aktywny kart papeterii - czarna ikona i tekst */
+.papeteria-card.active {
+  background: linear-gradient(135deg, #f5ed96 0%, #CFB53B 100%);
+  border-color: #f5ed96;
+  box-shadow: 0 8px 40px rgba(245, 237, 150, 0.3);
+  transform: translateY(-10px) scale(1.05);
+}
+
+.papeteria-card.active .card-icon i {
+  color: #000;
+}
+
+.papeteria-card.active .card-icon img {
+  filter: invert(0) brightness(1);
+}
+
+.papeteria-card.active h5 {
+  color: #000;
+}
+
+/* Na mobile jeszcze mniejsze karty papeterii */
+@media (max-width: 768px) {
+  .papeteria-card {
+    width: 150px;
+    height: 150px;
+  }
+  .papeteria-card .card-icon img {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Style dla szczegółów papeterii - ikony powinny być czarne (aktywny stan) */
+#papeteriaDetail .display-1 img {
+  filter: invert(0) brightness(1);
 }

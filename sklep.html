@@ -83,6 +83,10 @@
             animation: sway-gentle 3s ease-in-out infinite;
         }
 
+        .feature-icon img {
+            filter: brightness(0) saturate(100%) invert(95%) sepia(15%) saturate(800%) hue-rotate(5deg) brightness(98%) contrast(95%);
+        }
+
         @keyframes sway-gentle {
             0%, 100% { 
                 transform: rotate(-15deg); 
@@ -182,7 +186,7 @@
                             </div>
                             
                             <h2 class="display-3 fw-bold construction-text mb-4">
-                                Sklep w budowie
+                                <span class="gold-highlight">Sklep w budowie</span>
                             </h2>
                             
                             <p class="lead construction-text mb-4">
@@ -202,14 +206,14 @@
             <!-- COMING SOON FEATURES -->
             <section class="container my-5">
                 <h2 class="text-center fw-bold mb-5" style="color: #f5ed96;">
-                    <i class="fas fa-rocket" style="color: #f5ed96;"></i> Co znajdziesz w naszym sklepie?
+                    <i class="fas fa-rocket" style="color: #f5ed96;"></i> <span class="gold-highlight">Co znajdziesz w naszym sklepie?</span>
                 </h2>
                 
                 <div class="row g-4 justify-content-center">
                     <div class="col-md-4">
                         <div class="coming-soon-card text-center">
                             <div class="feature-icon" style="animation-delay: 0s;">
-                                <i class="fas fa-birthday-cake"></i>
+                                <img src="resources/icons/candles.png" alt="Świeczki" style="width: 60px; height: 60px;">
                             </div>
                             <h4 style="color: #f5ed96;">Świeczki</h4>
                             <p style="color: #f5f5f5;">Piękne świeczki urodzinowe, cyferki i fontanny do każdej okazji.</p>
@@ -219,7 +223,7 @@
                     <div class="col-md-4">
                         <div class="coming-soon-card text-center">
                             <div class="feature-icon" style="animation-delay: 1s;">
-                                <i class="fas fa-leaf"></i>
+                                <img src="resources/icons/wreath.png" alt="Wianki" style="width: 60px; height: 60px;">
                             </div>
                             <h4 style="color: #f5ed96;">Wianki</h4>
                             <p style="color: #f5f5f5;">Dekoracyjne wianki i girlandy na każdą porę roku i okazję.</p>
@@ -229,7 +233,7 @@
                     <div class="col-md-4">
                         <div class="coming-soon-card text-center">
                             <div class="feature-icon" style="animation-delay: 2s;">
-                                <i class="fas fa-box-open"></i>
+                                <img src="resources/icons/confetti.png" alt="Pakiety" style="width: 60px; height: 60px;">
                             </div>
                             <h4 style="color: #f5ed96;">Pakiety Imprezowe</h4>
                             <p style="color: #f5f5f5;">Gotowe zestawy imprezowe - wszystko czego potrzebujesz w jednym pakiecie.</p>

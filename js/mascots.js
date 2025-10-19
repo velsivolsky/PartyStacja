@@ -143,70 +143,56 @@ const oferta = {
   </button>
 </div>
     `,
-    zaproszenia: `
-      <h3 class="fw-bold mb-3 text-center"><i class="fas fa-envelope" style="color: #f5ed96;"></i> Zaproszenia</h3>
-      <p class="lead text-center">Pierwsze wrażenie to podstawa - zacznijmy od pięknych zaproszeń!</p>
-      <hr>
-      <ul class="list-unstyled ps-3 fs-5 text-center">
-        <li><i class="fas fa-palette" style="color: #f5ed96;"></i> Spersonalizowane projekty dopasowane do tematu</li>
-        <li><i class="fas fa-print" style="color: #f5ed96;"></i> Wysokiej jakości druk na różnych papierach</li>
-        <li><i class="fas fa-child" style="color: #f5ed96;"></i> Zaproszenia dziecięce z ulubionymi postaciami</li>
-        <li><i class="fas fa-ring" style="color: #f5ed96;"></i> Eleganckie zaproszenia na wesela i imprezy dorosłych</li>
-      </ul>
-<div id="zaproszeniaCarousel" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner h-100">
-    <div class="carousel-item active h-100">
-      <img src="https://via.placeholder.com/800x400/2a2a2a/CFB53B?text=Zaproszenia+1" class="d-block w-100" alt="zaproszenia_1">
-    </div>
-    <div class="carousel-item h-100">
-      <img src="https://via.placeholder.com/800x400/2a2a2a/CFB53B?text=Zaproszenia+2" class="d-block w-100" alt="zaproszenia_2">
-    </div>
-    <div class="carousel-item h-100">
-      <img src="https://via.placeholder.com/800x400/2a2a2a/CFB53B?text=Zaproszenia+3" class="d-block w-100" alt="zaproszenia_3">
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#zaproszeniaCarousel" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Poprzedni</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#zaproszeniaCarousel" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Następny</span>
-  </button>
-</div>
-    `,
     papeteria: `
       <h3 class="fw-bold mb-3 text-center"><i class="fas fa-scroll" style="color: #f5ed96;"></i> Papeteria</h3>
       <p class="lead text-center">Każdy detal ma znaczenie - dopełnij imprezę stylową papeterią!</p>
       <hr>
-      <ul class="list-unstyled ps-3 fs-5 text-center">
-        <li><i class="fas fa-envelope" style="color: #f5ed96;"></i> Zaproszenia na różne rodzaje uroczystości</li>
-        <li><i class="fas fa-id-card" style="color: #f5ed96;"></i> Winietki</li>
-      </ul>
-<div id="papeteriaCarousel" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner h-100">
-    <div class="carousel-item active h-100">
-      <img src="https://via.placeholder.com/800x400/2a2a2a/CFB53B?text=Papeteria+1" class="d-block w-100" alt="papeteria_1">
-    </div>
-    <div class="carousel-item h-100">
-      <img src="https://via.placeholder.com/800x400/2a2a2a/CFB53B?text=Papeteria+2" class="d-block w-100" alt="papeteria_2">
-    </div>
-    <div class="carousel-item h-100">
-      <img src="https://via.placeholder.com/800x400/2a2a2a/CFB53B?text=Papeteria+3" class="d-block w-100" alt="papeteria_3">
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#papeteriaCarousel" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Poprzedni</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#papeteriaCarousel" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Następny</span>
-  </button>
-</div>
+      
+      <div class="row g-4 justify-content-center">
+        <div class="col-6 col-md-3">
+          <div class="papeteria-card" data-id="zaproszenia" tabindex="0">
+            <div class="card-icon"><img src="resources/icons/scroll.png" alt="Zaproszenia" style="width: 60px; height: 60px;"></div>
+            <h5 class="text-center">Zaproszenia</h5>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="papeteria-card" data-id="winietki" tabindex="0">
+            <div class="card-icon"><img src="resources/icons/guest-card.png" alt="Winietki" style="width: 60px; height: 60px;"></div>
+            <h5 class="text-center">Winietki</h5>
+          </div>
+        </div>
+      </div>
+  
+      <div id="papeteriaDetail" class="mt-5 text-center"></div>
     `
   };
 
+const papeteria = {
+    zaproszenia: {
+      alt: 'Zaproszenia',
+      text: `Pierwsze wrażenie to podstawa - zacznijmy od pięknych zaproszeń!`,
+      desc: `
+        <ul class="list-unstyled ps-3 fs-5">
+            <li><i class="fas fa-palette" style="color: #f5ed96;"></i> Spersonalizowane projekty dopasowane do tematu</li>
+            <li><i class="fas fa-print" style="color: #f5ed96;"></i> Wysokiej jakości druk na różnych papierach</li>
+            <li><i class="fas fa-child" style="color: #f5ed96;"></i> Zaproszenia dziecięce z ulubionymi postaciami</li>
+            <li><i class="fas fa-ring" style="color: #f5ed96;"></i> Eleganckie zaproszenia na wesela i imprezy dorosłych</li>
+        </ul>
+        `
+    },
+    winietki: {
+      alt: 'Winietki',
+      text: `Eleganckie winietki, które nadadzą szyku każdej uroczystości.`,
+      desc: `
+        <ul class="list-unstyled ps-3 fs-5">
+          <li><i class="fas fa-table" style="color: #f5ed96;"></i> Personalizowane winietki z imionami gości</li>
+          <li><i class="fas fa-palette" style="color: #f5ed96;"></i> Dopasowane do motywu przewodniego imprezy</li>
+          <li><i class="fas fa-print" style="color: #f5ed96;"></i> Wysokiej jakości druk na eleganckim papierze</li>
+          <li><i class="fas fa-heart" style="color: #f5ed96;"></i> Idealne na wesela, komunie i inne uroczystości</li>
+        </ul>
+      `
+    }
+  };
 
 const maskotki = {
     mis: {
@@ -333,6 +319,105 @@ function initMaskotki() {
     });
   }
 
+function loadPapeteria(id) {
+  const container = document.getElementById('papeteriaDetail');
+  const p = papeteria[id];
+  
+  // If container already has content, fade it out first
+  if (container.innerHTML.trim() !== '') {
+    container.classList.add('fade-out');
+    setTimeout(() => {
+      updatePapeteriaContent(container, p);
+    }, 400);
+  } else {
+    // For first time display, also use fade-in animation
+    container.classList.add('fade-out'); // Start invisible
+    setTimeout(() => {
+      updatePapeteriaContent(container, p);
+    }, 100); // Slightly longer delay for first display
+  }
+}
+
+function updatePapeteriaContent(container, p) {
+  const carouselId = `${p.alt.toLowerCase()}Carousel`;
+  container.innerHTML = `
+    <div class="row align-items-center mb-5">
+      <div class="col-md-6">
+        <div id="${carouselId}" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner h-100">
+            <div class="carousel-item active h-100">
+              <img src="https://via.placeholder.com/800x400/2a2a2a/CFB53B?text=${p.alt}+1" class="d-block w-100" alt="${p.alt}_1">
+            </div>
+            <div class="carousel-item h-100">
+              <img src="https://via.placeholder.com/800x400/2a2a2a/CFB53B?text=${p.alt}+2" class="d-block w-100" alt="${p.alt}_2">
+            </div>
+            <div class="carousel-item h-100">
+              <img src="https://via.placeholder.com/800x400/2a2a2a/CFB53B?text=${p.alt}+3" class="d-block w-100" alt="${p.alt}_3">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Poprzedni</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Następny</span>
+          </button>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <h3 class="fw-bold mb-3">${p.alt}</h3>
+        <p class="lead fw-bold">${p.text}</p>
+        ${p.desc}
+      </div>
+    </div>
+    <hr>`;
+  
+  // Reset any inline styles and classes
+  container.style.opacity = '';
+  container.classList.remove('fade-out');
+  container.classList.add('fade-in');
+  
+  // Smooth scroll to the details
+  setTimeout(() => {
+    container.scrollIntoView({ 
+      behavior: 'smooth', 
+      block: 'start' 
+    });
+  }, 100);
+  
+  // Remove fade-in class after animation completes
+  setTimeout(() => {
+    container.classList.remove('fade-in');
+  }, 400);
+}
+
+function showPapeteria(event) {
+    const card = event.currentTarget;
+    
+    // Reset all papeteria cards to inactive state
+    document.querySelectorAll('.papeteria-card').forEach(c => {
+        c.classList.remove('active');
+    });
+    
+    // Add active class to clicked card
+    card.classList.add('active');
+    
+    loadPapeteria(card.dataset.id);
+}
+
+function initPapeteria() {
+    document.querySelectorAll('.papeteria-card').forEach(card => {
+        card.addEventListener('click', showPapeteria);
+        card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                showPapeteria(e);
+            }
+        });
+    });
+}
+
   function showOfferSection(section) {
     const ofertaContent = document.getElementById('oferta-content');
     
@@ -346,6 +431,16 @@ function initMaskotki() {
       }, 400);
     }
     
+    // Clear papeteria details with fade-out when switching sections
+    const papeteriaDetail = document.getElementById('papeteriaDetail');
+    if (papeteriaDetail && papeteriaDetail.innerHTML.trim() !== '') {
+      papeteriaDetail.classList.add('fade-out');
+      setTimeout(() => {
+        papeteriaDetail.innerHTML = '';
+        papeteriaDetail.classList.remove('fade-out');
+      }, 400);
+    }
+    
     ofertaContent.classList.add('fade-out');
     setTimeout(() => {
       ofertaContent.innerHTML = oferta[section];
@@ -354,6 +449,10 @@ function initMaskotki() {
       
       if (section === 'maskotki') {
         setTimeout(() => initMaskotki(), 100);
+      }
+      
+      if (section === 'papeteria') {
+        setTimeout(() => initPapeteria(), 100);
       }
       
       // Remove fade-in class after animation completes
