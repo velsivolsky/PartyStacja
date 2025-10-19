@@ -1,14 +1,14 @@
 /* Import custom fonts */
 @font-face {
-    font-family: 'Bonheur Royale';
-    src: url('../resources/fonts/Bonheur_Royale/BonheurRoyale-Regular.ttf') format('truetype');
+    font-family: 'Birthstone';
+    src: url('../resources/fonts/Birthstone/Birthstone-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'Lato';
-    src: url('../resources/fonts/Lato/Lato-Regular.ttf') format('truetype');
+    font-family: 'Dosis';
+    src: url('../resources/fonts/Dosis/Dosis-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -31,7 +31,7 @@
 html, body {
     overflow-x: hidden;
     width: 100%;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Dosis', sans-serif;
 }
 
 .header-color{
@@ -44,12 +44,12 @@ html, body {
 .container h2 {
   color: var(--logo-color) !important;
   text-shadow: 0 0 10px rgba(245, 237, 150, 0.3);
-  font-family: 'Bonheur Royale', cursive;
+  font-family: 'Birthstone', cursive;
 }
 
 /* Globalna reguła dla wszystkich H2 */
 h2 {
-  font-family: 'Bonheur Royale', cursive;
+  font-family: 'Birthstone', cursive;
   font-size: 2.5rem;
 }
 
@@ -63,7 +63,7 @@ h2 {
 
 /* Gold highlight w H2 zachowuje czcionkę Bonheur Royale */
 h2 .gold-highlight {
-  font-family: 'Bonheur Royale', cursive;
+  font-family: 'Birthstone', cursive;
 }
 
 .gold-highlight::after {
@@ -319,11 +319,11 @@ h2 .gold-highlight {
 
 
 p, h1, a, span, btn{
-  font-family: 'Lato', sans-serif;
+  font-family: 'Dosis', sans-serif;
 }
 
 .label{
-    font-family: 'Lato', sans-serif;
+    font-family: 'Dosis', sans-serif;
     font-weight: bold;
 }
 
@@ -335,7 +335,7 @@ p, h1, a, span, btn{
     padding: 0;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Dosis', sans-serif;
     color: var(--text-primary);
 
 
@@ -418,14 +418,14 @@ p, h1, a, span, btn{
     color: var(--brand-color);
     font-weight: 700;
     font-size: 1.8rem;
-    font-family: 'Bonheur Royale', cursive;
+    font-family: 'Birthstone', cursive;
     text-transform: uppercase;
     transition: color 0.3s ease;
     text-shadow: 0 0 10px rgba(245, 237, 150, 0.5);
   }
   
   .navbar-brand span {
-    font-family: 'Bonheur Royale', cursive;
+    font-family: 'Birthstone', cursive;
   }
   
   .navbar-brand:hover {
@@ -476,11 +476,11 @@ p, h1, a, span, btn{
 
   .hero-span{
     color: #c9af39;
-    font-family: 'Bonheur Royale', cursive;
+    font-family: 'Birthstone', cursive;
   }
 
   .hero-title {
-    font-family: 'Bonheur Royale', cursive;
+    font-family: 'Birthstone', cursive;
   }
 
   .normal-section{
@@ -495,7 +495,7 @@ p, h1, a, span, btn{
 
 .hero-section {
   background: var(--background);
-  font-family: 'Bonheur Royale', cursive;
+  font-family: 'Birthstone', cursive;
     padding-top: 100px; /* albo 5rem */
   
 }
@@ -505,7 +505,7 @@ p, h1, a, span, btn{
 .hero-section p,
 .hero-section span,
 .hero-section a {
-  font-family: 'Bonheur Royale', cursive !important;
+  font-family: 'Birthstone', cursive !important;
   font-weight: bold !important;
 }
 
@@ -520,7 +520,7 @@ p, h1, a, span, btn{
 
 /* Przycisk w hero - normalna czcionka */
 .hero-section .btn {
-  font-family: 'Lato', sans-serif !important;
+  font-family: 'Dosis', sans-serif !important;
   font-size: 1.2rem !important;
   transition: all 0.3s ease !important;
 }
@@ -703,7 +703,7 @@ p, h1, a, span, btn{
     z-index: 10000; /* Wyższy niż overlay */
     color: var(--brand-color);
     font-size: 1.5rem;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Dosis', sans-serif;
 }
 
 /* Animacja loadera */
