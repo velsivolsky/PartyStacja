@@ -172,7 +172,9 @@
   #swieceCarousel,
   #zaproszeniaCarousel,
   #winietkiCarousel,
-  #papeteriaCarousel {
+  #papeteriaCarousel,
+  #podziekowaniaCarousel,
+  #boxyCarousel {
     height: 400px; /* wysokość pierwszego obrazka – dopasuj do swojego */
   }
 #fotobudkaCarousel img,
@@ -180,7 +182,9 @@
 #swieceCarousel img,
 #zaproszeniaCarousel img,
 #winietkiCarousel img,
-#papeteriaCarousel img {
+#papeteriaCarousel img,
+#podziekowaniaCarousel img,
+#boxyCarousel img {
   height: 400px; /* wysokość z pierwszego */
   object-fit: contain; /* obrazek się skaluję, ale nie wytnie */
   width: 100%;
@@ -241,6 +245,28 @@
   filter: invert(0) brightness(1);
 }
 
+/* Ikona podziękowań - domyślnie złota, czarna przy hover/active */
+.oferta-tile[data-show="podziekowania"] .emoji img {
+  filter: brightness(0) saturate(100%) invert(95%) sepia(15%) saturate(800%) hue-rotate(5deg) brightness(98%) contrast(95%);
+  transition: filter 0.3s ease;
+}
+
+.oferta-tile[data-show="podziekowania"]:hover .emoji img,
+.oferta-tile[data-show="podziekowania"].active .emoji img {
+  filter: invert(0) brightness(1);
+}
+
+/* Ikona boxów prezentowych - domyślnie złota, czarna przy hover/active */
+.oferta-tile[data-show="boxy"] .emoji img {
+  filter: brightness(0) saturate(100%) invert(95%) sepia(15%) saturate(800%) hue-rotate(5deg) brightness(98%) contrast(95%);
+  transition: filter 0.3s ease;
+}
+
+.oferta-tile[data-show="boxy"]:hover .emoji img,
+.oferta-tile[data-show="boxy"].active .emoji img {
+  filter: invert(0) brightness(1);
+}
+
 /* Style dla kart papeterii - podobne do kart maskotki */
 .papeteria-card {
   cursor: pointer;
@@ -250,14 +276,15 @@
   border: 1px solid rgba(245, 237, 150, 0.3);
   border-radius: 50%;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  min-height: 200px;
-  width: 200px;
-  height: 200px;
+  min-height: 180px;
+  width: 180px;
+  height: 180px;
   color: #f5ed96;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin: 0 auto;
 }
 
 .papeteria-card:hover,
@@ -285,8 +312,8 @@
 }
 
 .papeteria-card .card-icon img {
-  width: 60px;
-  height: 60px;
+  width: 54px;
+  height: 54px;
   filter: brightness(0) saturate(100%) invert(95%) sepia(15%) saturate(800%) hue-rotate(5deg) brightness(98%) contrast(95%);
   transition: filter 0.3s ease;
 }
@@ -330,12 +357,12 @@
 /* Na mobile jeszcze mniejsze karty papeterii */
 @media (max-width: 768px) {
   .papeteria-card {
-    width: 150px;
-    height: 150px;
+    width: 135px;
+    height: 135px;
   }
   .papeteria-card .card-icon img {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
   }
 }
 

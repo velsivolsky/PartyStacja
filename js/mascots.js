@@ -151,19 +151,83 @@ const oferta = {
       <div class="row g-4 justify-content-center">
         <div class="col-6 col-md-3">
           <div class="papeteria-card" data-id="zaproszenia" tabindex="0">
-            <div class="card-icon"><img src="resources/icons/scroll.png" alt="Zaproszenia" style="width: 60px; height: 60px;"></div>
+            <div class="card-icon"><img src="resources/icons/scroll.png" alt="Zaproszenia" style="width: 54px; height: 54px;"></div>
             <h5 class="text-center">Zaproszenia</h5>
           </div>
         </div>
         <div class="col-6 col-md-3">
           <div class="papeteria-card" data-id="winietki" tabindex="0">
-            <div class="card-icon"><img src="resources/icons/guest-card.png" alt="Winietki" style="width: 60px; height: 60px;"></div>
+            <div class="card-icon"><img src="resources/icons/guest-card.png" alt="Winietki" style="width: 54px; height: 54px;"></div>
             <h5 class="text-center">Winietki</h5>
           </div>
         </div>
       </div>
   
       <div id="papeteriaDetail" class="mt-5 text-center"></div>
+    `,
+    podziekowania: `
+      <h3 class="fw-bold mb-3 text-center"><i class="fas fa-gift" style="color: #f5ed96;"></i> Podziękowania</h3>
+      <p class="lead text-center">Wyraź wdzięczność w wyjątkowy sposób - piękne podziękowania dla najbliższych.</p>
+      <hr>
+      <ul class="list-unstyled ps-3 fs-5 text-center">
+        <li><i class="fas fa-heart" style="color: #f5ed96;"></i> Podziękowania dla rodziców, świadków i gości</li>
+        <li><i class="fas fa-hands-holding-heart" style="color: #f5ed96;"></i> Indywidualne projekty z osobistym akcentem</li>
+        <li><i class="fas fa-gift" style="color: #f5ed96;"></i> Różne formaty - kartki, bileciki, dyplomy</li>
+        <li><i class="fas fa-star" style="color: #f5ed96;"></i> Dopasowane do stylu całej uroczystości</li>
+      </ul>
+<div id="podziekowaniaCarousel" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner h-100">
+    <div class="carousel-item active h-100">
+      <img src="https://via.placeholder.com/800x400/2a2a2a/CFB53B?text=Podziękowania+1" class="d-block w-100" alt="podziekowania_1">
+    </div>
+    <div class="carousel-item h-100">
+      <img src="https://via.placeholder.com/800x400/2a2a2a/CFB53B?text=Podziękowania+2" class="d-block w-100" alt="podziekowania_2">
+    </div>
+    <div class="carousel-item h-100">
+      <img src="https://via.placeholder.com/800x400/2a2a2a/CFB53B?text=Podziękowania+3" class="d-block w-100" alt="podziekowania_3">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#podziekowaniaCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Poprzedni</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#podziekowaniaCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Następny</span>
+  </button>
+</div>
+    `,
+    boxy: `
+      <h3 class="fw-bold mb-3 text-center"><i class="fas fa-box-open" style="color: #f5ed96;"></i> Boxy prezentowe</h3>
+      <p class="lead text-center">Stylowe opakowania, które zrobią wrażenie jeszcze przed rozpakowaniem!</p>
+      <hr>
+      <ul class="list-unstyled ps-3 fs-5 text-center">
+        <li><i class="fas fa-box-open" style="color: #f5ed96;"></i> Eleganckie pudełka w różnych rozmiarach</li>
+        <li><i class="fas fa-ribbon" style="color: #f5ed96;"></i> Ozdobne wstążki i dodatki dekoracyjne</li>
+        <li><i class="fas fa-palette" style="color: #f5ed96;"></i> Kolorystyka dopasowana do motywu imprezy</li>
+        <li><i class="fas fa-sparkles" style="color: #f5ed96;"></i> Perfekcyjne na upominki dla gości i świadków</li>
+      </ul>
+<div id="boxyCarousel" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner h-100">
+    <div class="carousel-item active h-100">
+      <img src="https://via.placeholder.com/800x400/2a2a2a/CFB53B?text=Boxy+1" class="d-block w-100" alt="boxy_1">
+    </div>
+    <div class="carousel-item h-100">
+      <img src="https://via.placeholder.com/800x400/2a2a2a/CFB53B?text=Boxy+2" class="d-block w-100" alt="boxy_2">
+    </div>
+    <div class="carousel-item h-100">
+      <img src="https://via.placeholder.com/800x400/2a2a2a/CFB53B?text=Boxy+3" class="d-block w-100" alt="boxy_3">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#boxyCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Poprzedni</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#boxyCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Następny</span>
+  </button>
+</div>
     `
   };
 
