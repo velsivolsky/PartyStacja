@@ -552,6 +552,19 @@ function initPapeteria() {
         }
         
         showOfferSection(section);
+        
+        // Scroll to content on mobile devices
+        if (window.innerWidth <= 768) {
+          setTimeout(() => {
+            const ofertaContent = document.getElementById('oferta-content');
+            if (ofertaContent) {
+              ofertaContent.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+              });
+            }
+          }, 500); // Wait for content to load before scrolling
+        }
       });
       
       // Touch events dla lepszej responsywności na mobile

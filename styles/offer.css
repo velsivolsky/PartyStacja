@@ -357,12 +357,16 @@
 /* Na mobile jeszcze mniejsze karty papeterii */
 @media (max-width: 768px) {
   .papeteria-card {
-    width: 135px;
-    height: 135px;
+    width: 108px;
+    height: 108px;
+    padding: 10px;
   }
   .papeteria-card .card-icon img {
-    width: 36px;
-    height: 36px;
+    width: 28px;
+    height: 28px;
+  }
+  .papeteria-card h5 {
+    font-size: 0.75rem;
   }
 }
 
