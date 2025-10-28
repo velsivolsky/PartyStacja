@@ -52,8 +52,8 @@ const oferta = {
       <div class="row g-4 justify-content-center">
         <div class="col-6 col-md-3">
           <div class="maskotka-card" data-id="mis" tabindex="0">
-            <img src="resources/photos/mis.jpg" alt="Miś PartyStacji" class="img-fluid rounded-circle mb-2 shadow-sm">
-            <h5 class="text-center">Miś PartyStacji</h5>
+            <img src="resources/photos/mis.jpg" alt="Miś PartTime" class="img-fluid rounded-circle mb-2 shadow-sm">
+            <h5 class="text-center">Miś PartyTime</h5>
           </div>
         </div>
         <div class="col-6 col-md-3">
@@ -270,7 +270,7 @@ const papeteria = {
 const maskotki = {
     mis: {
       img: 'resources/photos/mis.jpg',
-      alt: 'Miś PartyStacji',
+      alt: 'Miś PartyTime',
       text: `Nasz firmowy miś – uroczy, przyjazny i zawsze gotowy do zabawy.
             Idealny wybór na roczek, chrzest lub sesję z fotobudką.`,
       desc: `
