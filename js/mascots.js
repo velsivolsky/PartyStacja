@@ -124,13 +124,13 @@ const oferta = {
 <div id="swieceCarousel" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner h-100">
     <div class="carousel-item active h-100">
-      <img src="https://via.placeholder.com/800x400/2a2a2a/CFB53B?text=Świece+1" class="d-block w-100" alt="swiece_1">
+      <img src="resources/photos/offer/swieca1.jpeg" class="d-block w-100" alt="swiece_1">
     </div>
     <div class="carousel-item h-100">
-      <img src="https://via.placeholder.com/800x400/2a2a2a/CFB53B?text=Świece+2" class="d-block w-100" alt="swiece_2">
+      <img src="resources/photos/offer/swieca2.jpeg" class="d-block w-100" alt="swiece_2">
     </div>
     <div class="carousel-item h-100">
-      <img src="https://via.placeholder.com/800x400/2a2a2a/CFB53B?text=Świece+3" class="d-block w-100" alt="swiece_3">
+      <img src="resources/photos/offer/swieca3.jpeg" class="d-block w-100" alt="swiece_3">
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#swieceCarousel" data-bs-slide="prev">
@@ -178,13 +178,16 @@ const oferta = {
 <div id="podziekowaniaCarousel" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner h-100">
     <div class="carousel-item active h-100">
-      <img src="https://via.placeholder.com/800x400/2a2a2a/CFB53B?text=Podziękowania+1" class="d-block w-100" alt="podziekowania_1">
+      <img src="resources/photos/offer/pod1.jpeg" class="d-block w-100" alt="podziekowania_1">
     </div>
     <div class="carousel-item h-100">
-      <img src="https://via.placeholder.com/800x400/2a2a2a/CFB53B?text=Podziękowania+2" class="d-block w-100" alt="podziekowania_2">
+      <img src="resources/photos/offer/pod2.jpeg" class="d-block w-100" alt="podziekowania_2">
     </div>
     <div class="carousel-item h-100">
-      <img src="https://via.placeholder.com/800x400/2a2a2a/CFB53B?text=Podziękowania+3" class="d-block w-100" alt="podziekowania_3">
+      <img src="resources/photos/offer/pod3.jpeg" class="d-block w-100" alt="podziekowania_3">
+    </div>
+    <div class="carousel-item h-100">
+      <img src="resources/photos/offer/pod4.jpeg" class="d-block w-100" alt="podziekowania_3">
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#podziekowaniaCarousel" data-bs-slide="prev">
@@ -210,13 +213,19 @@ const oferta = {
 <div id="boxyCarousel" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner h-100">
     <div class="carousel-item active h-100">
-      <img src="https://via.placeholder.com/800x400/2a2a2a/CFB53B?text=Boxy+1" class="d-block w-100" alt="boxy_1">
+      <img src="resources/photos/offer/box1.jpeg" class="d-block w-100" alt="boxy_1">
     </div>
     <div class="carousel-item h-100">
-      <img src="https://via.placeholder.com/800x400/2a2a2a/CFB53B?text=Boxy+2" class="d-block w-100" alt="boxy_2">
+      <img src="resources/photos/offer/box2.jpeg" class="d-block w-100" alt="boxy_2">
     </div>
     <div class="carousel-item h-100">
-      <img src="https://via.placeholder.com/800x400/2a2a2a/CFB53B?text=Boxy+3" class="d-block w-100" alt="boxy_3">
+      <img src="resources/photos/offer/box3.jpeg" class="d-block w-100" alt="boxy_3">
+    </div>
+    <div class="carousel-item h-100">
+      <img src="resources/photos/offer/box4.jpeg" class="d-block w-100" alt="boxy_4">
+    </div>
+    <div class="carousel-item h-100">
+      <img src="resources/photos/offer/box5.jpeg" class="d-block w-100" alt="boxy_3">
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#boxyCarousel" data-bs-slide="prev">
