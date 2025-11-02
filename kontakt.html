@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles/main_style.css">
     <link rel="stylesheet" href="styles/contact.css">
+    <link rel="stylesheet" href="styles/contact_form.css">
     <link rel="stylesheet" href="styles/effects.css">
     <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -100,164 +101,372 @@
 
 <!--SECTION 1-->
       <section class="container my-5 normal-section">
-        <h2 class="text-center" style="color: #f5ed96;">Wypełnij formularz, a my zajmiemy się resztą — szybko, sprawnie i bez stresu.</h2>
-        <form method="POST" action="send_mail.php" class="form-container">
-        <div class="mb-3">
-          <label for="name" class="form-label">Imię i nazwisko:</label>
-          <input type="text" id="name" name="name" class="form-control" required>
+        <h2 class="text-center mb-4" style="color: #f5ed96;">Wypełnij formularz, a my zajmiemy się resztą — szybko, sprawnie i bez stresu.</h2>
+        
+        <!-- Progress Bar -->
+        <div class="form-progress-container mb-5">
+          <div class="form-progress-bar">
+            <div class="form-progress-step active" data-step="1">
+              <div class="form-progress-circle">1</div>
+              <div class="form-progress-label">Typ zapytania</div>
+            </div>
+            <div class="form-progress-step" data-step="2">
+              <div class="form-progress-circle">2</div>
+              <div class="form-progress-label">Szczegóły</div>
+            </div>
+            <div class="form-progress-step" data-step="3">
+              <div class="form-progress-circle">3</div>
+              <div class="form-progress-label">Wybór usług</div>
+            </div>
+            <div class="form-progress-step" data-step="4">
+              <div class="form-progress-circle">4</div>
+              <div class="form-progress-label">Dane kontaktowe</div>
+            </div>
+            <div class="form-progress-step" data-step="5">
+              <div class="form-progress-circle">5</div>
+              <div class="form-progress-label">Podsumowanie</div>
+            </div>
+          </div>
         </div>
 
-        <div class="mb-3">
-          <label for="email" class="form-label">E-mail kontaktowy:</label>
-          <input type="email" id="email" name="email" class="form-control" required>
-        </div>
-
-        <div class="mb-3">
-          <label for="phone" class="form-label">Numer telefonu:</label>
-          <input type="tel" id="phone" name="phone" class="form-control" required>
-        </div>
-
-        <div class="mb-3">
-          <label for="date" class="form-label">Data wydarzenia:</label>
-          <input type="date" id="date" name="date" class="form-control">
-        </div>
+        <form id="multiStepForm" method="POST" action="send_mail.php" class="form-container">
           
-            <div class="mb-3">
+          <!-- KROK 1: Typ zapytania -->
+          <div class="form-step active" data-step="1">
+            <h3 class="text-center mb-4" style="color: #f5ed96;">Co Cię interesuje?</h3>
+            <div class="row g-4 justify-content-center">
+              <div class="col-md-5">
+                <div class="inquiry-type-card" data-type="event">
+                  <div class="inquiry-icon"><img src="resources/icons/confetti.png" alt="Event"></div>
+                  <h4>Organizuję event</h4>
+                  <p>Szukam animacji, atrakcji, dekoracji lub cateringu na imprezę</p>
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="inquiry-type-card" data-type="shop">
+                  <div class="inquiry-icon"><img src="/resources/icons/shopping-bag.png" alt="Shop"></div>
+                  <h4>Chcę zapytać o produkty</h4>
+                  <p>Interesują mnie papeteria, świece, wianki, podziękowania lub boxy prezentowe</p>
+                </div>
+              </div>
+            </div>
+            <input type="hidden" name="inquiry_type" id="inquiryType" required>
+          </div>
+
+          <!-- KROK 2: Szczegóły eventu -->
+          <div class="form-step" data-step="2">
+            <h3 class="text-center mb-4" style="color: #f5ed96;">Powiedz nam o swoim evencie</h3>
+            
+            <div class="mb-4">
               <label class="form-label">Rodzaj imprezy:</label>
+              <div class="event-types-grid">
+                <div class="event-type-option" data-value="Urodziny">
+                  <img src="/resources/icons/cake.png" alt="Urodziny">
+                  <span>Urodziny</span>
+                </div>
+                <div class="event-type-option" data-value="Roczek">
+                  <img src="/resources/icons/baby.png" alt="Roczek">
+                  <span>Roczek</span>
+                </div>
+                <div class="event-type-option" data-value="Komunia">
+                  <img src="/resources/icons/church.png" alt="Komunia">
+                  <span>Komunia</span>
+                </div>
+                <div class="event-type-option" data-value="Chrzest">
+                  <img src="/resources/icons/christianity.png" alt="Chrzest">
+                  <span>Chrzest</span>
+                </div>
+                <div class="event-type-option" data-value="Wesele">
+                  <img src="/resources/icons/groom.png" alt="Wesele">
+                  <span>Wesele</span>
+                </div>
+                <div class="event-type-option" data-value="Baby shower">
+                  <img src="/resources/icons/baby-carriage.png" alt="Baby shower">
+                  <span>Baby shower</span>
+                </div>
+                <div class="event-type-option" data-value="Event firmowy">
+                  <img src="/resources/icons/suitcase.png" alt="Event firmowy">
+                  <span>Event firmowy</span>
+                </div>
+                <div class="event-type-option" data-value="Inne">
+                  <i class="fas fa-ellipsis-h"></i>
+                  <span>Inne</span>
+                </div>
+              </div>
+              <input type="hidden" name="event_type" id="eventType">
+              <input type="text" name="event_custom" id="eventCustom" class="form-control mt-3" placeholder="Jaki rodzaj wydarzenia?" style="display: none;">
+            </div>
 
-              <div class="form-check">
-                <input class="form-check-input event-checkbox" type="checkbox" name="event_type" value="Urodziny" id="urodziny">
-                <label class="form-check-label" for="urodziny">Urodziny</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input event-checkbox" type="checkbox" name="event_type" value="Roczek" id="roczek">
-                <label class="form-check-label" for="roczek">Roczek</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input event-checkbox" type="checkbox" name="event_type" value="Komunia" id="komunia">
-                <label class="form-check-label" for="komunia">Komunia</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input event-checkbox" type="checkbox" name="event_type" value="Chrzest" id="chrzest">
-                <label class="form-check-label" for="chrzest">Chrzest</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input event-checkbox" type="checkbox" name="event_type" value="Wesele" id="wesele">
-                <label class="form-check-label" for="wesele">Wesele</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input event-checkbox" type="checkbox" name="event_type" value="Baby shower" id="babyshower">
-                <label class="form-check-label" for="babyshower">Baby shower</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input event-checkbox" type="checkbox" name="event_type" value="Event firmowy" id="event">
-                <label class="form-check-label" for="event">Event firmowy / piknik</label>
+            <div class="mb-3">
+              <label for="eventDate" class="form-label">Data wydarzenia: *</label>
+              <input type="date" id="eventDate" name="event_date" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="eventLocation" class="form-label">Lokalizacja (miasto/miejscowość): *</label>
+              <input type="text" id="eventLocation" name="location" class="form-control" placeholder="np. Warszawa" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="guestCount" class="form-label">Szacowana liczba gości: *</label>
+              <input type="number" id="guestCount" name="guest_count" class="form-control" min="1" placeholder="np. 50" required>
+            </div>
+          </div>
+
+          <!-- KROK 3: Wybór usług -->
+          <div class="form-step" data-step="3">
+            <h3 class="text-center mb-4" style="color: #f5ed96;">Wybierz usługi</h3>
+            
+            <div class="services-container">
+              <!-- Animacje i Atrakcje -->
+              <div class="service-category" data-availability="event-only">
+                <div class="service-category-header" data-category="animacje">
+                  <img src="/resources/icons/favorites.png" alt="Animacje" class="category-icon">
+                  <h5>Animacje i Atrakcje</h5>
+                  <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="service-category-content">
+                  <!-- Maskotki -->
+                  <div class="service-subcategory">
+                    <h6><i class="fas fa-paw"></i> Maskotki</h6>
+                    <div class="service-options">
+                      <label class="service-option-label">
+                        <input type="checkbox" name="services[]" value="Maskotka: Miś">
+                        <span>Miś</span>
+                      </label>
+                      <label class="service-option-label">
+                        <input type="checkbox" name="services[]" value="Maskotka: Panda">
+                        <span>Panda</span>
+                      </label>
+                      <label class="service-option-label">
+                        <input type="checkbox" name="services[]" value="Maskotka: Angel">
+                        <span>Angel</span>
+                      </label>
+                      <label class="service-option-label">
+                        <input type="checkbox" name="services[]" value="Maskotka: Stitch">
+                        <span>Stitch</span>
+                      </label>
+                    </div>
+                  </div>
+                  
+                  <!-- Atrakcje -->
+                  <div class="service-subcategory">
+                    <h6><i class="fas fa-gamepad"></i> Atrakcje</h6>
+                    <div class="service-options">
+                      <label class="service-option-label">
+                        <input type="checkbox" name="services[]" value="Fotobudka 360">
+                        <span>Fotobudka 360</span>
+                      </label>
+                      <label class="service-option-label">
+                        <input type="checkbox" name="services[]" value="Maszyna do baniek">
+                        <span>Maszyna do baniek</span>
+                      </label>
+                      <label class="service-option-label">
+                        <input type="checkbox" name="services[]" value="Maszyna do piany">
+                        <span>Maszyna do piany</span>
+                      </label>
+                      <label class="service-option-label">
+                        <input type="checkbox" name="services[]" value="Dmuchaniec mini">
+                        <span>Dmuchaniec mini</span>
+                      </label>
+                      <label class="service-option-label">
+                        <input type="checkbox" name="services[]" value="Dmuchaniec średni">
+                        <span>Dmuchaniec średni</span>
+                      </label>
+                      <label class="service-option-label">
+                        <input type="checkbox" name="services[]" value="Dmuchaniec duży">
+                        <span>Dmuchaniec duży</span>
+                      </label>
+                      <label class="service-option-label">
+                        <input type="checkbox" name="services[]" value="Kula sferyczna">
+                        <span>Kula sferyczna</span>
+                      </label>
+                      <label class="service-option-label">
+                        <input type="checkbox" name="services[]" value="Maszyna do popcornu">
+                        <span>Maszyna do popcornu</span>
+                      </label>
+                      <label class="service-option-label">
+                        <input type="checkbox" name="services[]" value="Maszyna do waty cukrowej">
+                        <span>Maszyna do waty cukrowej</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <!-- Inne -->
-              <div class="form-check d-flex align-items-center gap-2">
-                <input class="form-check-input" type="checkbox" name="event_type" value="Inne" id="inneImpreza">
-                <label class="form-check-label" for="inneImpreza">Inne:</label>
-                <input type="text" name="event_custom" class="form-control form-control-sm" style="max-width: 300px;">
+              <!-- Dekoracje -->
+              <div class="service-category" data-availability="event-only">
+                <div class="service-category-header" data-category="dekoracje">
+                  <img src="/resources/icons/wedding-arch.png" alt="Dekoracje" class="category-icon">
+                  <h5>Dekoracje</h5>
+                  <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="service-category-content">
+                  <div class="service-options">
+                    <label class="service-option-label">
+                      <input type="checkbox" name="services[]" value="Balonowe kompozycje">
+                      <span>Balonowe kompozycje</span>
+                    </label>
+                    <label class="service-option-label">
+                      <input type="checkbox" name="services[]" value="Dekoracje kwiatowe">
+                      <span>Dekoracje kwiatowe</span>
+                    </label>
+                    <label class="service-option-label">
+                      <input type="checkbox" name="services[]" value="Dekoracje tematyczne">
+                      <span>Dekoracje tematyczne</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Catering -->
+              <div class="service-category" data-availability="event-only">
+                <div class="service-category-header" data-category="catering">
+                  <img src="/resources/icons/fork.png" alt="Catering" class="category-icon">
+                  <h5>Catering</h5>
+                  <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="service-category-content">
+                  <div class="service-options">
+                    <label class="service-option-label">
+                      <input type="checkbox" name="services[]" value="Przekąski">
+                      <span>Przekąski</span>
+                    </label>
+                    <label class="service-option-label">
+                      <input type="checkbox" name="services[]" value="Menu dziecięce">
+                      <span>Menu dziecięce</span>
+                    </label>
+                    <label class="service-option-label">
+                      <input type="checkbox" name="services[]" value="Deserki i candy bar">
+                      <span>Deserki i candy bar</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Foto -->
+              <div class="service-category" data-availability="event-only">
+                <div class="service-category-header" data-category="foto">
+                  <img src="/resources/icons/camera.png" alt="Foto" class="category-icon">
+                  <h5>Usługi foto</h5>
+                  <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="service-category-content">
+                  <div class="service-options">
+                    <label class="service-option-label">
+                      <input type="checkbox" name="services[]" value="Reportaż z imprezy">
+                      <span>Reportaż z imprezy</span>
+                    </label>
+                    <label class="service-option-label">
+                      <input type="checkbox" name="services[]" value="Mini sesje z maskotkami">
+                      <span>Mini sesje z maskotkami</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Produkty do kupienia -->
+              <div class="service-category">
+                <div class="service-category-header" data-category="produkty">
+                  <img src="/resources/icons/shopping-bag.png" alt="Produkty" class="category-icon">
+                  <h5>Produkty (można kupić bez eventu)</h5>
+                  <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="service-category-content">
+                  <div class="service-options">
+                    <label class="service-option-label">
+                      <input type="checkbox" name="services[]" value="Papeteria: Zaproszenia">
+                      <span>Zaproszenia</span>
+                    </label>
+                    <label class="service-option-label">
+                      <input type="checkbox" name="services[]" value="Papeteria: Winietki">
+                      <span>Winietki</span>
+                    </label>
+                    <label class="service-option-label">
+                      <input type="checkbox" name="services[]" value="Podziękowania">
+                      <span>Podziękowania</span>
+                    </label>
+                    <label class="service-option-label">
+                      <input type="checkbox" name="services[]" value="Boxy prezentowe">
+                      <span>Boxy prezentowe</span>
+                    </label>
+                    <label class="service-option-label">
+                      <input type="checkbox" name="services[]" value="Świece">
+                      <span>Świece</span>
+                    </label>
+                    <label class="service-option-label">
+                      <input type="checkbox" name="services[]" value="Wianki">
+                      <span>Wianki</span>
+                    </label>
+                  </div>
+                </div>
               </div>
             </div>
-          
-            <div class="mb-3">
-              <label class="form-label">Lokalizacja wydarzenia (miasto, miejscowość):</label>
-              <input type="text" name="location" class="form-control">
-            </div>
-          
-            <div class="mb-3">
-              <label class="form-label">Wybierz interesujące Cię atrakcje:</label>
+          </div>
 
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="attractions[]" value="Fotobudka 360" id="foto360">
-                <label class="form-check-label" for="foto360">Fotobudka 360</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="attractions[]" value="Maskotki" id="maskotki">
-                <label class="form-check-label" for="maskotki">Maskotki (Miś, Panda, Stitch, Angel)</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="attractions[]" value="Dmuchańce" id="dmuchance">
-                <label class="form-check-label" for="dmuchance">Dmuchańce</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="attractions[]" value="Dekoracje" id="dekoracje">
-                <label class="form-check-label" for="dekoracje">Dekoracje</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="attractions[]" value="Świece" id="swiece">
-                <label class="form-check-label" for="swiece">Świece</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="attractions[]" value="Papeteria" id="papeteria">
-                <label class="form-check-label" for="papeteria">Papeteria (zaproszenia, winietki)</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="attractions[]" value="Wianki" id="wianki">
-                <label class="form-check-label" for="wianki">Wianki</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="attractions[]" value="Maszyna do baniek" id="banki">
-                <label class="form-check-label" for="banki">Maszyna do baniek</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="attractions[]" value="Maszyna do waty cukrowej" id="wata">
-                <label class="form-check-label" for="wata">Maszyna do waty cukrowej</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="attractions[]" value="Catering" id="catering">
-                <label class="form-check-label" for="catering">Catering</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="attractions[]" value="Gadżety" id="gadżety">
-                <label class="form-check-label" for="gadżety">Przebrania / Gadżety</label>
-              </div>
+          <!-- KROK 4: Dane kontaktowe -->
+          <div class="form-step" data-step="4">
+            <h3 class="text-center mb-4" style="color: #f5ed96;">Twoje dane kontaktowe</h3>
+            
+            <div class="mb-3">
+              <label for="contactName" class="form-label">Imię i nazwisko: *</label>
+              <input type="text" id="contactName" name="name" class="form-control" required>
+            </div>
 
-              <!-- Dodatkowe "Inne" -->
-              <div class="form-check d-flex align-items-center gap-2">
-                <input class="form-check-input" type="checkbox" name="attractions[]" value="Inne" id="inneAtrak">
-                <label class="form-check-label" for="inneAtrak">Inne:</label>
-                <input type="text" name="attraction_custom" class="form-control form-control-sm" style="max-width: 300px;">
-              </div>
-            </div>
-          
             <div class="mb-3">
-              <label class="form-label">Dodatkowe informacje / pytania:</label>
-              <textarea name="message" class="form-control" rows="5"></textarea>
+              <label for="contactEmail" class="form-label">E-mail: *</label>
+              <input type="email" id="contactEmail" name="email" class="form-control" required>
             </div>
-          
+
             <div class="mb-3">
-              <label class="form-label">Zgody:</label>
+              <label for="contactPhone" class="form-label">Telefon: *</label>
+              <input type="tel" id="contactPhone" name="phone" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="additionalMessage" class="form-label">Dodatkowe informacje / pytania:</label>
+              <textarea id="additionalMessage" name="message" class="form-control" rows="5" placeholder="Napisz nam więcej o swoich potrzebach..."></textarea>
+            </div>
+
+          </div>
+
+          <!-- KROK 5: Podsumowanie -->
+          <div class="form-step" data-step="5">
+            <h3 class="text-center mb-4" style="color: #f5ed96;">Podsumowanie zapytania</h3>
+            
+            <div class="summary-box" id="summaryContent">
+              <!-- Dynamicznie generowane podsumowanie -->
+            </div>
+
+            <div class="mb-4">
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" required id="rodo">
                 <label class="form-check-label" for="rodo">
-                  Wyrażam zgodę na przetwarzanie danych w celu kontaktu i przygotowania oferty.
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="ofertaPDF" id="ofertaPDF">
-                <label class="form-check-label" for="ofertaPDF">
-                  Chcę otrzymać ofertę PDF na e-mail (opcjonalnie)
+                  Wyrażam zgodę na przetwarzanie danych osobowych w celu kontaktu i przygotowania oferty. *
                 </label>
               </div>
             </div>
             
             <div class="mb-4 text-center">
-              <a href="polityka.html" class="btn btn-primary">
-                Polityka prywatności
+              <a href="polityka.html" target="_blank" class="btn btn-outline-primary">
+                <i class="fas fa-shield-alt"></i> Polityka prywatności
               </a>
             </div>
-            
-            <hr style="border-color: #f5ed96;">
-            
-            <div class="text-center">
-              <button type="submit" class="btn btn-primary">
-                <i class="fas fa-paper-plane"></i> Wyślij zapytanie
-              </button>
-            </div>
-          </form>
+          </div>
+
+          <!-- Navigation Buttons -->
+          <div class="form-navigation">
+            <button type="button" class="btn btn-secondary" id="prevBtn" style="display: none;">
+              <i class="fas fa-arrow-left"></i> Wstecz
+            </button>
+            <button type="button" class="btn btn-primary" id="nextBtn">
+              Dalej <i class="fas fa-arrow-right"></i>
+            </button>
+            <button type="submit" class="btn btn-success" id="submitBtn" style="display: none;">
+              <i class="fas fa-paper-plane"></i> Wyślij zapytanie
+            </button>
+          </div>
+        </form>
       </section>
 
 
@@ -268,112 +477,7 @@
   </div>
   
   <script src="js/import.js"></script>
-
-
-  <script>
-// Funkcja do generowania confetti
-function createConfetti() {
-  const colors = ['#f5ed96', '#CFB53B', '#FFD700', '#F0E68C', '#BDB76B'];
-  
-  // Tworzenie 60 kawałków confetti
-  for (let i = 0; i < 60; i++) {
-    const confettiPiece = document.createElement('div');
-    confettiPiece.style.position = 'fixed';
-    confettiPiece.style.width = Math.random() * 15 + 8 + 'px';
-    confettiPiece.style.height = Math.random() * 15 + 8 + 'px';
-    confettiPiece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    confettiPiece.style.left = Math.random() * window.innerWidth + 'px';
-    confettiPiece.style.top = '-30px';
-    confettiPiece.style.borderRadius = '3px';
-    confettiPiece.style.opacity = '0.9';
-    confettiPiece.style.pointerEvents = 'none';
-    confettiPiece.style.zIndex = '9999';
-    confettiPiece.style.boxShadow = '0 2px 8px rgba(245, 237, 150, 0.6)';
-    
-    document.body.appendChild(confettiPiece);
-    
-    // Parametry animacji
-    const fallDuration = Math.random() * 3000 + 2000; // 2-5 sekund
-    const swayAmount = Math.random() * 300 + 100; // 100-400px
-    const rotationAmount = Math.random() * 720 + 360; // 360-1080 stopni
-    
-    // Animacja JavaScript
-    animateConfetti(confettiPiece, fallDuration, swayAmount, rotationAmount);
-  }
-}
-
-function animateConfetti(element, duration, swayAmount, rotation) {
-  const startTime = Date.now();
-  const startX = parseFloat(element.style.left);
-  const startY = parseFloat(element.style.top);
-  const endY = window.innerHeight + 50;
-  
-  function animate() {
-    const elapsed = Date.now() - startTime;
-    const progress = elapsed / duration;
-    
-    if (progress >= 1) {
-      element.remove();
-      return;
-    }
-    
-    // Pozycja Y (spadanie)
-    const currentY = startY + (endY - startY) * progress;
-    
-    // Pozycja X (zygzak)
-    const swayProgress = progress * Math.PI * 4; // 4 pełne oscylacje
-    const currentX = startX + Math.sin(swayProgress) * swayAmount * (1 - progress * 0.5);
-    
-    // Rotacja
-    const currentRotation = rotation * progress;
-    
-    // Opacity (zanikanie pod koniec)
-    const opacity = progress > 0.8 ? (1 - progress) * 5 : 0.9;
-    
-    element.style.left = currentX + 'px';
-    element.style.top = currentY + 'px';
-    element.style.transform = `rotate(${currentRotation}deg)`;
-    element.style.opacity = opacity;
-    
-    requestAnimationFrame(animate);
-  }
-  
-  animate();
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-  const eventCheckboxes = document.querySelectorAll('.event-checkbox');
-  const inneCheckbox = document.getElementById('inneImpreza');
-  const inneInput = inneCheckbox.nextElementSibling; // pole tekstowe obok "Inne"
-
-  eventCheckboxes.forEach(box => {
-    box.addEventListener('change', () => {
-      if (box.checked) {
-        eventCheckboxes.forEach(b => { if (b !== box) b.checked = false; });
-        inneCheckbox.checked = false;
-        inneInput.value = '';
-      }
-    });
-  });
-
-  inneCheckbox.addEventListener('change', () => {
-    if (inneCheckbox.checked) {
-      eventCheckboxes.forEach(b => b.checked = false);
-    } else {
-      inneInput.value = '';
-    }
-  });
-
-  // Dodanie obsługi confetti do przycisku
-  const submitButton = document.querySelector('button[type="submit"]');
-  if (submitButton) {
-    submitButton.addEventListener('click', function(e) {
-      createConfetti();
-    });
-  }
-});
-
-</script>
+  <script src="js/contact_form.js"></script>
 <script src="js/active_link.js" defer></script>
 <script src="js/barba-setup.js" defer></script>
 </body>
