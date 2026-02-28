@@ -114,6 +114,10 @@ const oferta = {
     swiece: `
       <h3 class="fw-bold mb-3 text-center"><i class="fas fa-candle-holder" style="color: #f5ed96;"></i> Świece</h3>
       <p class="lead text-center">Magiczny blask, który tworzy wyjątkową atmosferę każdej chwili.</p>
+      
+      <div class="text-center mt-4">
+        <img src="resources/vela_flora_logo.png" alt="Vela Flora" style="max-width: 200px; height: auto; filter: brightness(0) saturate(100%) invert(95%) sepia(15%) saturate(800%) hue-rotate(5deg) brightness(98%) contrast(95%);">
+      </div>
       <hr>
       <ul class="list-unstyled ps-3 fs-5 text-center">
         <li><i class="fas fa-birthday-cake" style="color: #f5ed96;"></i> Świece urodzinowe w różnych kształtach</li>
@@ -142,6 +146,7 @@ const oferta = {
     <span class="visually-hidden">Następny</span>
   </button>
 </div>
+
     `,
     papeteria: `
       <h3 class="fw-bold mb-3 text-center"><i class="fas fa-scroll" style="color: #f5ed96;"></i> Papeteria</h3>

@@ -1,0 +1,35 @@
+# Google, Bing, and other search engines
+User-agent: *
+Allow: /
+Disallow: /vendor/
+Disallow: /emails/
+Disallow: /resources/fonts/
+Disallow: /*.php
+Disallow: /composer-setup.php
+Disallow: /composer.json
+Disallow: /composer.lock
+Disallow: /cookies-modal.html
+Disallow: /test-cookies.html
+Disallow: /*backup*
+Disallow: /notes.txt
+
+# Specific delay for Googlebot
+User-agent: Googlebot
+Crawl-delay: 0
+
+# Specific delay for Bingbot
+User-agent: Bingbot
+Crawl-delay: 1
+
+# Block bad bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# Sitemap location
+Sitemap: https://www.e-partytime.pl/sitemap.xml

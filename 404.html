@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Strona nie znaleziona | PartyTime</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/main_style.css">
+    <link rel="stylesheet" href="styles/effects.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    
+    <meta name="description" content="Strona nie znaleziona (404). Powróć na stronę główną PartyTime.">
+    <meta name="robots" content="noindex, follow">
+    
+    <style>
+        .error-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            text-align: center;
+            color: white;
+        }
+        
+        .error-content {
+            padding: 40px 20px;
+        }
+        
+        .error-code {
+            font-size: 120px;
+            font-weight: bold;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .error-message {
+            font-size: 28px;
+            margin: 20px 0;
+            font-weight: 600;
+        }
+        
+        .error-description {
+            font-size: 16px;
+            margin: 20px 0 40px 0;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .error-buttons {
+            margin-top: 40px;
+        }
+        
+        .btn-error {
+            margin: 10px 10px;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 30px;
+            border: 2px solid white;
+            background: transparent;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-error:hover {
+            background: white;
+            color: #667eea;
+            transform: translateY(-3px);
+        }
+        
+        .btn-primary-error {
+            background: white;
+            color: #667eea;
+        }
+        
+        .btn-primary-error:hover {
+            background: transparent;
+            color: white;
+        }
+        
+        .error-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .breadcrumb-404 {
+            margin-top: 50px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .breadcrumb-404 a {
+            color: white;
+            text-decoration: underline;
+            margin: 0 5px;
+        }
+        
+        .breadcrumb-404 a:hover {
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-content">
+            <div class="error-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            
+            <h1 class="error-code">404</h1>
+            <h2 class="error-message">Strona nie znaleziona!</h2>
+            
+            <p class="error-description">
+                Przepraszamy, ale strona, którą szukasz, nie istnieje lub została przeniesiona. 
+                Prosimy powrócić do strony głównej lub zapoznać się z naszą ofertą.
+            </p>
+            
+            <div class="error-buttons">
+                <a href="/" class="btn-error btn-primary-error">
+                    <i class="fas fa-home"></i> Strona główna
+                </a>
+                <a href="/oferta.html" class="btn-error">
+                    <i class="fas fa-star"></i> Oferta
+                </a>
+                <a href="/kontakt.html" class="btn-error">
+                    <i class="fas fa-envelope"></i> Kontakt
+                </a>
+            </div>
+            
+            <div class="breadcrumb-404">
+                <p>Sekcje strony:</p>
+                <a href="/">Główna</a> | 
+                <a href="/o_nas.html">O nas</a> | 
+                <a href="/oferta.html">Oferta</a> | 
+                <a href="/galeria.html">Galeria</a> | 
+                <a href="/sklep.html">Sklep</a> | 
+                <a href="/kontakt.html">Kontakt</a>
+            </div>
+        </div>
+    </div>
+    
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

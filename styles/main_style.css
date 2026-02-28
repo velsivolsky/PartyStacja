@@ -313,6 +313,16 @@ p, h1, a, span, btn{
   font-size: 1.6rem !important; /* Fotobudki, Dekoracje, etc. */
 }
 
+/* Globalne style dla wszystkich buttonów */
+.btn, button, a.btn {
+  transition: all 0.3s ease !important;
+}
+
+.btn:hover, button:hover, a.btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(245, 237, 150, 0.4);
+}
+
 /* Przycisk w hero - normalna czcionka */
 .hero-section .btn {
   font-family: 'Dosis', sans-serif !important;
@@ -323,8 +333,8 @@ p, h1, a, span, btn{
 /* Hover dla przycisku w hero */
 .hero-section .btn:hover {
   background-color: #e6d680 !important;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(245, 237, 150, 0.4);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(245, 237, 150, 0.4);
 }
 
 /* Pozostałe elementy */
@@ -435,12 +445,21 @@ p, h1, a, span, btn{
 .social-icon {
   margin: 0 20px;
   display: inline-block;
-  transition: transform 0.35s cubic-bezier(0.34, 2, 0.9, 1);
+  transition: all 0.3s ease;
   will-change: transform;
 }
 
 .social-icon:hover {
-  transform: scale(1.35);
+  transform: scale(1.2);
+}
+
+.social-icon i {
+  transition: all 0.3s ease;
+}
+
+.social-icon:hover i {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 10px rgba(245, 237, 150, 0.6));
 }
 
 /* ===== BARBA.JS STYLES - ZAPOBIEGANIE MIGANIU ===== */
