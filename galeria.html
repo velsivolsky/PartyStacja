@@ -8,12 +8,15 @@
     <link rel="stylesheet" href="styles/main_style.css">
     <link rel="stylesheet" href="styles/contact.css">
     <link rel="stylesheet" href="styles/gallery.css">
-    <link rel="stylesheet" href="styles/effects.css">
-    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://unpkg.com/@barba/core"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Defer non-critical CSS -->
+    <link rel="stylesheet" href="styles/effects.css" media="print" onload="this.media='all'" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="styles/effects.css" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    </noscript>
 
     <!--SEO META TAGS-->
     <meta name="description" content="Chwytamy chwile! Zobacz, jak wyglądają nasze atrakcje w akcji – fotobudka 360, pluszowe maskotki i kolorowe dekoracje.">
@@ -48,6 +51,8 @@
   src="resources/logo.jpg"
   alt="PartyTime Logo"
   class="img-fluid mx-auto d-block"
+  width="500"
+  height="500"
 />
           </div>
 
@@ -103,7 +108,7 @@
       <div class="carousel-item active">
         <div class="row justify-content-center">
           <div class="col-10 col-md-8">
-            <img src="resources/photos/real/12.JPG" class="d-block w-100 rounded shadow-sm img-clickable" alt="Zdjęcie 1" data-bs-toggle="modal" data-bs-target="#imageModal" data-img="resources/photos/real/12.JPG">
+            <img src="resources/photos/real/12.JPG" class="d-block w-100 rounded shadow-sm img-clickable" alt="Zdjęcie 1" data-bs-toggle="modal" data-bs-target="#imageModal" data-img="resources/photos/real/12.JPG" width="2048" height="1365">
           </div>
         </div>
       </div>
@@ -111,7 +116,7 @@
       <div class="carousel-item">
         <div class="row justify-content-center">
           <div class="col-10 col-md-8">
-            <img src="resources/photos/real/18.JPG" class="d-block w-100 rounded shadow-sm img-clickable" alt="Zdjęcie 2" data-bs-toggle="modal" data-bs-target="#imageModal" data-img="resources/photos/real/18.JPG">
+            <img src="resources/photos/real/18.JPG" class="d-block w-100 rounded shadow-sm img-clickable" alt="Zdjęcie 2" data-bs-toggle="modal" data-bs-target="#imageModal" data-img="resources/photos/real/18.JPG" width="2048" height="1365" loading="lazy">
           </div>
         </div>
       </div>
@@ -119,7 +124,7 @@
       <div class="carousel-item">
         <div class="row justify-content-center">
           <div class="col-10 col-md-8">
-            <img src="resources/photos/real/22.JPG" class="d-block w-100 rounded shadow-sm img-clickable" alt="Zdjęcie 3" data-bs-toggle="modal" data-bs-target="#imageModal" data-img="resources/photos/real/22.JPG">
+            <img src="resources/photos/real/22.JPG" class="d-block w-100 rounded shadow-sm img-clickable" alt="Zdjęcie 3" data-bs-toggle="modal" data-bs-target="#imageModal" data-img="resources/photos/real/22.JPG" width="2048" height="1365" loading="lazy">
           </div>
         </div>
       </div>
@@ -127,7 +132,7 @@
       <div class="carousel-item">
         <div class="row justify-content-center">
           <div class="col-10 col-md-8">
-            <img src="resources/photos/real/25.JPG" class="d-block w-100 rounded shadow-sm img-clickable" alt="Zdjęcie 4" data-bs-toggle="modal" data-bs-target="#imageModal" data-img="resources/photos/real/25.JPG">
+            <img src="resources/photos/real/25.JPG" class="d-block w-100 rounded shadow-sm img-clickable" alt="Zdjęcie 4" data-bs-toggle="modal" data-bs-target="#imageModal" data-img="resources/photos/real/25.JPG" width="2048" height="1365" loading="lazy">
           </div>
         </div>
       </div>
@@ -135,7 +140,7 @@
       <div class="carousel-item">
         <div class="row justify-content-center">
           <div class="col-10 col-md-8">
-            <img src="resources/photos/real/28.JPG" class="d-block w-100 rounded shadow-sm img-clickable" alt="Zdjęcie 5" data-bs-toggle="modal" data-bs-target="#imageModal" data-img="resources/photos/real/28.JPG">
+            <img src="resources/photos/real/28.JPG" class="d-block w-100 rounded shadow-sm img-clickable" alt="Zdjęcie 5" data-bs-toggle="modal" data-bs-target="#imageModal" data-img="resources/photos/real/28.JPG" width="2048" height="1365" loading="lazy">
           </div>
         </div>
       </div>
@@ -143,7 +148,7 @@
       <div class="carousel-item">
         <div class="row justify-content-center">
           <div class="col-10 col-md-8">
-            <img src="resources/photos/real/6.JPG" class="d-block w-100 rounded shadow-sm img-clickable" alt="Zdjęcie 6" data-bs-toggle="modal" data-bs-target="#imageModal" data-img="resources/photos/real/6.JPG">
+            <img src="resources/photos/real/6.JPG" class="d-block w-100 rounded shadow-sm img-clickable" alt="Zdjęcie 6" data-bs-toggle="modal" data-bs-target="#imageModal" data-img="resources/photos/real/6.JPG" width="2048" height="1365" loading="lazy">
           </div>
         </div>
       </div>
@@ -185,6 +190,9 @@
     <div id=footer-import></div>
   </div>
   
+<script src="bootstrap/js/bootstrap.bundle.min.js" defer></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+<script src="https://unpkg.com/@barba/core" defer></script>
 <script src="js/import.js" defer></script>
 <script src="js/active_link.js" defer></script>
 <script src="js/barba-setup.js" defer></script>

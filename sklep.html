@@ -6,12 +6,15 @@
     <title>PartyTime - Sklep</title>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles/main_style.css">
-    <link rel="stylesheet" href="styles/effects.css">
-    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://unpkg.com/@barba/core"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Defer non-critical CSS -->
+    <link rel="stylesheet" href="styles/effects.css" media="print" onload="this.media='all'" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="styles/effects.css" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    </noscript>
 
     <!--SEO META TAGS-->
     <meta name="description" content="Sklep PartyTime - wkrótce otwarcie! Sprawdź nasze nadchodzące produkty i bądź pierwszy który skorzysta z naszej oferty.">
@@ -309,5 +312,6 @@
             }, 1000);
         });
     </script>
+<script src="bootstrap/js/bootstrap.bundle.min.js" defer></script>
 </body>
 </html>

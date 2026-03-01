@@ -4,6 +4,7 @@
     src: url('../resources/fonts/Birthstone/Birthstone-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
@@ -11,6 +12,7 @@
     src: url('../resources/fonts/Dosis/Dosis-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
 }
 
 :root {
@@ -129,7 +131,7 @@ p, h1, a, span, btn{
   body{
     background-color: var(--section-bg);
     padding: 0;
-    opacity: 0;
+    opacity: 1;
     transition: opacity 0.5s ease-in-out;
     font-family: 'Dosis', sans-serif;
     color: var(--text-primary);
@@ -141,17 +143,13 @@ p, h1, a, span, btn{
     opacity: 0;
     /*position: relative; */
     z-index: 0; /* niech nie wchodzi przed sticky */
-    animation: fadeIn 2.5s ease-out forwards;
+    animation: fadeIn 0.6s ease-out forwards;
   }
   
   @keyframes fadeIn {
     0% {
       opacity: 0;
-      transform: translateY(30px);
-    }
-    20% {
-      opacity: 0;
-      transform: translateY(30px);
+      transform: translateY(10px);
     }
     100% {
       opacity: 1;

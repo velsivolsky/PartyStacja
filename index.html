@@ -6,13 +6,23 @@
     <title>PartyTime</title>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />              
     <link rel="stylesheet" href="styles/main_style.css" />
-    <link rel="stylesheet" href="styles/effects.css" />
-    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://unpkg.com/@barba/core"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="styles/fullwidth.css"/>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Preload LCP image -->
+    <link rel="preload" as="image" href="resources/logo.jpg" />
+    <!-- Preload critical fonts -->
+    <link rel="preload" as="font" type="font/truetype" href="resources/fonts/Birthstone/Birthstone-Regular.ttf" crossorigin />
+    <link rel="preload" as="font" type="font/truetype" href="resources/fonts/Dosis/Dosis-Regular.ttf" crossorigin />
+
+    <!-- Defer non-critical CSS -->
+    <link rel="stylesheet" href="styles/effects.css" media="print" onload="this.media='all'" />
+    <link rel="stylesheet" href="styles/fullwidth.css" media="print" onload="this.media='all'" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="styles/effects.css" />
+      <link rel="stylesheet" href="styles/fullwidth.css" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    </noscript>
 
         <!--SEO META TAGS-->
     <meta name="description" content="PartyTime - Wyjątkowe chwile zasługują na wyjątkową oprawę. Oferujemy fotobudki, dekoracje, maskotki i przebrania na każdą okazję. Skontaktuj się z nami, aby stworzyć niezapomniane wspomnienia!">
@@ -48,6 +58,9 @@
   src="resources/logo.jpg"
   alt="PartyTime Logo"
   class="img-fluid mx-auto d-block"
+  width="500"
+  height="500"
+  fetchpriority="high"
 />
           </div>
 
@@ -125,6 +138,10 @@
             src="resources/photos/real/5.JPG"
             alt="Rodzina i dzieci podczas zabawy"
             class="img-fluid rounded shadow-sm"
+            width="2048"
+            height="1365"
+            loading="lazy"
+            decoding="async"
           />
         </div>
       </div>
@@ -169,6 +186,10 @@
               src="resources/photos/real/23.JPG"
               alt="Rodzina i dzieci podczas zabawy"
               class="img-fluid rounded shadow-sm"
+              width="2048"
+              height="1365"
+              loading="lazy"
+              decoding="async"
             />
           </div>
         </div>
@@ -212,6 +233,10 @@
             src="resources/photos/real/18.JPG"
             alt="Rodzina i dzieci podczas zabawy"
             class="img-fluid rounded shadow-sm"
+            width="2048"
+            height="1365"
+            loading="lazy"
+            decoding="async"
           />
         </div>
       </div>
@@ -328,6 +353,7 @@
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
           style="border:0;"
+          title="Mapa Google - lokalizacja PartyTime"
         ></iframe>
         </div>
     </div>
@@ -335,13 +361,13 @@
 
 <div class="col-md-12 mt-4 text-center">
   <!-- WhatsApp -->
-  <a href="https://wa.me/530170100" target="_blank" class="mx-2 social-icon">
+  <a href="https://wa.me/530170100" target="_blank" class="mx-2 social-icon" aria-label="WhatsApp">
     <i class="fa-brands fa-whatsapp" style="font-size: 3rem; color: #f5ed96;"></i>
   </a>
-  <a href="https://facebook.com/profile.php?id=61578947922828" target="_blank" class="mx-2 social-icon">
+  <a href="https://facebook.com/profile.php?id=61578947922828" target="_blank" class="mx-2 social-icon" aria-label="Facebook">
     <i class="fa-brands fa-facebook" style="font-size: 3rem; color: #f5ed96;"></i>
   </a>
-  <a href="https://instagram.com/partytime.deluxe" target="_blank" class="mx-2 social-icon">
+  <a href="https://instagram.com/partytime.deluxe" target="_blank" class="mx-2 social-icon" aria-label="Instagram">
     <i class="fa-brands fa-instagram" style="font-size: 3rem; color: #f5ed96;"></i>
   </a>
 </div>
@@ -353,6 +379,9 @@
       <div id="footer-import"></div>
     </div>
     
+    <script src="bootstrap/js/bootstrap.bundle.min.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+    <script src="https://unpkg.com/@barba/core" defer></script>
     <script src="js/active_link.js" defer></script>
     <script src="js/import.js" defer></script>
     <script src="js/barba-setup.js" defer></script>

@@ -7,12 +7,15 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles/main_style.css">
     <link rel="stylesheet" href="styles/offer.css">
-    <link rel="stylesheet" href="styles/effects.css">
-    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://unpkg.com/@barba/core"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Defer non-critical CSS -->
+    <link rel="stylesheet" href="styles/effects.css" media="print" onload="this.media='all'" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="styles/effects.css" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    </noscript>
 
 
             <!--SEO META TAGS-->
@@ -20,7 +23,7 @@
     <meta name="description" content="Sprawdź ofertę PartyStacji: fotobudka 360, maskotki, dekoracje i inne atrakcje, które rozkręcą każdą imprezę.">
     <meta name="keywords" content="fotobudki, dekoracje, maskotki, przebrania, imprezy, eventy, PartyTime, galeria, kontakt">
     <meta name="author" content="PartyTime">
-    <meta property="og:title" content="PartyTime - Galeria">
+    <meta property="og:title" content="PartyTime - Oferta">
     <meta name="robots" content="index, follow">
 
     <meta property="og:description" content="Sprawdź ofertę PartyStacji: fotobudka 360, maskotki, dekoracje i inne atrakcje, które rozkręcą każdą imprezę.">
@@ -50,6 +53,8 @@
   src="resources/logo.jpg"
   alt="PartyTime Logo"
   class="img-fluid mx-auto d-block"
+  width="500"
+  height="500"
 />
           </div>
 
@@ -144,6 +149,9 @@
     <div id="footer-import"></div>
   </div>
 
+<script src="bootstrap/js/bootstrap.bundle.min.js" defer></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+<script src="https://unpkg.com/@barba/core" defer></script>
 <script src="js/mascots.js" defer></script>
 <script src="js/import.js" defer></script>
 <script src="js/active_link.js" defer></script>
