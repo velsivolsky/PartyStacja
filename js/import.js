@@ -8,6 +8,13 @@ function triggerFadeIn() {
 
 // Funkcja do załadowania navbaru i aktywacji menu
 function loadNavbar() {
+  const navContainer = document.getElementById('nav-import');
+  // Skip fetch if navbar already inlined in HTML
+  if (navContainer && navContainer.querySelector('nav')) {
+    activateMenu();
+    triggerFadeIn();
+    return;
+  }
   fetch('navbar.html')
     .then(response => response.text())
     .then(data => {

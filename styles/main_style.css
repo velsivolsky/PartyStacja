@@ -1,7 +1,8 @@
 /* Import custom fonts */
 @font-face {
     font-family: 'Birthstone';
-    src: url('../resources/fonts/Birthstone/Birthstone-Regular.ttf') format('truetype');
+    src: url('../resources/fonts/Birthstone/Birthstone-Regular.woff2') format('woff2'),
+         url('../resources/fonts/Birthstone/Birthstone-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -9,7 +10,8 @@
 
 @font-face {
     font-family: 'Dosis';
-    src: url('../resources/fonts/Dosis/Dosis-Regular.ttf') format('truetype');
+    src: url('../resources/fonts/Dosis/Dosis-Regular.woff2') format('woff2'),
+         url('../resources/fonts/Dosis/Dosis-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
