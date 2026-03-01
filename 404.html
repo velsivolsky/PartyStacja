@@ -14,142 +14,230 @@
     <meta name="robots" content="noindex, follow">
     
     <style>
+        body {
+            opacity: 1;
+            background: #000000;
+        }
+
         .error-container {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: radial-gradient(ellipse at center, rgba(245, 237, 150, 0.06) 0%, #000000 70%);
             text-align: center;
-            color: white;
+            color: #f5f5f5;
+            position: relative;
+            overflow: hidden;
         }
-        
+
+        .error-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image:
+                radial-gradient(2px 2px at 20% 30%, rgba(245,237,150,0.4) 0%, transparent 100%),
+                radial-gradient(2px 2px at 40% 70%, rgba(245,237,150,0.3) 0%, transparent 100%),
+                radial-gradient(2px 2px at 60% 20%, rgba(245,237,150,0.2) 0%, transparent 100%),
+                radial-gradient(2px 2px at 80% 60%, rgba(245,237,150,0.3) 0%, transparent 100%),
+                radial-gradient(1px 1px at 10% 80%, rgba(245,237,150,0.2) 0%, transparent 100%),
+                radial-gradient(1px 1px at 90% 10%, rgba(245,237,150,0.2) 0%, transparent 100%);
+            animation: twinkle 4s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .glass-box {
+            background: rgba(42, 42, 42, 0.5);
+            border: 1px solid rgba(245, 237, 150, 0.15);
+            border-radius: 1.2rem;
+            padding: 50px 40px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            max-width: 560px;
+            width: 100%;
+            margin: 0 15px;
+            position: relative;
+            z-index: 1;
+        }
+
         .error-content {
-            padding: 40px 20px;
+            padding: 0;
         }
-        
+
+        .error-icon {
+            font-size: 60px;
+            margin-bottom: 10px;
+            color: #f5ed96;
+            filter: drop-shadow(0 0 15px rgba(245, 237, 150, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
         .error-code {
-            font-size: 120px;
+            font-family: 'Birthstone', cursive;
+            font-size: 140px;
             font-weight: bold;
             margin: 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            line-height: 1;
+            color: #f5ed96;
+            text-shadow: 0 0 20px rgba(245,237,150,0.4), 0 0 40px rgba(245,237,150,0.2);
         }
-        
+
         .error-message {
-            font-size: 28px;
-            margin: 20px 0;
-            font-weight: 600;
+            font-family: 'Birthstone', cursive;
+            font-size: 2.2rem;
+            margin: 10px 0 20px;
+            color: #f5ed96;
+            text-shadow: 0 0 10px rgba(245,237,150,0.3);
         }
-        
+
         .error-description {
-            font-size: 16px;
-            margin: 20px 0 40px 0;
-            opacity: 0.9;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            font-family: 'Dosis', sans-serif;
+            font-size: 1.1rem;
+            margin: 0 auto 30px;
+            opacity: 0.85;
+            max-width: 500px;
+            line-height: 1.7;
+            color: #f5f5f5;
         }
-        
+
         .error-buttons {
-            margin-top: 40px;
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
         }
-        
+
         .btn-error {
-            margin: 10px 10px;
-            padding: 12px 30px;
-            font-size: 16px;
-            border-radius: 30px;
-            border: 2px solid white;
-            background: transparent;
-            color: white;
+            padding: 12px 28px;
+            font-family: 'Dosis', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            border: 1px solid rgba(245, 237, 150, 0.3);
+            background: rgba(245, 237, 150, 0.08);
+            color: #f5ed96;
             text-decoration: none;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             transition: all 0.3s ease;
         }
-        
+
         .btn-error:hover {
-            background: white;
-            color: #667eea;
+            background: #f5ed96;
+            color: #000000;
+            border-color: #f5ed96;
             transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(245, 237, 150, 0.3);
         }
-        
+
         .btn-primary-error {
-            background: white;
-            color: #667eea;
+            background: #f5ed96;
+            color: #000000;
+            border-color: #f5ed96;
         }
-        
+
         .btn-primary-error:hover {
             background: transparent;
-            color: white;
+            color: #f5ed96;
+            border-color: rgba(245, 237, 150, 0.4);
         }
-        
-        .error-icon {
-            font-size: 80px;
-            margin-bottom: 20px;
-            animation: bounce 2s infinite;
+
+        .error-divider {
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #f5ed96, transparent);
+            margin: 30px auto;
+            opacity: 0.5;
         }
-        
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+
+        .error-links {
+            margin-top: 10px;
+            font-family: 'Dosis', sans-serif;
+            font-size: 0.9rem;
+            opacity: 0.6;
         }
-        
-        .breadcrumb-404 {
-            margin-top: 50px;
-            font-size: 14px;
-            opacity: 0.8;
+
+        .error-links p {
+            margin-bottom: 8px;
+            color: #f5f5f5;
         }
-        
-        .breadcrumb-404 a {
-            color: white;
-            text-decoration: underline;
-            margin: 0 5px;
+
+        .error-links a {
+            color: #f5ed96;
+            text-decoration: none;
+            margin: 0 6px;
+            transition: opacity 0.2s;
         }
-        
-        .breadcrumb-404 a:hover {
+
+        .error-links a:hover {
             opacity: 0.7;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 576px) {
+            .error-code { font-size: 100px; }
+            .error-message { font-size: 1.8rem; }
+            .glass-box { padding: 35px 20px; }
         }
     </style>
 </head>
 <body>
     <div class="error-container">
-        <div class="error-content">
-            <div class="error-icon">
-                <i class="fas fa-exclamation-triangle"></i>
-            </div>
-            
-            <h1 class="error-code">404</h1>
-            <h2 class="error-message">Strona nie znaleziona!</h2>
-            
-            <p class="error-description">
-                Przepraszamy, ale strona, którą szukasz, nie istnieje lub została przeniesiona. 
-                Prosimy powrócić do strony głównej lub zapoznać się z naszą ofertą.
-            </p>
-            
-            <div class="error-buttons">
-                <a href="/" class="btn-error btn-primary-error">
-                    <i class="fas fa-home"></i> Strona główna
-                </a>
-                <a href="/oferta.html" class="btn-error">
-                    <i class="fas fa-star"></i> Oferta
-                </a>
-                <a href="/kontakt.html" class="btn-error">
-                    <i class="fas fa-envelope"></i> Kontakt
-                </a>
-            </div>
-            
-            <div class="breadcrumb-404">
-                <p>Sekcje strony:</p>
-                <a href="/">Główna</a> | 
-                <a href="/o_nas.html">O nas</a> | 
-                <a href="/oferta.html">Oferta</a> | 
-                <a href="/galeria.html">Galeria</a> | 
-                <a href="/sklep.html">Sklep</a> | 
-                <a href="/kontakt.html">Kontakt</a>
+        <div class="glass-box">
+            <div class="error-content">
+                <div class="error-icon">
+                    <i class="fas fa-map-signs"></i>
+                </div>
+                
+                <h1 class="error-code">404</h1>
+                <h2 class="error-message">Zabłądziłeś!</h2>
+                
+                <p class="error-description">
+                    Wygląda na to, że ta strona wyruszyła na własną imprezę.
+                    Wróć do nas — znajdziemy coś lepszego!
+                </p>
+                
+                <div class="error-buttons">
+                    <a href="/" class="btn-error btn-primary-error">
+                        <i class="fas fa-home"></i> Strona główna
+                    </a>
+                    <a href="/oferta.html" class="btn-error">
+                        <i class="fas fa-star"></i> Oferta
+                    </a>
+                    <a href="/kontakt.html" class="btn-error">
+                        <i class="fas fa-envelope"></i> Kontakt
+                    </a>
+                </div>
+
+                <div class="error-divider"></div>
+                
+                <div class="error-links">
+                    <p>Może szukasz:</p>
+                    <a href="/">Główna</a> |
+                    <a href="/o_nas.html">O nas</a> |
+                    <a href="/oferta.html">Oferta</a> |
+                    <a href="/galeria.html">Galeria</a> |
+                    <a href="/sklep.html">Sklep</a> |
+                    <a href="/kontakt.html">Kontakt</a>
+                </div>
             </div>
         </div>
     </div>
     
-    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="bootstrap/js/bootstrap.bundle.min.js" defer></script>
 </body>
 </html>

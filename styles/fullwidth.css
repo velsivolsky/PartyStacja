@@ -2,6 +2,7 @@
 .fullwidth-bg img {
   position: relative;
   transition: all 0.4s ease;
+  height: auto;
   
   /* Czysty fadeout na wszystkich krawędziach */
   mask: 
